@@ -1,3 +1,0 @@
-[F:-] App: Ctor
-[F:-] Framework: Wczytywanie konfiguracji z pliku: Config.dat
-[F:-] App: Dtor
