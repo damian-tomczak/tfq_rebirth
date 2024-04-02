@@ -36,8 +36,115 @@
 [F:1] ResMngr: D3dTexture: Loading "MenuButton" from: Game\Textures\MenuButton.tga
 [F:2] ResMngr: D3dTexture: Loading "GemParticleTexture" from: Game\Textures\GemParticle.tga
 [F:2] ResMngr: D3dEffect: Loading "ParticleShader" from: Engine\Shaders\ParticleShader.fxo
-[F:564] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00030203
-[F:614] Game: DestroyGame
-[F:614] App: OnDestroy
-[F:614] App: OnDeactivate
-[F:614] App: Dtor
+[F:275] App: OnDeactivate
+[F:583] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00030203
+[F:2356] Game: Loss
+[F:2358] ResMngr: Multishader: Loading from cache. Shader=PpShader, Hash=00000006
+[F:2984] ResMngr: Multishader: Loading from cache. Shader=PpShader, Hash=00000005
+[F:3617] Game: DestroyGame
+[F:3617] Game: CreateGame: 1
+[F:4825] App: OnActivate
+[F:5942] App: OnLostDevice
+[F:5942] App: OnPause
+[F:5942] App: OnResetDevice. Resolution=1920x1001
+[F:5942] App: OnResume
+[F:5943] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Screen, IsTexture=true, Width=1920, Height=1001, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:5943] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00000180
+[F:5943] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00000104
+[F:5943] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00021003
+[F:5943] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00030203
+[F:5943] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Blur_2, IsTexture=true, Width=480, Height=250, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:5943] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Blur_1, IsTexture=true, Width=480, Height=250, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:5943] ResMngr: Multishader: Loading from cache. Shader=PpShader, Hash=00000000
+[F:6471] Game: DestroyGame
+[F:6471] Game: CreateGame: 5
+[F:6471] ResMngr: Terrain: "RpgTerrain" Loading...
+[F:6471] ResMngr: Terrain: Loading texture heightmap from "Game\Terrain\RPG Heightmap.bmp".
+[F:6471] ResMngr: Terrain: Loading form description from "Game\Terrain\RPG Form Desc.dat".
+[F:6471] ResMngr: Terrain: Loading form map from "Game\Terrain\RPG Formmap.tga".
+[F:6471] ResMngr: Terrain: Loading patches from cache "Cache\Terrain\RpgTerrain".
+[F:6471] ResMngr: D3dTexture: Loading "LensFlare01" from: Engine\Textures\LensFlare01.dds
+[F:6471] ResMngr: D3dTexture: Loading "LensFlare02" from: Engine\Textures\LensFlare02.dds
+[F:6471] ResMngr: D3dTexture: Loading "LensFlare03" from: Engine\Textures\LensFlare03.dds
+[F:6471] ResMngr: D3dTexture: Loading "LensFlare_Halo" from: Engine\Textures\LensFlare_Halo.dds
+[F:6471] Engine: Grass: Loading. Desc="Game\Terrain\GrassDesc.dat", DensityMap="Game\Terrain\RPG Grass Density Map.tga"
+[F:6471] Engine: Creating TerrainRenderer: Desc="Game\Terrain\TreeDesc.dat", DensityMap="Game\Terrain\RPG Tree Density Map.tga"
+[F:6471] ResMngr: QMesh: "Campfire" Loading header from "Game\Models\Campfire.qmsh"
+[F:6471] ResMngr: QMesh: "Campfire" Loading data from "Game\Models\Campfire.qmsh"
+[F:6471] ResMngr: QMesh: "WormMesh" Loading header from "Game\Models\Worm.qmsh"
+[F:6471] ResMngr: QMesh: "WormMesh" Loading data from "Game\Models\Worm.qmsh"
+[F:6471] ResMngr: QMesh: "DwarfMesh" Loading header from "Game\Models\DxSdkDwarf.qmsh"
+[F:6471] ResMngr: QMesh: "DwarfMesh" Loading data from "Game\Models\DxSdkDwarf.qmsh"
+[F:6471] ResMngr: QMesh: "ExclamationMesh" Loading header from "Game\Models\Exclamation.qmsh"
+[F:6471] ResMngr: QMesh: "ExclamationMesh" Loading data from "Game\Models\Exclamation.qmsh"
+[F:6471] ResMngr: QMesh: "TinyMesh" Loading header from "Game\Models\DxSdkTiny.qmsh"
+[F:6471] ResMngr: QMesh: "TinyMesh" Loading data from "Game\Models\DxSdkTiny.qmsh"
+[F:6472] ResMngr: D3dEffect: Loading "ComplexSkyShader" from: Engine\Shaders\ComplexSky.fxo
+[F:6472] ResMngr: D3dTexture: Loading "Sky_Stars" from: Engine\Textures\Sky_Stars.png
+[F:6472] ResMngr: D3dTexture: Loading "Sky_Sun" from: Game\Textures\Sky_Sun.tga
+[F:6472] ResMngr: D3dTexture: Loading "Sky_Glow" from: Engine\Textures\Sky_Glow.tga
+[F:6472] ResMngr: D3dEffect: Loading "ComplexSkyCloudsShader" from: Engine\Shaders\ComplexSky_Clouds.fxo
+[F:6472] ResMngr: D3dTexture: Loading "NoiseTexture" from: Engine\Textures\Noise_Blurred.dds
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=40000080
+[F:6472] ResMngr: D3dTexture: Loading "Sand" from: Game\Textures\Sand.tga
+[F:6472] ResMngr: D3dTexture: Loading "Grass" from: Game\Textures\Grass.tga
+[F:6472] ResMngr: D3dTexture: Loading "Snow" from: Game\Textures\Snow.jpg
+[F:6472] ResMngr: D3dTexture: Loading "Path" from: Game\Textures\Path.tga
+[F:6472] ResMngr: D3dTexture: Loading "TreeTexture" from: Game\Textures\Tree.tga
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=TreeShader, Hash=00000003
+[F:6472] ResMngr: D3dEffect: Loading "GrassShader" from: Engine\Shaders\Grass.fxo
+[F:6472] ResMngr: D3dTexture: Loading "GrassTexture" from: Game\Textures\GrassSprite.tga
+[F:6472] ResMngr: D3dTextureSurface.CreateSurface: Name=ShadowMap_Normal_0, IsTexture=true, Width=1024, Height=1024, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:6472] ResMngr: D3dTextureSurface.CreateSurface: Name=ShadowMapping_DepthStencil, IsTexture=false, Width=1024, Height=1024, Pool=DEFAULT, Usage=DEPTHSTENCIL, Format=D16
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=TreeShader, Hash=00000014
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=4C000004
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=40000001
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=WaterShader, Hash=00000001
+[F:6472] ResMngr: D3dTexture: Loading "Water_n" from: Engine\Textures\Water_n.tga
+[F:6472] ResMngr: D3dTexture: Loading "Water_Caustics" from: Engine\Textures\Water_Caustics.tga
+[F:6472] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_ToneMapping_RAM, IsTexture=false, Width=38, Height=20, Pool=SYSTEMMEM, Usage=0, Format=A8R8G8B8
+[F:6472] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_ToneMapping_VRAM, IsTexture=false, Width=38, Height=20, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:6472] ResMngr: Multishader: Loading from cache. Shader=PpShader, Hash=00000008
+[F:6473] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=20000180
+[F:6473] ResMngr: D3dTexture: Loading "TinyTexture" from: Game\Textures\Tiny.dds
+[F:6473] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=24000007
+[F:6473] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=20C80104
+[F:6473] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=20000001
+[F:6473] ResMngr: D3dEffect: Loading "FallShader" from: Engine\Shaders\Fall.fxo
+[F:6473] ResMngr: D3dTexture: Loading "RainDrop" from: Game\Textures\Weather\RainDrop.tga
+[F:6473] ResMngr: D3dEffect: Loading "FallShader_Planes" from: Engine\Shaders\Fall_Planes.fxo
+[F:6473] ResMngr: D3dTexture: Loading "RainPlane" from: Game\Textures\Weather\RainPlane.tga
+[F:6473] ResMngr: D3dTexture: Loading "FallNoise" from: Engine\Textures\FallNoise.tga
+[F:9403] ResMngr: D3dTexture: Loading "SnowFlake" from: Game\Textures\Weather\SnowFlake.tga
+[F:9509] ResMngr: D3dTexture: Loading "SnowPlane" from: Game\Textures\Weather\SnowPlane.tga
+[F:11818] ResMngr: D3dTexture: Loading "WormTexture" from: Game\Textures\Worm.jpg
+[F:11818] ResMngr: Multishader: Loading shader source: Engine\Multishaders\MainShader.fx
+[F:11818] ResMngr: Multishader: Compiling. Shader=MainShader, Hash=2C000104
+[F:11820] ResMngr: D3dTexture: Loading "Wood" from: Game\Textures\Wood.jpg
+[F:11820] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00000001
+[F:11820] ResMngr: D3dEffect: Loading "HeatEffect" from: Engine\Shaders\HeatEffect.fxo
+[F:11820] ResMngr: Multishader: Loading shader source: Engine\Multishaders\PpShader.fx
+[F:11820] ResMngr: Multishader: Compiling. Shader=PpShader, Hash=00000018
+[F:11820] ResMngr: D3dTexture: Loading "PerturbationMap" from: Engine\Textures\PerturbationMap.tga
+[F:11830] ResMngr: D3dTexture: Loading "FireParticle" from: Game\Textures\FireParticle.tga
+[F:11839] ResMngr: D3dTexture: Loading "SmokeParticle" from: Game\Textures\SmokeParticle.tga
+[F:13502] ResMngr: D3dTexture: Loading "Creep" from: Game\Textures\Creep.tga
+[F:13810] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00014303
+[F:13810] ResMngr: D3dTexture: Loading "RainbowTexture" from: Game\Textures\Rainbow.tga
+[F:13868] ResMngr: D3dTexture: Loading "DwarfWeapon" from: Game\Textures\DwarfWeapon.jpg
+[F:13868] ResMngr: D3dTexture: Loading "DwarfBody" from: Game\Textures\DwarfBody.jpg
+[F:13868] ResMngr: D3dTexture: Loading "DwarfHead" from: Game\Textures\DwarfHead.jpg
+[F:13868] ResMngr: D3dTexture: Loading "DwarfBeard" from: Game\Textures\DwarfBeard.jpg
+[F:13868] ResMngr: D3dTexture: Loading "DwarfArmor" from: Game\Textures\DwarfArmor.jpg
+[F:13876] ResMngr: D3dTexture: Loading "LaserStripeTexture" from: Game\Textures\LaserStripe.tga
+[F:13877] ResMngr: Multishader: Compiling. Shader=MainShader, Hash=00000080
+[F:13877] ResMngr: Multishader: Compiling. Shader=MainShader, Hash=00000004
+[F:13877] ResMngr: Multishader: Compiling. Shader=MainShader, Hash=00004003
+[F:13916] ResMngr: D3dTexture: Loading "MainParticle" from: Game\Textures\MainParticle.tga
+[F:14176] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=04000007
+[F:15002] Game: Win
+[F:15223] Game: DestroyGame
+[F:15223] Game: DestroyGame
+[F:15223] App: OnDestroy
+[F:15223] App: OnDeactivate
+[F:15223] App: Dtor

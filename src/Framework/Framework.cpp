@@ -412,6 +412,7 @@ SETTINGS::SETTINGS(uint4 BackBufferWidth, uint4 BackBufferHeight, uint4 RefreshR
 	PresentationInverval(VSync ? D3DPRESENT_INTERVAL_DEFAULT : D3DPRESENT_INTERVAL_IMMEDIATE),
 	FlushMode(FLUSH_NONE)
 {
+	puts("123");
 }
 
 // Wynik porównania dwóch ustawieñ
@@ -704,10 +705,10 @@ DWORD WindowGetStyle()
 		if (g_AllowResize)
 		{
 			if (g_MaxWidth == 0 && g_MaxHeight == 0)
-				return WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | 
+				return WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME |
 					WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
 			else
-				return WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | 
+				return WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME |
 					WS_MINIMIZEBOX | WS_VISIBLE;
 		}
 		else
@@ -902,7 +903,7 @@ void ApplySettingsChange()
 			hr = Dev->Reset(&PresentParams);
 			if (FAILED(hr))
 				throw DirectXError(hr, "Nie mo¿na zmieniæ ustawieñ wyœwietlania - nie mo¿na zresetowaæ urz¹dzenia.", __FILE__, __LINE__);
-			
+
 			g_SettingsChangeState = SCS_SUCCEEDED;
 
 		}
@@ -922,7 +923,7 @@ void ApplySettingsChange()
 			hr = Dev->Reset(&PresentParams);
 			if (FAILED(hr))
 				throw DirectXError(hr, "Nie mo¿na zmieniæ ustawieñ wyœwietlania ani przywróciæ poprzednich - nie mo¿na zresetowaæ urz¹dzenia.", __FILE__, __LINE__);
-			
+
 			g_SettingsChangeState = SCS_FAILED;
 		}
 		// Rozmiar okna
@@ -1143,7 +1144,7 @@ void HandlePossibleSizeChange()
 						g_FrameObjectList.CallLostDevice();
 						// zasoby frameworka
 						FrameObjectsDeviceLost();
-						
+
 						EnvironmentReset();
 
 						Redraw();
@@ -1588,7 +1589,7 @@ int Go(
 		~InsideGoClass() { g_InsideGo = false; }
 	};
 	InsideGoClass InsideGoObj;
-	
+
 	// Zapamiêtaj zmienne inicjalizacyjne
 	Instance = Instance;
 	g_ClassName = ClassName;

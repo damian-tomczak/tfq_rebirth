@@ -1,115 +1,115 @@
-// Pocz¹tkowe ustawienia graficzne
+// Poczï¿½tkowe ustawienia graficzne
 Display
 {
-	// Wybór urz¹dzenia graficznego.
-	// Podaj indeks, np. 0, 1, 2 itd., jeœli masz wiêcej kart graficznych
-	// Domyœlnie: DEFAULT.
+	// Wybï¿½r urzï¿½dzenia graficznego.
+	// Podaj indeks, np. 0, 1, 2 itd., jeï¿½li masz wiï¿½cej kart graficznych
+	// Domyï¿½lnie: DEFAULT.
 	Adapter = DEFAULT
-	// Format bufora g³êbokoœci i bufora szablonu.
+	// Format bufora gï¿½ï¿½bokoï¿½ci i bufora szablonu.
 	// Dopuszczalne: D16, D24X8, D24S8.
-	// Jeœli program u¿ywa bufora szablonu, trzeba podaæ D24S8.
-	// Jeœli nie u¿ywa, mo¿na podaæ dowolny.
-	// Ten program nie u¿ywa bufora szablonu, ale D16 powoduje brzydkie linie na ³¹czeniach fragmentów terenu.
-	// Domyœlnie: D24X8
+	// Jeï¿½li program uï¿½ywa bufora szablonu, trzeba podaï¿½ D24S8.
+	// Jeï¿½li nie uï¿½ywa, moï¿½na podaï¿½ dowolny.
+	// Ten program nie uï¿½ywa bufora szablonu, ale D16 powoduje brzydkie linie na ï¿½ï¿½czeniach fragmentï¿½w terenu.
+	// Domyï¿½lnie: D24X8
 	AutoDepthStencilFormat = D24X8
-	// Liczba tylnych buforów: 0, 1, 2, 3.
+	// Liczba tylnych buforï¿½w: 0, 1, 2, 3.
 	// 0 oznacza to samo, co 1.
-	// Domyœlnie: 1
+	// Domyï¿½lnie: 1
 	BackBufferCount = 1
 	// Format tylnego bufora.
-	// Domyœlnie: A8R8G8B8
+	// Domyï¿½lnie: A8R8G8B8
 	BackBufferFormat = A8R8G8B8
-	// Rozdzielczoœæ w pikselach.
-	// Domyœlnie: odpowiednio 800 i 600.
+	// Rozdzielczoï¿½ï¿½ w pikselach.
+	// Domyï¿½lnie: odpowiednio 800 i 600.
 	BackBufferWidth = 1024
 	BackBufferHeight = 768
-	// Czêstotliwoœæ odœwie¿ania w Hz.
+	// Czï¿½stotliwoï¿½ï¿½ odï¿½wieï¿½ania w Hz.
 	// W przypadku trybu okienkowego nie ma znaczenia.
-	// Domyœlnie: 60
+	// Domyï¿½lnie: 60
 	RefreshRate = 60
-	// Tryb pe³noekranowy.
-	// true - pe³ny ekran, false - okno
-	// Domyœlnie: false
-	FullScreen = true
-	// Rodzaj urz¹dzenia - HAL lub REF.
-	// HAL - sterownik sprzêtowy
-	// REF - sterownik referencyjny. Nie wybieraæ - dzia³a zbyt wolno!
-	// Domyœlnie: HAL
+	// Tryb peï¿½noekranowy.
+	// true - peï¿½ny ekran, false - okno
+	// Domyï¿½lnie: false
+	FullScreen = false
+	// Rodzaj urzï¿½dzenia - HAL lub REF.
+	// HAL - sterownik sprzï¿½towy
+	// REF - sterownik referencyjny. Nie wybieraï¿½ - dziaï¿½a zbyt wolno!
+	// Domyï¿½lnie: HAL
 	DeviceType = HAL
-	// Czy mo¿na porzucaæ poprzedni¹ zawartoœæ bufora g³êbokoœci i szablonu.
-	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
-	// W przypadku tej aplikacji mo¿e i powinno byæ true.
+	// Czy moï¿½na porzucaï¿½ poprzedniï¿½ zawartoï¿½ï¿½ bufora gï¿½ï¿½bokoï¿½ci i szablonu.
+	// Zaleï¿½y od sposobu jego wykorzystania przez aplikacjï¿½.
+	// W przypadku tej aplikacji moï¿½e i powinno byï¿½ true.
 	DiscardDepthStencil = true
-	// Czy bufor g³êbokoœci i szablonu jest w³¹czony.
-	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
-	// W przypadku tej aplikacji musi byæ true.
+	// Czy bufor gï¿½ï¿½bokoï¿½ci i szablonu jest wï¿½ï¿½czony.
+	// Zaleï¿½y od sposobu jego wykorzystania przez aplikacjï¿½.
+	// W przypadku tej aplikacji musi byï¿½ true.
 	EnableAutoDepthStencil = true
-	// Czy bufor ekranu ma siê nadawaæ do blokowania.
-	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
-	// W przypadku tej aplikacji mo¿e i powinno byæ false.
+	// Czy bufor ekranu ma siï¿½ nadawaï¿½ do blokowania.
+	// Zaleï¿½y od sposobu jego wykorzystania przez aplikacjï¿½.
+	// W przypadku tej aplikacji moï¿½e i powinno byï¿½ false.
 	LockableBackBuffer = false
 	// Ustawienia antialiasingu.
-	// Wy³¹czone. Nie sprawdzane, czy program dzia³a przy w³¹czonych.
+	// Wyï¿½ï¿½czone. Nie sprawdzane, czy program dziaï¿½a przy wï¿½ï¿½czonych.
 	MultiSampleQuality = 0
 	MultiSampleType = NONE
-	// Sposób prezentacji klatki. Odpowiada za pionow¹ synchronizacjê (VSync).
-	// Dopuszczalne wartoœci: IMMEDIATE, DEFAULT, ONE, TWO, THREE, FOUR.
-	// IMMEDIATE - VSync wy³¹czone
-	// DEFAULT - VSync w³¹czone
-	// Domyœlnie: IMMEDIATE
+	// Sposï¿½b prezentacji klatki. Odpowiada za pionowï¿½ synchronizacjï¿½ (VSync).
+	// Dopuszczalne wartoï¿½ci: IMMEDIATE, DEFAULT, ONE, TWO, THREE, FOUR.
+	// IMMEDIATE - VSync wyï¿½ï¿½czone
+	// DEFAULT - VSync wï¿½ï¿½czone
+	// Domyï¿½lnie: IMMEDIATE
 	PresentationInverval = IMMEDIATE
-	// Sposób prezentacji klatki.
-	// Dopuszczalne wartoœci: DISCARD, FLIP, COPY
-	// Domyœlnie: DISCARD
+	// Sposï¿½b prezentacji klatki.
+	// Dopuszczalne wartoï¿½ci: DISCARD, FLIP, COPY
+	// Domyï¿½lnie: DISCARD
 	SwapEffect = DISCARD
-	// Sposób przetwarzania wierzcho³ków.
-	// Dopuszczalne wartoœci: HARDWARE, MIXED, SOFTWARE, AUTO
-	// Domyœlnie: AUTO
-	// Mo¿esz spróbowaæ przestawiæ na SOFTWARE, jeœli program siê nie uruchamia i masz kartê zintegrowan¹ firmy Intel.
+	// Sposï¿½b przetwarzania wierzchoï¿½kï¿½w.
+	// Dopuszczalne wartoï¿½ci: HARDWARE, MIXED, SOFTWARE, AUTO
+	// Domyï¿½lnie: AUTO
+	// Moï¿½esz sprï¿½bowaï¿½ przestawiï¿½ na SOFTWARE, jeï¿½li program siï¿½ nie uruchamia i masz kartï¿½ zintegrowanï¿½ firmy Intel.
 	VertexProcessing = AUTO
 	// Tryb oczekiwania na pokazanie klatki.
-	// Dopuszczalne wartoœci: None, Event, Lock
-	// Domyœlnie: Event
-	// None - brak oczekiwania, zalecane - pozwala uzyskaæ najwiêcej FPS
-	// Event - wybierz, jeœli gra "szarpie"
-	// Lock - wybierz, jeœli gra "szarpie", a Event nie pomaga
+	// Dopuszczalne wartoï¿½ci: None, Event, Lock
+	// Domyï¿½lnie: Event
+	// None - brak oczekiwania, zalecane - pozwala uzyskaï¿½ najwiï¿½cej FPS
+	// Event - wybierz, jeï¿½li gra "szarpie"
+	// Lock - wybierz, jeï¿½li gra "szarpie", a Event nie pomaga
 	FlushMode = Event
 }
 
 // Ustawienia silnika
 Engine
 {
-	// Czy w³¹czone jest oœwietlenie (false / true)
+	// Czy wï¿½ï¿½czone jest oï¿½wietlenie (false / true)
 	Lighting = true
 
 	// Ustawienia cieni	
 	ShadowMapping
 	{
-		// Czy w³¹czone s¹ cienie (false / true)
+		// Czy wï¿½ï¿½czone sï¿½ cienie (false / true)
 		Enabled = true
 		// Format tekstury Shadow Mapy
 		// Dopuszczalne: A8R8G8B8, G16R16, R32F
 		Format = A8R8G8B8
 		// Maksymalny rozmiar tekstury Shadow Mapy
 		MaxSize = 1024
-		// Maksymalny rozmiar œcianki tekstury szeœciennej Shadow Mapy dla œwiate³ punktowych
+		// Maksymalny rozmiar ï¿½cianki tekstury szeï¿½ciennej Shadow Mapy dla ï¿½wiateï¿½ punktowych
 		MaxCubeSize = 256
-		// Przesuniêcie pozwalaj¹ce pozbyæ siê brzydkich artefaktów.
-		// Eksperymentalnie udowodniona najlepsza wartoœæ
+		// Przesuniï¿½cie pozwalajï¿½ce pozbyï¿½ siï¿½ brzydkich artefaktï¿½w.
+		// Eksperymentalnie udowodniona najlepsza wartoï¿½ï¿½
 		Epsilon = 0.005
 	}
 	
-	// Ustawienia efektów postprocessingu
+	// Ustawienia efektï¿½w postprocessingu
 	Postprocessing
 	{
-		// Czy postprocessing jest w³¹czony (false / true)
+		// Czy postprocessing jest wï¿½ï¿½czony (false / true)
 		Enabled = true
 	}
 	
 	// Ustawienia trawy
 	Grass
 	{
-		// Odlegloœæ, w jakiej widaæ trawê
+		// Odlegloï¿½ï¿½, w jakiej widaï¿½ trawï¿½
 		ZFar = 30
 	}
 }
@@ -144,7 +144,7 @@ Game
 		LightColor   = "1.0,0.8,0.8,0.8"
 		AmbientColor = "1.0,0.2,0.2,0.2"
 		CameraAngleX = 1.09955 // PI/2 * 0.7
-		CameraAngleY = 0.10 // PI/2 * 0.1 - ileœtam
+		CameraAngleY = 0.10 // PI/2 * 0.1 - ileï¿½tam
 		CameraDist = 14
 		CameraSmoothTime = 0.05
 		WindVec = "0.2,0.3"
@@ -262,7 +262,7 @@ Game
 			3,-10,7; 3,10,7; 2,10,-3; 2,-10,-3;
 			2,-10,-3; 2,10,-3; -3,10,-4; -3,-10,-4
 		"
-		// Wzór:
+		// Wzï¿½r:
 		// x1,-10,z1; x1,10,z1; x2,10,z2; x2,-10,z2;
 		// y= zawsze -10 .. 10
 	}
@@ -280,7 +280,7 @@ Game
 		AmbientColor = "0.1,0.1,0.1"
 		LightColor = "0.9,0.9,0.9"
 		DarkLightColor = "0.5,0.5,0.5"
-		LightDir = "-3,-3,-2" // Nie musi byæ znormalizowany
+		LightDir = "-3,-3,-2" // Nie musi byï¿½ znormalizowany
 		DayTime = 0.6
 		Wind = "0.25,0.15"
 		DarkWind = "0.75,0.25"

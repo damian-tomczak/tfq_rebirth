@@ -1,166 +1,28 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Client.vcxproj).  This can lead to incorrect clean and rebuild behavior.
 cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  pch.cpp
-cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-cl : command line  warning D9030: '/Gm' is incompatible with multiprocessing; ignoring /MP switch
-  Tokenizer.cpp
-  Threads.cpp
-  Stream.cpp
-  Profiler.cpp
-  Math.cpp
-  Logger.cpp
-  FreeList.cpp
-  Files.cpp
-  Error.cpp
-  Dator.cpp
-  DateTime.cpp
-  Config.cpp
-  Base.cpp
-  Generating Code...
-cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-cl : command line  warning D9030: '/Gm' is incompatible with multiprocessing; ignoring /MP switch
-  MathHelpDrawing.cpp
-  Main.cpp
-  GameSpace.cpp
-  GameRts.cpp
-  GameRpg.cpp
-  GamePacman.cpp
-  GameFpp.cpp
-  GameBase.cpp
-  DebugGui.cpp
-  Res_d3d.cpp
-  ResMngr.cpp
-  QMesh.cpp
-  Multishader.cpp
-  GUI_PropertyGridWindow.cpp
-  GUI_Controls.cpp
-E:\New folder\clear\tfq_rebirth\src\Framework\GUI_Controls.cpp(619,40): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Framework/GUI_Controls.cpp')
-  
-  GUI.cpp
-  Gfx2D.cpp
   Framework.cpp
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(753,28): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(754,28): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(753,54): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(754,54): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(929,29): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(930,29): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(929,55): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(930,55): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(1804,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(1805,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(1805,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(1806,13): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(1852,14): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(1853,14): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   (compiling source file '/Framework/Framework.cpp')
   
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp(1857,14): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp(1858,14): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   (compiling source file '/Framework/Framework.cpp')
   
-  D3dUtils.cpp
-  AsyncConsole.cpp
-  Generating Code...
-  Compiling...
-  Water.cpp
-  Trees.cpp
-E:\New folder\clear\tfq_rebirth\src\Engine\Trees.cpp(452,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Trees.cpp')
-  
-  Terrain.cpp
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1468,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1469,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1470,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1471,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1610,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1611,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  (compiling source file '/Engine/Terrain.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1767,41): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1767,41): warning C4244:         with
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1767,41): warning C4244:         [
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1767,41): warning C4244:             T=int
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1767,41): warning C4244:         ]
-  (compiling source file '/Engine/Terrain.cpp')
-  
-  Sky.cpp
-  QMap.cpp
-  IcosphereRes.cpp
-  Grass.cpp
-  Fall.cpp
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(135,37): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(135,37): warning C4244:         with
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(135,37): warning C4244:         [
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(135,37): warning C4244:             T=int
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(135,37): warning C4244:         ]
-  (compiling source file '/Engine/Fall.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(141,37): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(141,37): warning C4244:         with
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(141,37): warning C4244:         [
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(141,37): warning C4244:             T=int
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp(141,37): warning C4244:         ]
-  (compiling source file '/Engine/Fall.cpp')
-  
-  Entities.cpp
-  Engine_pp.cpp
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(500,49): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(500,77): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(501,58): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(501,95): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(803,26): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(803,36): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(804,51): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp(804,81): warning C4838: conversion from 'uint4' to 'LONG' requires a narrowing conversion
-  (compiling source file '/Engine/Engine_pp.cpp')
-  
-  Engine.cpp
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(512,41): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(512,41): warning C4244:         with
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(512,41): warning C4244:         [
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(512,41): warning C4244:             T=int
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(512,41): warning C4244:         ]
-  (compiling source file '/Engine/Engine.cpp')
-  
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(523,41): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(523,41): warning C4244:         with
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(523,41): warning C4244:         [
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(523,41): warning C4244:             T=int
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp(523,41): warning C4244:         ]
-  (compiling source file '/Engine/Engine.cpp')
-  
-  Camera.cpp
-  Generating Code...
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp(1453): warning C4717: 'engine::Terrain::GetFormIndex': recursive on all control paths, function will cause runtime stack overflow
-Base.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  TFQ.vcxproj -> E:\New folder\clear\tfq_rebirth\src\Debug\TFQ.exe
+  TFQ.vcxproj -> C:\Users\damian\source\repos\tfq_rebirth\src\Debug\TFQ.exe

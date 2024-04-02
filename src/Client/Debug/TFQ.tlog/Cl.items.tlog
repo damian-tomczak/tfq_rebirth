@@ -1,46 +1,46 @@
-E:\New folder\clear\tfq_rebirth\src\Common\Base.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Base.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Config.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Config.obj
-E:\New folder\clear\tfq_rebirth\src\Common\DateTime.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\DateTime.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Dator.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Dator.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Error.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Error.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Files.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Files.obj
-E:\New folder\clear\tfq_rebirth\src\Common\FreeList.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\FreeList.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Logger.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Logger.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Math.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Math.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Profiler.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Profiler.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Stream.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Stream.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Threads.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Threads.obj
-E:\New folder\clear\tfq_rebirth\src\Common\Tokenizer.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Tokenizer.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Camera.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Camera.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Engine.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Engine_pp.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Engine_pp.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Entities.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Entities.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Fall.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Fall.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Grass.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Grass.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\IcosphereRes.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\IcosphereRes.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\QMap.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\QMap.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Sky.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Sky.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Terrain.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Terrain.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Trees.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Trees.obj
-E:\New folder\clear\tfq_rebirth\src\Engine\Water.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Water.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\AsyncConsole.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\AsyncConsole.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\D3dUtils.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\D3dUtils.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\Framework.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Framework.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\Gfx2D.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Gfx2D.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\GUI.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GUI.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\GUI_Controls.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GUI_Controls.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\GUI_PropertyGridWindow.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GUI_PropertyGridWindow.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\Multishader.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Multishader.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\pch.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\pch.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\QMesh.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\QMesh.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\ResMngr.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\ResMngr.obj
-E:\New folder\clear\tfq_rebirth\src\Framework\Res_d3d.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Res_d3d.obj
-E:\New folder\clear\tfq_rebirth\src\Client\DebugGui.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\DebugGui.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GameBase.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GameBase.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GameFpp.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GameFpp.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GamePacman.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GamePacman.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GameRpg.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GameRpg.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GameRts.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GameRts.obj
-E:\New folder\clear\tfq_rebirth\src\Client\GameSpace.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\GameSpace.obj
-E:\New folder\clear\tfq_rebirth\src\Client\Main.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\Main.obj
-E:\New folder\clear\tfq_rebirth\src\Client\MathHelpDrawing.cpp;E:\New folder\clear\tfq_rebirth\src\Client\Debug\MathHelpDrawing.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Base.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Base.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Config.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Config.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\DateTime.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\DateTime.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Dator.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Dator.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Error.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Error.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Files.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Files.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\FreeList.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\FreeList.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Logger.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Logger.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Math.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Math.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Profiler.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Profiler.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Stream.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Stream.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Threads.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Threads.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Common\Tokenizer.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Tokenizer.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Camera.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Camera.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Engine.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Engine.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Engine_pp.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Engine_pp.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Entities.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Entities.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Fall.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Fall.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Grass.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Grass.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\IcosphereRes.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\IcosphereRes.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\QMap.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\QMap.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Sky.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Sky.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Terrain.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Terrain.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Trees.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Trees.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Engine\Water.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Water.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\AsyncConsole.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\AsyncConsole.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\D3dUtils.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\D3dUtils.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Framework.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Framework.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Gfx2D.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Gfx2D.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\GUI.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GUI.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\GUI_Controls.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GUI_Controls.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\GUI_PropertyGridWindow.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GUI_PropertyGridWindow.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Multishader.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Multishader.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\pch.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\pch.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\QMesh.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\QMesh.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\ResMngr.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\ResMngr.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Framework\Res_d3d.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Res_d3d.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\DebugGui.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\DebugGui.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GameBase.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GameBase.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GameFpp.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GameFpp.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GamePacman.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GamePacman.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GameRpg.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GameRpg.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GameRts.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GameRts.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\GameSpace.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\GameSpace.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\Main.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\Main.obj
+C:\Users\damian\source\repos\tfq_rebirth\src\Client\MathHelpDrawing.cpp;C:\Users\damian\source\repos\tfq_rebirth\src\Client\Debug\MathHelpDrawing.obj
