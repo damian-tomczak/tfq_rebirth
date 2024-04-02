@@ -1,0 +1,254 @@
+Zapis tekstowy zasobu
+================================================================================
+
+QMap "NAZWA" [STAN] "NAZWA-PLIKU" ;
+
+
+Edycja mapy w Blender
+================================================================================
+
+Œwiat³a
+--------------------------------------------------------------------------------
+
+Akceptowane s¹ rodzaje œwiate³: Lamp, Spot. Pozosta³e s¹ ignorowane i generuj¹
+ostrze¿enie.
+
+Respektowane s¹ nastêpuj¹ce parametry œwiate³:
+- Pozycja, orientacja i rozmiar jako obiektu
+- Kolor (R,G,B)
+- Zasiêg (Dist)
+Dla œwiate³ Spot dodatkowo:
+- K¹t (SpotSi)
+- Miêkkoœæ (SpotBl)
+
+Pozosta³e parametry s¹ ignorowane. W szczególnoœci nie s¹ respektowane:
+- Ustawienia cieni (RayShadow, BufShadow)
+  Nie mogê siê do nich dostaæ ze skryptu eksportuj¹cego!
+- Energy
+- Quad/Sphere
+- Gamma
+- Square/Rect
+
+
+Format .qmap.tmp
+================================================================================
+
+Format poœredni eksportu map Indoor z Blendera.
+Plik tekstowy. Kodowanie ANSI. Koniec wiersza dowolny.
+Tokeny jak w module Tokenizer z CommonLib.
+
+Sk³adnia:
+
+QMAP TMP 10
+objects {
+	obiekt
+	obiekt
+	...
+}
+
+Rodzaje obiektów: mesh, lamp, lattice
+
+- Kolejnoœæ obiektów jest dowolna.
+- Obiektów typu mesh, lamp i lattice mo¿e pojawiæ siê dowolna iloœæ.
+
+Wspólne pola:
+
+- Pozycja_obiektu - pozycja œrodka danego obiektu:
+  <x>,<y>,<z>
+- Orientacja_obiektu - k¹ty Eulera:
+  <x>,<y>,<z>
+- Rozmiar_obiektu - wspó³czynniki skalowania:
+  <x>,<y>,<z>
+
+
+Obiekt typu mesh
+--------------------------------------------------------------------------------
+
+mesh <Nazwa_obiektu(string)> {
+	<Pozycja_obiektu>
+	<Orientacja_obiektu>
+	<Rozmiar_obiektu>
+	<Auto_smooth_angle(float)>
+	<Czy_s¹_wsp_tekstury(0|1)>
+	materials <Liczba_materia³ów> {
+		<Nazwa_materia³u>
+		<Nazwa_materia³u>
+		...
+	}
+	vertices <Liczba_wierzcho³ków> {
+		<Pozycja_wierzcho³ka>
+		<Pozycja_wierzcho³ka>
+		...
+	}
+	faces <Liczba_œcianek> {
+		<Liczba_wierzcho³ków> <Nr_materia³u> <Czy_smooth> <Indeks_wierzcho³ka> [Wsp_tekstury] <Indeks_wierzcho³ka> [Wsp_tekstury] ...
+		<Liczba_wierzcho³ków> <Nr_materia³u> <Czy_smooth> <Indeks_wierzcho³ka> [Wsp_tekstury] <Indeks_wierzcho³ka> [Wsp_tekstury] ...
+		...
+	}
+}
+
+Gdzie:
+- Nazwa_materia³u - (³añcuch)
+- Pozycja_wierzcho³ka:
+  <x>,<y>,<z>
+- Indeks_wierzcho³ka (uint) - odnosi siê do tablicy wierzcho³ków, zawsze w odpowiednim zakresie
+- Wsp_tekstury:
+  <x>,<y>
+- Nr_materia³u:
+  Liczba ca³kowita bez znaku, 0..15
+  Mo¿e wykraczaæ poza rozmiar listy materia³ów.
+- Czy_smooth: 0 lub 1
+
+Materia³ów jest miêdzy 0..16.
+Wierzcho³ków w œcianie jest miêdzy 3..4.
+
+
+Obiekt typu lamp
+--------------------------------------------------------------------------------
+
+lamp <Nazwa_obiektu(string)> {
+	<Pozycja_obiektu>
+	<Orientacja_obiektu>
+	<Rozmiar_obiektu>
+	<Typ(identifikator)>
+	<Dane>
+}
+
+- Typ: Lamp, Spot
+- Dane: zale¿nie od typu.
+
+Dane dla typu Lamp:
+
+<Zasiêg(float)>
+<R(float)>, <G(float)>, <B(float)>
+
+Dane dla typu Spot:
+
+<Zasiêg(float)>
+<R(float)>, <G(float)>, <B(float)>
+<Softness(float)>
+<Angle(float)>
+
+Gdzie:
+- Zasiêg : float - zasiêg w jednostkach
+  Chyba podlega skalowaniu przez skalowanie obiektu.
+- R, G, B : float - kolor (0..1)
+- Softness : float - miêkkoœæ œwiat³a rzucanego przez Spot (0..1)
+  0 oznacza najtwardsze, 1 najmiêksze
+- Angle : float - k¹t padania œwiat³a spot w stopniach (1..180)
+
+
+Format .qmap
+================================================================================
+
+Rozszerzenie .qmap
+Oficjalna nazwa: The Final Quest Map 1.0
+Plik binarny.
+Endianowoœæ jak w pecetach.
+Znaki zapisywane w kodowaniu Windows-1250.
+
+Plik:
+- Format: "TFQMAP" (6 * char)
+- Wersja: "10" (2 * char)
+- MaterialCount : uint4
+  Liczba materia³ów
+- Materials - Materia³y
+- DrawVB - Bufor wierzcho³ków rysowania
+- DrawIB - Bufor indeksów rysowania
+- DrawTree - Drzewo Octree rysowania
+- CollisionVB - Bufor wierzcho³ków kolizji
+- CollisionIB - Bufor indeksów kolizji
+- CollisionTree - Drzewo Octree kolizji
+
+Materia³y:
+Ka¿dy z nich to nazwa z³o¿ona z 1B d³ugoœæ i dalej znaków.
+
+DrawVB:
+- VertexCount : uint4
+  Liczba wierzcho³ków
+- Wierzcho³ki, a ka¿dy:
+  - Pos : float[3]
+  - Normal : float[3]
+  - Tex : float[2]
+  - Tangent : float[3]
+  - Binormal : float[3]
+
+DrawIB:
+- Liczba indeksów : uint4
+- Indeksy, a ka¿dy to liczba uint4 indeksuj¹ca bufor wierzcho³ków rysowania.
+
+DrawTree:
+To struktura hierarchiczna. Jest jeden wêze³ g³ówny. Ka¿dy wêze³ mo¿e mieæ swoje
+podwêz³y.
+Node - Wêze³:
+- AABB : float[6]
+  Pozycje minimalna i maksymalna wyznaczaj¹ce AABB wêz³a
+- HasSubNodes : bool (1B, wartoœæ 0 lub 1)
+  1 jeœli posiada podwêz³y
+- Podwêz³y (8)
+- Liczba fragmentów : uint4
+- Fragmenty, a ka¿dy:
+  - MaterialIndex : uint4
+  - IndexBegin : uint4
+  - IndexEnd : uint4
+  - VertexBegin : uint4
+  - VertexEnd : uint4
+
+CollisionVB:
+- VertexCount : uint4
+  Liczba wierzcho³ków
+- Wierzcho³ki, a ka¿dy posiada tylko pozycjê Pos : float3
+
+CollisionIB:
+- Liczba indeksów : uint4
+- Indeksy, a ka¿dy to liczba uint4 indeksuj¹ca bufor wierzcho³ków rysowania.
+
+CollisionTree:
+To struktura hierarchiczna. Ka¿dy wêze³ mo¿e mieæ swoje podwêz³y.
+Node - Wêze³:
+- AABB : float[6]
+  Pozycje minimalna i maksymalna wyznaczaj¹ce AABB wêz³a
+- HasSubNodes : bool (1B, wartoœæ 0 lub 1)
+  1 jeœli posiada podwêz³y
+- Podwêz³y (8)
+- Fragment
+  Wyznacza geometriê robi¹c¹ kolizje.
+  - IndexBegin : uint4
+  - IndexEnd : uint4
+
+
+Format QMAP.DESC
+================================================================================
+
+Format pomocniczy do opisywania danych podczas kompilacji mapy z formatu
+QMAP.TMP do formatu QMAP. Plik tekstowy. Kodowanie Windows-1250. Koniec wiersza
+dowolny (zaleacny CR+LF). Rozszerzenie zaleacne: ".qmap.desc". Format zgodny
+z modu³em Tokenizer.
+
+Nag³ówek tworzy linijka:
+
+QMAP DESC 10
+
+Dalej jest sekcja:
+
+materials {
+	"NazwaMateria³u" {
+		<DaneMateria³u>
+	}
+}
+
+Gdzie NazwaMateria³u to nazwa Ÿród³owa materia³u, tak jak wystêpuje w pliku
+QMAP.TMP.
+
+Nie ka¿dy materia³ musi byæ tu udokumentowany.
+
+Dopuszczalne dane materia³u, wszystkie opcjonalne, s¹ nastêpuj¹ce:
+
+tex gen ;
+  Automatyczne generowanie wsp. tekstury, nawet jeœli w siatce Ÿród³owej wystêpuj¹
+tex scale <Liczba:float> ;
+  Skalowanie wspó³rzêdnych tekstury.
+name "NowaNazwa";
+  Zmiana nazwy materia³u.
+drop;
+  Porzucenie geometrii rysowanej tym materia³em.

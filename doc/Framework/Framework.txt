@@ -1,0 +1,248 @@
+################################################################################
+    Framework
+################################################################################
+Autor  : Adam Sawicki
+Wersja : 6.1
+Data   : 8 lutego 2007
+
+
+
+Framework to szkielet aplikacji Direct3D. Zakres odpowiedzialnoœci:
+
+- Tworzenie, usuwanie, zarz¹dzanie oknem Windows.
+- Obs³uga okna - sterowanie mo¿liwoœciami, odbieranie komunikatów (skalowanie,
+  minimalizacja, utrata aktywnoœci itp.)
+- Tworzenie, usuwanie, ponowne tworzenie i resetowanie obiektu Direct3D oraz
+  urz¹dzenia Direct3D.
+- Obs³uga utraty urz¹dzenia.
+- Udostêpnianie do u¿ytku obiektów: okna, obiektu D3D, urz¹dzenia D3D
+- Zmiana ustawieñ graficznych.
+  Jeœli siê nie uda, powrót do poprzednich.
+- Przechwytywanie i obs³uga b³êdów modu³u Error.
+- Obs³uga pêli komunikatów.
+- Obs³uga wejœcia z klawiatury i z myszy.
+- Pomiar czasu. Zliczanie FPS.
+- Wczytywanie z pliku i zapisywanie do pliku ustawieñ graficznych.
+
+
+Config.dat
+==========
+
+Wiêkszoœæ opcji nie by³a i nie jest opisana bo ich znaczenie i mo¿liwe wartoœci
+s¹ w miarê oczywiste.
+
+FlushMode = None, Event, Lock
+Sposób, w jaki aplikacja ma oczekiwaæ na zakoñczenie renderowania przed
+zaprezentowaniem klatki.
+None - brak oczekiwania. To jest wartoœæ domyœlna, najszybsza i zalecana o ile
+nie wystêpuj¹ ¿adne problemy. Jeœli wystêpuje zjawisko "rwania siê" animacji
+albo zjawisko nie-rysowania ca³ej geometrii tylko czêœci, nale¿y w³¹czyæ Event,
+a jeœli to nie pomo¿e, najbrutalniejsz¹ metodê, czyli Lock.
+
+
+LoopMode
+========
+
+Program mo¿e pracowaæ w dwóch trybach: "LoopMode" na true lub na false.
+
+- true oznacza, ¿e program ca³y czas pêtli siê na maxa wykonuj¹c kolejne klatki
+  animacji OnFrame
+- false oznacza, ¿e program nie wykonuje klatek, a jedynie czeka na komunikaty
+  do okna i reaguje na polecenie odrysowania Redraw - tylko kiedy zachodzi
+  potrzeba odrysowania okna wykonuje OnFrame
+
+Tryb ten mo¿na zmieniaæ w dowolnej chwili funkcj¹ SetLoopMode. Domyœlnie jest
+true.
+
+
+OnFrame
+=======
+
+Trzeba sobie samemu zrobiæ Clear, BeginScene i EndScene. Present jest robione
+przez framework. W OnFrame lepiej najpierw narysowaæ, potem zostawiæ rysowanie i
+policzyæ - wtedy dzia³a szybciej.
+
+UWAGA! Wywo³ywaæ Clear, BeginScene, EndScene i w ogóle rysowaæ wolno tylko
+po sprawdzeniu ¿e (frame::Dev && !frame::GetDeviceLost()).
+
+
+Czego nie ma
+============
+
+- Enumeracji trybów graficznych.
+Framework jest przezroczysty - daje dostêp do obiektów Direct3D i urz¹dzenia.
+Enumeracja adapterów czy trybów to sprawa tak prosta i tak indywidualna, ¿e
+nie ma sensu zamykaæ jej we frameworku.
+
+- DirectInput, obs³ugi joysticków i innych manipulatorów
+Obs³ugiwane jest tylko wejœcie z klawiatury i z myszy i wystarcza do tego
+(a nawet najlepsze jest do tego) zwyk³e Windows API.
+
+
+Zdarzenia
+=========
+
+Wywo³ania poszczególnych funkcji / callbacków uk³adaj¹ siê tak:
+
+OnCreate()
+  OnDeviceCreate()
+    OnDeviceRestore()
+	  OnFrame()
+	OnDeviceInvalidate()
+  OnDeviceDestroy()
+OnDestroy()
+
+Przy czym jeœli pewna inicjalizacja zakoñczy siê b³êdem:
+
+- ¯adne funkcje wewnêtrzne nie s¹ wywo³ywane.
+- Komplementarna funkcja finalizuj¹ca zostanie wywo³ana.
+
+Jak widaæ z poni¿szych scenariuszy, trudno okreœliæ jasn¹ zale¿noœæ w sekwencji
+wywo³añ zdarzeñ z pierwszej i z drugiej z tych grup:
+
+OnCreate - OnDestroy
+  Jednorazowo, inicjalizacja i finalizacja aplikacji.
+OnDeviceCreate - OnDeviceDestroy
+  Po utworzeniu i przed usuniêciem urz¹dzenia.
+OnDeviceRestore - OnDeviceInvalidate
+  Po utworzeniu lub zresetowaniu oraz przed zresetowaniem lub usuniêciem
+  urz¹dzenia.
+
+OnRestore - OnMinimize
+  Podczas przywracania oraz minimalizacji lub Alt+Tab itp. kiedy na pe³nym
+  ekranie.
+OnActivate - OnDeactivate
+  Podczas uzyskiwania oraz utraty aktywnoœci (ogniska) przez okno programu.
+OnResume - OnPause
+  Podczas odzyskiwania i utraty czasowej zdolnoœci do pêtlenia siê.
+
+Typowe scenariusze:
+
+- Uruchomienie aplikacji:
+    OnActivate - OnCreate - OnDeviceCreate - OnDeviceRestore
+- Wy³¹czenie aplikacji:
+    OnDeviceInvalidate - OnDeviceDestroy - OnDestroy - OnDeactivate
+- Prze³¹czenie siê na inne okno (program w oknie):
+    OnDeactivate
+  Powrót:
+    OnActivate
+- Skalowanie (program w oknie)
+  Pocz¹tek:
+    OnPause
+  Koniec:
+    OnDeviceInvalidate - OnDeviceRestore, OnResume
+- Przenoszenie
+  Pocz¹tek:
+    OnPause
+  Koniec:
+    OnResume
+- Wciœniêcie lewego Altu jako wejœcie do menu okna
+  Pierwsze naciœniêcie:
+    OnPause
+  Drugie naciœniêcie:
+    OnResume
+- Minimalizacja programu (program w oknie):
+  Minimalizacja:
+    OnMinimize - OnDeactivate
+  Przywrócenie:
+    OnActivate - OnRestore
+- Alt+Tab na pe³nym ekranie:
+  Wyjœcie:
+    OnDeviceInvalidate - OnDeactivate
+  Przywrócenie:
+    OnActivate - OnRestore - OnPause - OnDeviceRestore - OnResume
+- Maksymalizacja okna
+    OnPause - OnDeviceInvalidate - OnDeviceRestore - OnResume
+  Przywracanie okna ze zmaksymalizowanego:
+    OnPause - OnDeviceInvalidate - OnDeviceRestore - OnResume
+
+
+Uk³ad wspó³rzêdnych
+===================
+
+Framework okreœla tzw. uk³ad wspó³rzêdnych myszy. U¿ywa go do podawania
+wspó³rzêdnych kursora myszy. Udostêpnia te¿ macierz rzutowania ortogonalnego
+zbudowan¹ na jego bazie. Dziêki temu mo¿na u¿ywaæ go w ca³ym systemie GUI i
+ca³ej grafice 2D w aplikacji.
+
+Uk³ad okreœlaj¹ parametry podawane do funkcji Go:
+
+- MouseCoords : MOUSE_COORDS
+- MouseCoordsWidth, MouseCoordsHeight
+
+Dostêpne s¹ trzy tryby - MC_PIXELS, MC_FIXED_HEIGHT, MC_FIXED. Po szczegó³y
+patrz komentarze tego enuma we Framework.hpp.
+
+
+Wielow¹tkowoœæ
+==============
+
+Modu³ nie jest bezpieczny w¹tkowo. Nale¿y go u¿ywaæ tylko z jednego w¹tku.
+
+
+Wyj¹tki
+=======
+
+Modu³ zajmuje siê obs³ug¹ wyj¹tków. Wyj¹tki nigdy nie wylatuj¹ z funkcji g³ównej
+Go, za to mo¿na zg³aszaæ swoje w funkcjach callback wywo³ywanych przez framework
+i on je przechwyci i obs³u¿y.
+
+
+Ustawienia graficzne i konfiguracja
+===================================
+
+Framework wczytuje konfiguracjê g³ówn¹ programu z pliku "Config.xnl" i umieszcza
+w zmiennej globalnej g_Config z modu³u Config. S¹ tam ustawienia graficzne, ale
+mog¹ te¿ byæ dowolne dodatkowe ustawienia dla warstw ni¿szych aplikacji.
+
+Zmiany w konfiguracji mo¿na wprowadzaæ w czasie pracy programu i mo¿na j¹
+zapisaæ do pliku (np. w zdarzeniu OnDestroy) u¿ywaj¹c funkcji:
+
+- WriteSettingsToConfig - wpisuje bie¿¹ce ustawienia wyœwietlania
+  do konfiguracji
+- SaveConfig - zapisuje konfiguracjê do pliku
+
+Ustawienia mo¿na zmieniaæ w czasie pracy programu funkcj¹ ChangeSettings. Jest
+to tak naprawdê ¿¹danie zmiany trybu, ktore zostanie wykonane przed nastêpn¹
+klatk¹.
+
+U¿ytkownikowi mo¿na daæ do wyboru tryby, a te, które maj¹ pozostaæ niedostêpne
+do zmiany pozostan¹ po prostu z wartoœci¹ tak¹, jak¹ maj¹ zapisan¹ w pliku
+z ustawieniami.
+
+Plik jest w formacie modu³u Config opartym o jêzyk XNL2. Poszczególne klucze i
+ich wartoœci to:
+
+- BackBufferWidth : uint4
+- BackBufferHeight : uint4
+- RefreshRate : uint4
+- BackBufferFormat : D3DFORMAT
+  Dostêpne s¹ sta³e D3DFMT_ bez tego przedrostka, pisane z du¿ej litery, np.
+  "A8R8G8B8", a tak¿e liczby uint4.
+- BackBufferCount : uint4
+- MultiSampleType : D3DMULTISAMPLE_TYPE
+  Dostêpne s¹ sta³e D3DMULTISAMPLE_ bez tego przedrostka pisane z du¿ej litery,
+  np. "NONE", a tak¿e liczby typu uint4.
+- MultiSampleQuality : uint4
+- SwapEffect : D3DSWAPEFFECT
+  Dostêpne s¹ sta³e D3DSWAPEFFECT_ bez tego przedrostka pisane z du¿ej litery,
+  np. "DISCARD", a tak¿e liczby typu uint4.
+- FullScreen : bool
+- EnableAutoDepthStencil : bool
+- AutoDepthStencilFormat : D3DFORMAT
+  Patrz wy¿ej.
+- DiscardDepthStencil : bool
+- LockableBackBuffer : bool
+- PresentationInverval : uint4 {Presentation Interval}
+  Dostêpne s¹ sta³e D3DPRESENT_INTERVAL_ bez tego przedrostka z du¿ej litery,
+  np. "DEFAULT", a tak¿e liczby typu uint4.
+- Adapter : uint4 {Adapter}
+  Dostêpne s¹ liczby typu uint4, a tak¿e wartoœæ specjalna "DEFAULT".
+- DeviceType : D3DDEVTYPE
+  Dostêpne s¹ sta³e D3DDEVTYPE_ bez tego przedrostka z du¿ej litery, np. "HAL",
+  a tak¿e liczby typu uint4.
+- VertexProcessing : uint4 {Vertex Processing}
+  Dostêpne s¹ sta³e D3DCREATE_*_VERTEXPROCESSING bez tego przedrostka i
+  przyrostka z du¿ej litery, np. "HARDWARE", a tak¿e wartoœæ specjalna "AUTO"
+  oraz liczby typu uint4.
+

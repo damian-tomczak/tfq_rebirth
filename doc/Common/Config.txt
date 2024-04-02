@@ -1,0 +1,123 @@
+################################################################################
+  Kodowanie Windows-1250, koniec wiersza CR+LF, test: Za¿ó³æ gêœl¹ jaŸñ
+  Config - Obs³uga plików konfiguracyjnych
+  Copyleft (C) 2007 Adam Sawicki
+  Licencja: GNU LGPL
+  Kontakt: mailto:sawickiap@poczta.onet.pl , http://regedit.gamedev.pl/
+################################################################################
+
+
+Wstêp
+================================================================================
+
+Modu³ do wczytywania, odczytywania, przechowywania, zapsywania i ogólnie do
+zarz¹dzania konfiguracj¹. Obs³uguje hierarchiczne pliki konfiguracyjne o sk³adni
+wzorowanej na C/C++, np.:
+
+  Value1 = ValueData1
+  Value2 = "Value Data \"2\""
+  Value3 = -10.5 // Komentarz
+  TextValue = "Multiline
+  Text"
+  
+  List = { item1, item2, "item3" }
+  
+  /* komentarz... */
+  
+  SubConfig {
+    SubConfigValue = SubConfigValueData
+  }
+
+
+Konfiguracja
+================================================================================
+
+*Konfiguracja* to, w ogólnym znaczeniu, z³o¿ona struktura danych przechowuj¹ca
+ró¿nego rodzaju zorganizowane dane przeznaczone do konfigurowania programu,
+czyli zawieraj¹ce jakieœ ustawienia. Jest zwykle wczytywana przez program z
+pliku podczas uruchamiania. Pliki konfiguracyjne mog¹ byæ:
+
+- Tylko odczytywane
+  S¹ przez program tylko czytane, a edytowane przez u¿ytkownika.
+- Odczytywane i zapisywane
+  S¹ przez program zarówno zapisywane jak i odczytywane. Zwykle nie wymagaj¹
+  wtedy rêcznych zmian ze strony u¿ytkownika. Rêcznie wyedytowane, ulegaj¹
+  rozformatowaniu, a konkretnie podczas zapisywania konfiguracji:
+  > Kolejnoœæ elementów nie zostaje zachowana - s¹ sortowane alfabetycznie
+  > Komentarze nie zostaj¹ zachowane
+  > Wciêcia, puste wiersze i wszelkie formatowania nie zostaj¹ zachowane
+
+
+Sk³adnia
+================================================================================
+
+Format pliku konfiguracji oparty jest na module Tokenizer. Oznacza to, ¿e
+wystêpuj¹ w nim takie rodzaje tokenów, jak w C/C++, w szczególnoœci:
+
+- Komentarze // ... i /* ... */
+- Identyfikatory, np.: abc123
+- £añcuchy, np.: "abc 123"
+- Znaki, np.: 'A'
+- Liczby ca³kowite, np.: -123
+- Liczby zmiennoprzecinkowe, np.: 10.5
+- Symbole, np.: = { } :
+
+Koñce wiersza nie maj¹ znaczenia. Wielkoœæ liter ma znaczenie. Kolejnoœæ
+elementów nie ma znaczenia.
+
+Konfiguracja to hierarchia *elementów*. S¹ 3 rodzaje elementów:
+
+1. *Wartoœæ*
+Posiada *dane*, czyli ³añcuch znaków. Przeznaczona jest do przechowywania
+krótkiej, pojedynczej danej tekstowej, np. liczby. Zapisana mo¿e byæ jako
+identyfikator, znak, ³añcuch lub liczba. Przyk³ady:
+
+  Klucz1 = false
+  Klucz2 = "Ala ma kota"
+  Klucz3 = -123
+  Klucz4 = '\0'
+  Klucz5 = 2.0e-3
+
+2. *Lista*
+Sekwencja wartoœci. Trzeba je oddzielaæ przecinkami. Przyk³ad:
+
+  Klucz = { Dana1, "Dana2", 123 }
+
+3. *Konfiguracja*
+Mapa odwzorowuj¹ca *klucze* (te¿ ³añcuchy) na podelementy. Klucz musi byæ
+identyfikatorem. G³ówna konfiguracja, podobnie jak jej podkonfiguracje te¿ jest
+tego typu. Przyk³ad:
+
+  Klucz {
+    PodKlucz1 = PodWartosc1
+    podKlucz2 = "PodWartoœæ 2"
+    ...
+  }
+
+
+Kod
+================================================================================
+
+Te 3 rodzaje elementów odwzorowane s¹ bezpoœrednio na klasy dostêpne w module
+Config w przestrzeni nazw config. Swoje pola maj¹ upublicznione, dlatego
+umo¿liwiaj¹ bezpoœredni¹ manipulacjê na swoich danych, jeœli zachodzi taka
+potrzeba. Kiedy chcemy u¿ywaæ listy lub pobieraæ nazwy wszystkich podelementów
+konfiguracji, musimy to robiæ rêcznie. W przeciwnym wypadku mo¿emy u¿ywaæ
+wygodnych metod klasy Config, które umo¿liwiaj¹ typowe operacje zapisywania i
+odczytywania danych z elementu o podanej *œcie¿ce*. Œcie¿ka to ³añcuch
+zawieraj¹cy np.:
+
+	"Konfiguracja/PodKonfiguracja/PodPodKonfiguracja/Element"
+
+Przyk³ad typowego u¿ycia modu³u:
+
+  common::Config cfg;
+  cfg.LoadFromFile("Settings.cfg");
+
+  int Timeout;
+  cfg.MustGetDataEx("GeneralSettings/Timeout", &Timeout);
+
+Istnieje zmienna globalna g_Config do dyspozycji u¿ytkownika, która zapewnia
+miejsce do przechowywania g³ównej konfiguracji programu, aby ka¿dy mia³ do niej
+dostêp.
+

@@ -1,0 +1,86 @@
+################################################################################
+  Kodowanie Windows-1250, koniec wiersza CR+LF, test: Za¿ó³æ gêœl¹ jaŸñ
+  Profiler - Przyrz¹d do pomiarów czasu i wydajnoœci
+  Copyleft (C) 2007 Adam Sawicki
+  Licencja: GNU LGPL
+  Kontakt: mailto:sawickiap@poczta.onet.pl , http://regedit.gamedev.pl/
+################################################################################
+
+
+Wstêp
+================================================================================
+
+Profiler to prosta klasa do pomiaru czasu ró¿nych operacji, która u³atwia
+znajdowanie miejsc w kodzie powoduj¹cych najwiêksze opóŸnienia.
+
+Klasa Profiler to podstawowa klasa do pomiaru. Przechowuje hierarchiê obiektów
+klasy ProfilerItem. Mo¿na tworzyæ jej obiekt samemu lub skorzystaæ z domyœlnego 
+w zmiennej g_Profiler.
+
+
+Pomiar
+================================================================================
+
+Zbieranie statystyk opiera siê na wielokrotnym powtarzaniu pomiarów
+(automatycznie wyci¹gana jest œrednia) z u¿yciem jednej z tych metod:
+
+- Metod Begin i End klasy Profiler
+- Tworzenia obiektów klasy Profile
+- Wygodnego makra PROFILE_GUARD
+
+Przyk³ad:
+
+void Operacja1()
+{
+	Wait(11);
+}
+
+void Operacja2()
+{
+	{
+		PROFILE_GUARD("Pod-operacja 1");
+		Wait(23);
+	}
+	{
+		PROFILE_GUARD("Pod-operacja 2");
+		Wait(10);
+	}
+}
+
+void Test()
+{
+	for (uint i = 0; i < 10; i++)
+	{
+		{
+			PROFILE_GUARD("Operacja 1");
+			Operacja1();
+		}
+		{
+			PROFILE_GUARD("Operacja 2");
+			Operacja2();
+		}
+	}
+}
+
+
+Wyniki
+================================================================================
+
+Do wyników pomiaru mo¿na siê dostaæ za pomoc¹:
+
+- Bezpoœredni dostêp do drzewa obiektów klasy ProfilerItem, za pomoc¹ metody
+  Profiler::GetRootItem.
+- Pobranie ³añcucha z pe³nym wynikiem za pomoc¹ metody Profiler::FormatString.
+
+Przyk³ad:
+
+	string s;
+	common::g_Profiler.FormatString(&s);
+	std::cout << s << std::endl;
+
+Dla powy¿szego kodu wynik wygl¹da tak:
+
+Operacja 1 : 14.92 ms (10)
+Operacja 2 : 46.8442 ms (10)
+  Pod-operacja 1 : 31.2242 ms (10)
+  Pod-operacja 2 : 15.4256 ms (10)

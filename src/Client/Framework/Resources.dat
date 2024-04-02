@@ -1,0 +1,9 @@
+d3dxeffect "PlainColor2d" LOCK "Framework\\Shaders\\PlainColor2d.fxo";
+d3dxeffect "SpriteEffect01" LOCK "Framework\\Shaders\\SpriteEffect01.fxo";
+
+font "Font02" LOCK
+	"Framework\\Fonts\\Arial_b.fnt",
+	"Framework\\Fonts\\Arial_b_00.png";
+d3dxeffect "FontEffect" LOCK "Framework\\Shaders\\FontEffect.fxo";
+
+texture "GuiSprites" LOCK "Framework\\Textures\\GuiSprites.png";

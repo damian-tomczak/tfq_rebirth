@@ -1,0 +1,246 @@
+################################################################################
+    Gfx 2D
+################################################################################
+
+
+Modu³ do rysowania grafiki 3D - prostok¹tów i tekstu. G³ównie do rysowania GUI.
+U¿ywa i w³¹cza: "ResMngr.hpp", "Res_d3d.hpp". Wszystko zgromadzone jest
+w przestrzeni nazw gfx2d.
+
+
+Canvas
+================================================================================
+
+G³ównym obiektem jest singleton Canvas. Za jego pomoc¹ rysuje siê to wszystko.
+Trzeba go powiadamiaæ o zdarzeniach urz¹dzenia - OnDeviceCreate,
+OnDeviceDestroy, OnDeviceRestore, OnDeviceInvalidate.
+
+Rysowanie jest wygodne. Polega na swobodnym przestawianiu opcji takich jak:
+SetColor (do obydwu - spritów i tekstu), SetSprite (do spritów), SetFont
+(do tekstu).
+
+Funkcja DrawRect rysuje prostok¹t (sprita). Funkcja DrawText rysuje tekst.
+Mo¿na te¿ rysowaæ prostok¹ty wype³nione jednolitym kolorem. W tym celu ustawiamy
+SetSprite na 0 i rysujemy DrawRect.
+
+Ponadto do ustawiania s¹ w postaci stosu (operacje Push i Pop): Translation
+(przesuniêcie pocz¹tku uk³adu - 0,0), ClipRect (prostok¹t obcinaj¹cy - wzglêdem
+bie¿¹cego pocz¹tku uk³adu) i Alpha (przezroczystoœæ). W kolorze nie dzia³a
+sk³adowa Alpha - przezroczystoœæ trzeba robiæ za pomoc¹ PushAlpha/PopAlpha.
+
+Mo¿na swobodnie wywo³ywaæ funkcje rysuj¹ce i przestawiaæ stany canvasa nie
+martwi¹c siê o to jak on u¿ywa D3D. Jedynie na koñcu (kiedy koñczymy klatkê lub
+zamierzamy rysowaæ coœ innego, samemu) trzeba nie zapomnieæ wywo³aæ Flush.
+
+Canvas do rysowania wymaga ustawionego (sam sobie nie ustawi): Lighting=false,
+Zenable=false, AlphaBlendEnable, SrcBlend, DestBlend i macierzy (g³ównie macierz
+rzutowania - pobieramy j¹ z frame::GetMouseCoordsProjection).
+
+Po dostosowaniu Canvas do u¿ycia nowego font managera res::Font w wersji 1.1
+modu³u Gfx2d, podczas rysowania tekstu dzia³a ju¿ wszystko - translacja, kana³
+alfa oraz nawet prostok¹t obcinaj¹cy.
+
+
+Sprite
+================================================================================
+
+Sprite to obiekt klasy Sprite. Jest czymœ wiêcej ni¿ parametrami podawanymi do
+konkretnego rysowania prostok¹ta, ale czymœ mniej ni¿ zasobem. S¹ pamiêtane w
+singletonie SpriteRepository, który dzia³a podobnie jak manager zasobów dla
+zasobów. Definicje spritów mo¿na wczytywaæ hurtem z pliku tekstowego XNL2,
+pojedynczo z ³añcucha XNL2 lub tworzyæ ca³kowicie z kodu. Mo¿na je tworzyæ i
+usuwaæ dynamicznie w czasie pracy.
+
+Sprite ³¹czy zasoby tekstury, efektu oraz przechowuje dodatkowe informacje na
+temat fragmentów tej tekstury, które maj¹ byæ u¿ywane do rysowania prostok¹tów
+2D. Jego czas ¿ycia musi byæ pozbiorem czasu ¿ycia tych dwóch zasobów.
+
+Po co spritowi efekt? Sprawa nie jest jednoznaczna, ale jednak siê przyda, bo
+sprity mog¹ siê ró¿niæ, np. ustawieniami samplera (clamp, filtrowanie liniowe
+lub punktowe), w³¹czonym alfa-testem itp.
+
+Modu³ Gfx2D umo¿liwia rysowanie fragmentów tekstury sprita jako prostok¹tów
+na ekranie. W tym celu przechowuje definicje elementów na tej teksturze, wyra¿on¹
+w pikselach (a wiêc uzale¿nion¹ od rozmiaru tej tektsury):
+
+1. Elementy proste
+   - Sprite mo¿e byæ albo w trybie, w którym elementy proste s¹ macierz¹.
+     Wówczas definiuje siê iloœæ kolumn, szerokoœæ i wysokoœæ pojedynczego
+     elementu oraz dodatkowe odstêpy.
+   - Albo w trybie w³asnym prostok¹tów, w którym ka¿dy prosty element jest
+     opisany rêcznie przez wspó³rzêdne prostok¹ta ne teksturze.
+2. Elementy z³o¿one
+   £¹cz¹ elementy proste w wiêksz¹ ca³oœæ umo¿liwiaj¹c rysowanie rozci¹gaj¹cych
+   siê lub rozk³adanych s¹siaduj¹co (powtarzaj¹cych siê) wzorów wraz z ramkami
+   po wybranych bokach czy dooko³a.
+
+Elementy s¹ indeksowane jak tablica, wiêc nale¿y u¿ywaæ niskich indeksów,
+najlepiej kolejnych (0, 1, 2 itd...). Indeks specjalny INDEX_ALL oznacza ca³oœæ
+tekstury sprita. Indeks INDEX_NONE oznacza nie rysowanie niczego. Indeksy
+elementów z³o¿onych budujemy u¿ywaj¹c na indeksie funkcji ComplexElement.
+Indeksy elementów prostych wpisujemy po prostu.
+
+Sk³adnia definicji sprita
+-------------------------
+
+W jêzyku parsowanym przez Tokenizer z z CommonLib
+
+  <nazwa> { <parametry> }
+
+nazwa (string) - nazwa sprita
+
+parametry:
+
+  effect <nazwa>
+  texture <nazwa>
+  [elementy-proste]
+  [elementy-z³o¿one]
+
+elementy-proste:
+
+  matrix {
+    <col-count>
+    <element-width> <element-height>
+    [ <space-x> <space-y>
+    [ <start-x> <start-y> ] ]
+  }
+
+  lub:
+
+  rects {
+    <index> <prostok¹t>
+    <index> <prostok¹t>
+    ...
+  }
+
+prostok¹t:
+
+  { left=<left> top=<top> right=<right> bottom=<bottom> }
+
+  lub
+
+  { left=<left> top=<top> width=<right> height=<bottom> }
+
+elementy-z³o¿one:
+
+  complex {
+    <index> <element-z³o¿ony>
+    <index> <element-z³o¿ony>
+    ...
+  }
+
+element-z³o¿ony:
+
+  {
+    center = <index> <szerokoœæ> <wysokoœæ> [flagi]
+    [ left = <index> <szerokoœæ> <wysokoœæ> [flagi] ]
+    [ right = <index> <szerokoœæ> <wysokoœæ> [flagi] ]
+    [ top = <index> <szerokoœæ> <wysokoœæ> [flagi] ]
+    [ bottom = <index> <szerokoœæ> <wysokoœæ> [flagi] ]
+    [ left_top = <index> [flagi] ]
+    [ right_top = <index> [flagi] ]
+    [ left_bottom = <index> [flagi] ]
+    [ right_bottom = <index> [flagi] ]
+  }
+
+szerokoœæ, wysokoœæ:
+
+  <float>
+
+  lub:
+
+  <float> %
+
+flagi (identyfikatory):
+
+  ( CW | CCW | UD ) [H] [V]
+
+
+Przyk³ady
+---------
+
+Prosty sprite do rysowania wy³¹cznie jako ca³oœæ z u¿yciem indeksu INDEX_ALL.
+
+  "Sprite01" {
+    effect "SpriteEffect01.fxo"
+    texture "SpriteTexture01.png"
+  }
+
+Sprite do rysowania przycisku, w którym w³asne prostok¹ty opisuj¹ trzy obszary
+przedstawiaj¹ce kolejno: lewy brzeg, œrodek i prawy brzeg przycisku. Na wysokoœæ
+ca³oœæ siê rozci¹ga, na szerokoœæ œrodek siê rozci¹ga, a brzegi maj¹ sta³¹
+szerokoœæ.
+
+  "Sprite03" {
+    effect "SpriteEffect01.fxo"
+    texture "SpriteTexture04.png"
+    rects {
+      0 { left=0, top=0, right=3, bottom=21 }
+      1 { left=3, top=0, right=26, bottom=21 }
+      2 { left=26, top=0, right=29, bottom=21 }
+    }
+    complex {
+      0 {
+        center = 1 100% 100%
+        left = 0 3 100%
+        right = 2 3 100%
+      }
+    }
+  }
+
+Sprite, na którym w macierzy 4x4, w jej lewym górnym obszarze 3x3 s¹ wyrysowane
+odpowiednio rogi, boki i œrodek rameczki, która ma siê automatycznie powtarzaæ
+(domyœlnie) lub rozci¹gaæ bêd¹c powtórzon¹ zawsze 2 razy (fragment
+zakomentowany) podczas rysowania jako jeden prostok¹t.
+
+  "Sprite02" {
+    effect "SpriteEffect01.fxo"
+    texture "SpriteTexture03.png"
+    matrix { 4, 8, 8, 0, 0, 0, 0 }
+    complex {
+      0 {
+        center = 5 32 32
+        left = 4 32 32
+        right = 6 32 32
+        top = 1 32 32
+        bottom = 9 32 32
+  {/      center = 5 50% 50%
+        left = 4 25% 50%
+        right = 6 25% 50%
+        top = 1 50% 25%
+        bottom = 9 50% 25% /}
+        left_top = 0
+        right_top = 2
+        left_bottom = 8
+        right_bottom = 10
+      }
+    }
+  }
+
+
+Techniczne
+================================================================================
+
+Quad sprita jest rysowany tak:
+
+  0-------1
+  |     / |
+  |   /   |       0-1-2, 2-1-3
+  | /     |
+  2-------3
+
+Przy rysowaniu tak spritów jak i tekstu u¿ywany bêdzie zawsze format wierzcho³ka:
+- D3DFVF_XYZ
+  z = 1.0f
+  Pozycja w jednoskach uk³adu 2D frameworka
+- D3DFVF_DIFFUSE
+  Alfa-blending zawsze w³¹czony
+  Kana³ alfa u¿ywany do rekurencyjnej przezroczystoœci
+  Kolor u¿ywany lub nie przy blendingu w efekcie
+- D3DFVD_TEX1
+  Wspó³rzêdne tekstury, u¿ywane lub nie przy blendingu w efekcie
+Efekt musi mieæ parametry:
+- Texture : texture
+
+Musi te¿ istnieæ efekt o nazwie "PlainColor2d.fxo" (bezparametrowy).
+

@@ -1,0 +1,319 @@
+Sk³adnia wiersza poleceñ
+================================================================================
+
+Tools <operacja> <zadanie> <zadanie> <opcja> <opcja> ...
+
+- Jest jeden rodzaj operacji na raz.
+- Dopuszczalne zadania i opcje s¹ zale¿ne od wybranej operacji.
+- Opcje mog¹ byæ dowolnie wymieszane, ich pozycja nie ma znaczenia.
+- Zadania s¹ wykonywane po kolei tak jak podane.
+
+
+OPERACJA /Mesh
+--------------------------------------------------------------------------------
+
+Operacje na siatce w formacie QMSH.
+
+- Pierwszym zadaniem musi byæ wczytanie lub wygenerowanie siatki (obecnie
+  dostêpne tylko /i).
+
+
+Dostêpne zadania:
+-----------------
+
+/i=<NazwaPliku>
+Wczytanie pliku ("i" jak Input).
+Format rozpoznawany jest po rozszerzeniu. Wspierane formaty:
+> .qmsh - g³ówny format modeli
+> .qmsh.tmp - format poœredni eksportu z Blendera
+
+/o=<NazwaPliku>
+Zapisanie pliku ("o" jak Output).
+Format rozpoznawany jest po rozszerzeniu. Wspierane formaty:
+> .qmsh - format natywny QMSH
+
+/I
+Informacje o bie¿¹cej siatce. "i" jak Informacje.
+
+/v
+Szczegó³owe informacje o bie¿acej siatce (³¹cznie z list¹ obiektów itd.) "v" jak
+Verbose.
+
+/Mend
+Uruchamia NvMeshMender ponownie wyliczaj¹c tangent i binormal (o ile podane
+/Tangents) oraz normalne (o ile nie podane /NoCalcNormals). Na dzia³anie tego
+polecenia wp³ywaj¹ opcje: /Tangents /MaxSmoothAngle /NoCalcNormals
+/RespectExistingSplits /FixCylindricalWrapping.
+
+/Translate=X,Y,Z
+"/Translate=X,Y,Z|Object:Nazwa"
+Translacja pozycji wierzcho³ków - wszystkich lub podanego obiektu.
+Przekszta³cenie zostaje wprowadzone tylko dla pierwszego obiektu o tej nazwie.
+Przekszta³cenia wprowadza te¿ do normalnych, tangentów i koœci, ale do koœci
+tylko jeœli przekszta³cenie dotyczy ca³ego obiektu. Niestety mimo tego czasami
+po transformacji animacja siê krzaczy - nie wiem dlaczego.
+Przyk³ad: "/Translate=2.5,0,0|Object:Cube"
+
+/RotateYawPitchRoll=Yaw,Pitch,Roll
+"/RotateYawPitchRoll=Yaw,Pitch,Roll|Object:Nazwa"
+Obrót wierzcho³ków o podane k¹ty Eulera. Uwagi jak dla /Translate.
+
+/RotateQuaternion=x,y,z,w
+"/RotateQuaternion=x,y,z,w|Object:Nazwa"
+Obrót wierzcho³ków o podany kwaternion. Uwagi jak dla /Translate.
+
+/RotateAxisAngle=x,y,z;a
+"/RotateAxisAngle=x,y,z;a|Object:Nazwa"
+Obrót o podany k¹t a wokó³ osi podanej przez wektor x,y,z. Uwagi jak dla
+/Translate.
+
+/Scale=v
+/Scale=x,y,z
+"/Scale=v|Object:Nazwa"
+"/Scale=x,y,z|Object:Nazwa"
+Skalowanie pozycij wierzcho³ków. Uwagi jak dla /Translate.
+
+/Transform=a11,a12,a13,a14;a21,a22,a23,a24;a31,a32,a33,a34;a41,a42,a43,a44
+"/Transform=a11,a12,a13,a14;a21,a22,a23,a24;a31,a32,a33,a34;a41,a42,a43,a44|Object:Nazwa"
+Dowolna transformacja pozycji wierzcho³ków przez podan¹ macierz. Uwagi jak dla
+/Translate. Macierz mo¿e zawieraæ wszystko, ³¹cznie z translacj¹ i nawet
+rzutowaniem.
+
+/CenterOnAverage
+/CenterOnMedian
+"/CenterOnAverage|Object:Nazwa"
+"/CenterOnMedian|Object:Nazwa"
+Translacja wierzcho³ków celem wycentrowania na œredniej arytmetycznej lub
+medianie z ich pozycji. Uwagi jak dla /Translate. Ewentualna œrednia, mediana
+czy centrowanie liczone s¹ zawsze na podstawie granic ca³ego modelu, nie
+podanego obiektu.
+
+/TransformToBox=p1x,p1y,p1z;p2x,p2y,p2z
+/TransformToBoxProportional=p1x,p1y,p1z;p2x,p2y,p2z
+"/TransformToBox=p1x,p1y,p1z;p2x,p2y,p2z|Object:Nazwa"
+"/TransformToBoxProportional=p1x,p1y,p1z;p2x,p2y,p2z|Object:Nazwa"
+Translacja oraz skalowanie wierzcho³ków tak, aby ca³y model zmieœci³ siê w
+podanym prostopad³oœcianie AABB. Uwagi jak dla /Translate. Ewentualna œrednia,
+mediana czy centrowanie liczone s¹ zawsze na podstawie granic ca³ego modelu, nie
+podanego obiektu.
+
+/TranslateTex=X,Y
+"/TranslateTex=X,Y|Object:Nazwa"
+Translacja wspó³rzêdnych tekstury - wszystkich wierzcho³ków lub tylko
+wierzcho³ków podanego obiektu. Przekszta³cenie zostaje wprowadzone tylko dla
+pierwszego obiektu o podanej nazwie.
+
+/ScaleTex=S
+/ScaleTex=X,Y
+"/ScaleTex=S|Object:Nazwa"
+"/ScaleTex=X,Y|Object:Nazwa"
+Skalowanie wspó³rzêdnych tekstury. Uwagi jak dla /TranslateTex.
+
+/TransformTex=a11,a12,a13,a14;a21,a22,a23,a24;a31,a32,a33,a34;a41,a42,a43,a44
+"/TransformTex=a11,a12,a13,a14;a21,a22,a23,a24;a31,a32,a33,a34;a41,a42,a43,a44|Object:Nazwa"
+Transformacja wspó³rzêdnych tekstury przez dowoln¹ macierz 4x4. Uwagi jak dla
+/TranslateTex. Macierz mo¿e zawieraæ wszystko, ³¹cznie z translacj¹ i nawet
+rzutowaniem.
+
+/NormalizeNormals
+Normalizacja normalnych i jeœli s¹ to tak¿e tangent i binormal.
+
+/ZeroNormals
+Zerowanie normalnych i jeœli s¹ to tak¿e tangent i binormal.
+
+/DeleteTangents
+Jeœli s¹, to usuwa z modelu tangent i binormal.
+
+/DeleteSkinning
+Usuwa z modelu wszelkie informacje o koœciach i animacjach.
+
+/DeleteObject=Nazwa
+Usuwa obiekt o podanej nazwie.
+
+/RenameObject=Nazwa1:Nazwa2
+Zmienia nazwê obiektu.
+
+/RenameMaterial=Nazwa1:Nazwa2
+Zmienia nazwê materia³u (wszystkie wyst¹pienia).
+
+/SetMaterial=NazwaObiektu:NowaNazwaMateria³u
+Zmienia nazwê materia³u dla podanego obiektu.
+
+/SetAllMaterials=NowaNazwaMateria³u
+Zmienia nazwê materia³ów wszystkich obiektów na podan¹.
+
+/RenameBone=Nazwa1:Nazwa2
+Zmienia nazwê koœci.
+
+/RenameAnimation=Nazwa1:Nazwa2
+Zmienia nazwê animacji.
+
+/DeleteAnimation=Nazwa
+Usuwa podan¹ animacjê.
+
+/DeleteAllAnimations
+Usuwa wszystkie animacje. Koœci zostaj¹.
+
+/ScaleTime=x
+"/ScaleTime=x|Animation:Nazwa"
+Skaluje czas podanej animacji lub wszystkich animacji.
+
+/OptimizeAnimations
+Optymalizuje wszystkie animacje - usuwa te klatki kluczowe, które nic nie wnosz¹
+bo le¿¹ dok³adnie na interpolacji miêdzy s¹siednimi.
+
+/RecalcBoundings
+Ponownie przelicza bry³y otaczaj¹ce model. Nie nale¿y tego u¿ywaæ - one i tak
+licz¹ siê same.
+
+/FlipNormals
+Zmienia zwrot wektorów normalnych. Stosowaæ np. po skalowaniu ujemnym
+(odbijaniu).
+
+/FlipFaces
+Zmienia kolejnoœæ wierzcho³ków w trójk¹tach - odwraca ich stronê na drug¹.
+Stosowaæ np. po skalowaniu ujemnym (odbijaniu).
+
+/RemoveAnimationMovement
+Specjalny algorytm sprowadzaj¹cy animacje modelu z takiej która przesuwa obiekt
+do takiej, w której obiekt tylko przebiera koñczynami w miejscu. Robi to
+modyfikuj¹c translacjê dla koœci g³ównego poziomu.
+
+/Validate
+Wszechstronne sprawdzenie siatki i pokazanie raportu z ostrze¿eniami i b³êdami
+co jest w niej Ÿle.
+
+/NormalizeQuaternions
+Normalizuje kwaterniony obrotu w klatkach kluczowych wszystkich animacji.
+
+
+Dodatkowe opcje:
+----------------
+
+/MaxSmoothAngle=<K¹t_w_stopniach>
+Maksymalny k¹t przy którym ma nastêpowaæ wyg³adzanie, kiedy odpalany jest
+NVMeshMender. Nie dotyczy odpalania go w ramach konwersji z formatu QMSH TMP -
+wtedy brane jest pod uwagê ustawienie k¹ta AutoSmooth z wyeksportowanej
+siatki.
+
+/NoCalcNormals
+Czy uruchamiany NVMeshMender ma wyliczyæ od nowa normalne, a nie tylko tangent i
+binormal. Nie dotyczy odpalania go w ramach konwersji z formatu QMSH TMP - wtedy
+normalne musz¹ zostaæ wyliczone, bo nie ma ich pocz¹tkowo wcale.
+Domyœlnie: true
+
+/RespectExistingSplits
+Ustawienie podczas uruchamiania NVMeshMender - czy respektowaæ to ¿e dwa
+wierzcho³ki le¿¹ce w jednym miejscu pozostan¹ dwoma osobnymi wierzcho³kami nawet
+jeœli wg kryteriów wyg³adzania mog³yby staæ siê jednym.
+Domyœlnie: false
+
+/FixCylindricalWrapping
+Ustawienie podczas uruchamiania NVMeshMender.
+Domyœlnie: false
+UWAGA: Jeœli NvMeshMender wysypuje program lub daje w wyniku b³êdne normalne
+lub tangenty, spróbuj nie podaæ dej opcji - powinno pomóc.
+
+/Tangents
+Czy wyliczaæ wektory Tangent i Binormal podczas uruchamiania NVMeshMender.
+Tak¿e, czy wyjœciowa siatka ma mieæ Tangent i Binormal.
+Domyœlnie: false
+
+
+OPERACJA /Map
+--------------------------------------------------------------------------------
+
+Operacje na mapie w formacie QMAP.
+
+- Pierwszym zadaniem musi byæ wczytanie lub wygenerowanie mapy (obecnie dostêpne
+tylko /i).
+
+Dostêpne zadania:
+
+- /i=<NazwaPliku>
+  Jak Input.
+  Wczytanie pliku.
+  Format rozpoznawany jest po rozszerzeniu. Wspierane formaty:
+  > .qmap.tmp - format poœredni eksportu z Blendera
+- /o=<NazwaPliku>
+  Jak Output.
+  Zapisanie pliku.
+  Format rozpoznawany jest po rozszerzeniu. Wspierane formaty:
+  > .qmap - format natywny QMAP
+- /I
+  Jak Info.
+  Informacje o bie¿¹cej mapie.
+- /v
+  Jak Verbose.
+  Szczegó³owe informacje o bie¿acej mapie.
+
+Dodatkowe opcje:
+
+- /d=<NazwaPliku>
+  Plik .qmap.desc zawieraj¹cy opis dodatkowych danych dla mapy
+  Domyœlnie: Brak, bez niego materia³y nazywaj¹ siê tak jak w pliku wejœciowym
+- /Bounds=x1,y1,z1;x2,y2,z2
+  Rêcznie podane granice stanowi¹ce podstawê podzia³u przestrzeni na swobodne
+  drzewo ósemkowe Octree.
+  Domyœlnie: Wyliczane automatycznie na podstawie geometrii.
+- /K=<Liczba>
+  Liczba (0..1) to rozszerzenie dla wêz³ów swobodnego drzewa ósemkowego.
+  0 oznacza zwyczajne drzewo ósemkowe. 1 to ju¿ stanowczo za du¿o.
+  Domyœlnie: 0.25
+- MaxOctreeDepth=<Liczba>
+  Maksymalna g³êbokoœæ drzewa.
+  Domyœlnie: 9
+
+
+OPERACJA /Texture
+--------------------------------------------------------------------------------
+
+Operacje na teksturach 2D w dowolnym formacie graficznym i dowolnej
+rozdzielczoœci (niekoniecznie potêga dwójki).
+
+- Pierwszym zadaniem musi byæ wczytanie lub wygenerowanie tekstury.
+
+Dostêpne zadania:
+
+- /i=<NazwaPliku>
+  Jak Input.
+  Wczytanie pliku tekstury.
+  Format rozpoznawany jest po rozszerzeniu. Wspierane formaty takie jak D3DX:
+  BMP, JPEG, TGA, PNG, DDS, PPM, DIB, HDR, PDM
+- /o=<NazwaPliku>
+  Jak Output.
+  Zapisanie pliku tekstury.
+  Format rozpoznawany jest po rozszerzeniu. Wspierane formaty takie jak w /i.
+- /I
+  Jak Info.
+  Informacje o bie¿¹cej teksturze.
+- /v
+  Jak Verbose.
+  Szczegó³owe informacje o bie¿acej teksturze.
+- /Swizzle=XXXX
+  Mieszanie kana³ów tekstury. Kolejne z 4 znaków oznaczaj¹ kana³y docelowe: A,
+  R, G, B. Ka¿dy z nich ma znak odpowiadaj¹cy wartoœci która ma do niego trafiæ:
+  > 0 - wartoœæ 0
+  > 1 - wartoœæ 255
+  > R - wartoœæ kana³u R
+  > G - wartoœæ kana³u G
+  > B - wartoœæ kana³u B
+- /SharpenAlpha=BackgroundColor
+  Zaawansowany filtr zmieniajacy obrazek z kana³em alfa na taki, który nada siê
+  do stosowania Alpha-Testing. Obrazek wejœciowy mo¿e posiadaæ p³ynne granice
+  przezroczystoœci. Obrazek wyjœciowy posiada w kanale alfa zawsze 0 lub 255.
+  AlphaThreshold to wartoœæ alfa, pocz¹wszy od której piksel jest uznawany jako
+  nieprzezroczysty. BackgroundColor to kolor t³a, jakie mia³ obrazek przed jego
+  wyciêciem. Polecenie wykorzystuje ten kolor, by przefiltrowaæ pó³przezroczyste
+  krawêdzie i w ten sposób pozbyæ siê brzydkiego "halo" na granicach.
+- /ClampTransparent
+  Wype³nia kolory pikseli przezroczystych kolorem najbli¿szego
+  nieprzezroczystego piksela w poziomie lub w pionie, co zapobiega
+  "przeciekaniu" kolorów pikseli przezroczystych np. przy mipmappingu.
+
+Dodatkowe opcje:
+
+- /AlphaThreshold=x
+  X = 1..255, granica wartoœci kana³u alfa, pocz¹wszy od której piksel uznawany
+  jest jako nieprzezroczysty we wszystkich poleceniach wymagaj¹cych jasno
+  okreœlonej granicy przezroczystoœci.

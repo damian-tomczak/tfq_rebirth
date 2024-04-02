@@ -1,0 +1,33 @@
+{
+	Background {
+		0.0 0x282B24 0x060606, // noc - czarno
+		0.3 0x282B24 0x060606, // noc - czarno
+		0.4 0xB8454A 0x5783C2, // rano - wschód s³oñca
+		0.5 0x7f91a7 0x99CCF9, // po³udnie - jasno
+		0.8 0xD0D3FE 0x101F5A, // popo³udnie - b³êkit
+		0.9 0xED712B 0x001C43  // wieczór - zachód s³oñca
+	}
+	
+	Sun {
+		"Sky_Sun"
+		0.093589790479692
+		1
+		-2.095816 // Jedna godzina to 0.261799
+		0, -0.2, 1
+		HorizonColor=0x80FFFFFF ZenithColor=0xFFFFFFFF
+	}
+	
+	Clouds {
+		ScaleInv = 1
+		Threshold = 0.7
+		Sharpness = 5
+		Colors {
+			0.0 0xFFFFFFFF 0xFFFFFFFF, // noc
+			0.3 0xFFFFFFFF 0xFFFFFFFF, // noc
+			0.4 0xFFC1745A 0xFFFCFAA3, // rano
+			0.5 0xFF000080 0xFFFFFFFF, // po³udnie
+			0.8 0xFF000080 0xFFFFFFFF, // popo³udnie
+			0.9 0xFFEDC592 0xFFB39573 // wieczór
+		}
+	}
+}

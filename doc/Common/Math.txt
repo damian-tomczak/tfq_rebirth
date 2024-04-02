@@ -1,0 +1,300 @@
+################################################################################
+  Kodowanie Windows-1250, koniec wiersza CR+LF, test: Za¿ó³æ gêœl¹ jaŸñ
+  Math - Modu³ matematyczny
+  Copyleft (C) 2007 Adam Sawicki
+  Licencja: GNU LGPL
+  Kontakt: mailto:sawickiap@poczta.onet.pl , http://regedit.gamedev.pl/
+################################################################################
+
+
+Wstêp
+================================================================================
+
+To jest zaanwasowana biblioteka matematyczna. Definiuje typu takie jak wektor
+czy macierz. Elementy matematyczne nie wymagaj¹ce tych typów, a jedynie
+operuj¹ce na zwyk³ych liczbach, znajdziesz w module Base. Math to najwiêkszy z
+modu³ów CommonLib. Zawarte w nim elementy przeznaczone s¹ g³ównie do
+programowania gier. Math dubluje wiêkszoœæ funkcjonalnoœci biblioteki D3DX z
+DirectX w zakresie matematyki, a tak¿e implementuje du¿o innych funkcji wy¿szego
+poziomu, jak kolizje miêdzy ró¿nymi obiektami geometrycznymi.
+
+
+Za³o¿enia
+================================================================================
+
+- Przenoœna.
+
+- Wszystko ma w³asne, niezale¿na, korzystaj¹ca tylko z Base.
+
+- Nie u¿ywa wyj¹tków modu³u Error.
+
+- Mo¿liwoœci:
+Nie wszystko to co ma D3DX, ale du¿a czêœæ z tego. Wszystko, co czêsto u¿ywane,
+wa¿ne i potrzebne. Dodatkowo zaawansowane obliczenia typu kolizje miêdzy ró¿nego
+rodzaju obiektami.
+
+- Nastawiona bardziej nia wspó³pracê z DirectX ni¿ OpenGL - uk³ad wspó³rzêdnych
+lewoskrêtny, macierze w porz¹dku wierszowym, kolory w formacie A8R8G8B8 itp.
+
+- W razie zdefiniowania USE_DIRECTX oferuje wygodn¹ i szybk¹ (0 narzutu)
+konwersjê miêdzy typami matematycznymi w³asnymi a D3DX, poniewa¿ wystêpuje
+zgodnoœæ bitowa.
+
+- Funkcji generuj¹cych czy przeliczaj¹cych ró¿ne rzeczy nie s¹ zdefiniowane
+wewn¹trz klas jako metody statyczne ani tym bardziej jako zwyk³e (typu
+obiekt1.ZróbCoœ(obiekt2)), tylko jako zwyk³e funkcje globalne, czêsto
+przeci¹¿one.
+
+- W funkcjach generuj¹cych czy licz¹cych coœ wszelkie struktury bardziej z³o¿one
+ni¿ pojedyncza liczba zwracane s¹ przez pierwszy parametr wskaŸnikowy, a nie
+przez zwrócenie wartoœci.
+
+- Ka¿dy kolor reprezentowany jest przez sk³adowe ARGB, kana³ alfa jest tak samo
+wa¿ny i nie jest nigdzie pomijany ani domyœlnie inicjalizowany. Domyœlny format
+koloru to A8R8G8B8 (kompatybilny z uint4).
+
+- DECYZJA: Jak zrobiæ operacje, np.:
+1. dot3(v1, v2)
+2. VEC3::dot(v1, v2)
+3. v1.dot3(v2)
+DECYZJA: 1
+BO:
+> Ta opcja jest najkrótsza
+> Zapis 3 jest brzydki i nienaturalny, bo niesymetrynczy
+> Zapis 2 jest d³u¿szy i niczego nie polepsza, bo nawet kiedy bêdzie konflikt
+  w przestrzeni globalnej to funkcja siê prze³aduje albo siê j¹ inaczej nazwie.
+
+- DECYZJA: Jak zrobiæ inicjalizacjê struktur, np.:
+1. PLANE plane1(v1, v2, v3);
+2. PLANE plane1; CreatePlane(&plane1, v1, v2, v3);
+3. PLANE plane1; plane1.Fill(v1, v2, v3);
+DECYZJA: 2, konstruktor tylko do bezpoœredniej inicjalizacji pól bez konwersji.
+BO:
+> Opcja 1 sama nie wystarczy, czasem chce siê zmieniæ, wtedy trzebaby dodaæ
+  2 lub 3.
+> Jest zgodna z konwencj¹ funkcji wype³niaj¹cych, konwertuj¹cych itp.
+  Rozró¿nienie miêdzy inicjalizacj¹ a konwersj¹ jest p³ynne.
+
+- Nie ma kolizji odcinka z obiektami.
+Dlaczego? Bo mo¿na skorzystaæ z kolizji promienia i sprawdziæ czy otrzymane t
+nie przekracza d³ugoœci odcinka (0..1 czy te¿ 0..D³ugoœæ).
+
+
+Sk³adniki
+================================================================================
+
+Modu³ definiuje nastêpuj¹ce obiekty geometryczne jako struktury:
+
+- POINT_ - punkt 2D (int)
+- RECTI - prostok¹t 2D (int)
+- RECTF - prostok¹t 2D (float)
+- LINE2D - prosta 2D (float)
+- VEC2 - wektor/punkt 2D (float)
+- VEC3 - wektor/punkt 3D (float)
+- VEC4 - wektor/punkt 4D (float)
+- MATRIX - macierz 4x4 (float)
+- PLANE - p³aszczyzna 3D (float)
+- BOX - prostopad³oœcian 3D (float)
+- COLOR - kolor (4 x uint1)
+- COLORF - kolor (4 x float)
+- QUATERNION - kwaternion (float)
+
+Wspierane s¹ te¿ nastêpuj¹ce rodzaje obiektów nie maj¹ce swoich struktur:
+
+- Trójk¹t
+  U¿ywa siê trzech punktów:
+  VEC3 p0, p1, p2
+- Promieñ/prosta 3D
+  U¿ywa siê pozycji punktu i wektora kierunku:
+  VEC3 Orig, Dir
+- Sfera
+  Uu¿ywa siê pozycji œrodka i d³ugoœci promienia:
+  VEC3 Center, float Radius
+
+
+math_cast
+================================================================================
+
+To tak naprawdê szablon funkcji, który w ogólnym przypadku nie dzia³a (rzuca
+assertion failed), ale ma zdefiniowane specjalizacje. S³u¿y do konwersji miêdzy
+typami tego modu³u math a typami innymi matematycznymi, np. z Win32API czy D3DX.
+Ma zwykle zerowy narzut, bo dokonuje reinterpretacji, a nie ¿adnej konwersji.
+U¿ywa siê go intuicyjnie, tak samo jak normalnego rzutowania, np.:
+
+	math::POINT_ Pt(1, 2);
+	POINT WinPt = math::math_cast<POINT>(Pt);
+
+Zdefiniowane s¹ nastêpuj¹ce konwersje:
+
+- miêdzy common::POINT_ a POINT z Win32API
+- miêdzy common::RECTI a RECT z Win32API
+- miêdzy common::VEC2 a D3DXVECTOR2 z D3DX
+- miêdzy common::VEC3 a D3DXVECTOR3 z D3DX
+- miêdzy common::VEC4 a D3DXVECTOR4 z D3DX
+- miêdzy common::COLOR a uint4
+- miêdzy common::COLOR a unsigned long == DWORD == D3DCOLOR z DirectX
+- miêdzy common::COLORF a D3DXCOLOR z D3DX
+- miêdzy common::PLANE a D3DXPLANE z D3DX
+- miêdzy common::MATRIX a D3DXMATRIX z D3DX
+- miêdzy common::QUATERNION a D3DXQUATERNION z D3DX
+
+
+Kolizje
+================================================================================
+
+Punkt:
+- Punkt
+  - Czy nachodz¹ na siebie - VecEqual
+- Promieñ, prosta, odcinek
+  - Odleg³oœæ punktu od prostej - PointToLineDistance
+  - Czy punkt le¿y na prostej - PointOnLine
+  - Rzut punktu na prost¹ - ClosestPointOnLine
+  - Wartoœæ parametru t punktu le¿¹cego na prostej - PointToLine
+  - Punkt nale¿y od odcinka - PointInLineSegment
+- Prostopad³oœcian
+  - Czy punkt nale¿y do prostopad³oœcianu - PointInBox
+  - Odleg³oœæ punktu od prostopad³oœcianu - PointToBoxDistance
+  - Najbli¿szy punkt z prostopad³oœcianu - ClosestPointInBox
+- Sfera
+  - Czy punkt nale¿y do sfery - PointInSphere
+  - Odleg³oœæ punktu od sfery - PointToSphereDistance
+  - Najbli¿szy punkt ze sfery - ClosestPointOnSphere
+- P³aszczyzna
+  - Czy punkt nale¿y do p³aszczyzny - PointOnPlane
+  - Odleg³oœæ punktu od p³aszczyzny - abs(DotCoord)
+  - Najbli¿szy punkt z p³aszczyzny (rzut) - ClosestPointOnPlane
+  - Po której stronie p³aszczyzny le¿y punkt - DotCoord
+- Trójk¹t
+  - Czy punkt nale¿y do trójk¹ta - PointOnTriangle
+  - Najbli¿szy punkt z trójk¹ta - (BRAK)
+  - Wspó³rzêdne barycentryczne punktu w trójk¹cie - CalculateBarycentric
+- Frustum
+  - Czy punkt nale¿y do frustuma FRUSTUM_PLANES - PointInFrustum
+  - Najbli¿szy punkt z frustuma - (BRAK)
+
+Promieñ, prosta, odcinek:
+- Promieñ, prosta, odcinek:
+  - Parametry T najbli¿szych sobie punktów na prostych - ClosestPointsOnLines
+- Prostopad³oœcian
+  - Kolizja promienia z prostopad³oœcianem - RayToBox
+- Sfera
+  - Kolizja promienia ze sfer¹ - RayToSphere
+- P³aszczyzna
+  - Kolizja promienia z p³aszczyzn¹ - RayToPlane
+- Trójk¹t
+  - Kolizja promienia z trójk¹tem - RayToTriangle
+- Frustum
+  - Kolizja promienia z frustumem - RayToFrustum
+
+Prostopad³oœcian AABB:
+- Prostopad³oœcian:
+  - Czy dwa prostopad³oœciany koliduj¹ - OverlapBox
+  - Suma prostopad³oœcianów - Union
+  - Czêœæ wspólna prostopad³oœcianów - Intersection
+- Sfera:
+  - Kolizja prostopad³oœcianu ze sfer¹ - SphereToBox
+  - Sfera w prostopad³oœcianie - SphereInBox
+  - Prostopad³oœcian w sferze - BoxInSphere
+- P³aszczyzna:
+  - Kolizja prostopad³oœcianu z p³aszczyzn¹ - PlaneToBox
+  - Klasyfikacja prostopad³oœcianu do p³aszczyzny - ClassifyBoxToPlane
+- Trójk¹t:
+  - Czy trójk¹t jest wewn¹trz prostopad³oœcianu - TriangleInBox
+  - Czy trójkat nachodzi na prostopad³oœcian - TriangleToBox
+- Frustum:
+  - Czy AABB jest wewn¹trz frustuma - BoxInFrustum
+  - Kolizja AABB z frustumem - BoxToFrustum_Fast, BoxToFrustum
+
+Sfera:
+- Sfera:
+  - Kolizja sfery ze sfer¹ - SphereToSphere
+- P³aszczyzna:
+  - Kolizja sfery z p³aszczyzn¹ - SphereToPlane
+  - Klasyfikacja sfery do p³aszczyzny - SphereToPlane
+- Trójk¹t: (BRAK)
+- Frustum:
+  - Sfera zawiera siê we frustumie - SphereInFrustum
+  - Kolizja sfery z frustumem - SphereToFrustum_Fast, SphereToFrustum
+
+P³aszczyzna:
+- P³aszczyzna:
+  - Kolizja dwóch p³aszczyzn - Intersect2Planes
+  - Kolizja trzech p³aszczyzn - Intersect3Planes
+- Trójk¹t:
+  - Czy p³aszczyzna koliduje z trójk¹tem - PlaneToTriangle
+  - Klasyfikacja trójk¹ta do p³aszczyzny - ClassifyPlaneToTriangle
+- Frustum:
+  - Czy p³aszczyzna koliduje z frustumem (klasyfikacja) - ClassifyFrustumToPlane
+
+Trójk¹t:
+- Trójk¹t:
+  - Kolizja dwóch trójk¹tów: TriangleToTriangle
+- Frustum:
+  - Trójk¹t wewn¹trz frustuma: TriangleInFrustum
+  - Kolizja trójk¹ta z frustumem: TriangleToFrustum
+
+Frustum:
+- Frustum:
+  - Kolizja dwóch frustumów: FrustumToFrustum
+
+
+Kolizjê odcinka z dowolnym obiektem mo¿na zrobiæ tak: Dany jest odcinek
+o pocz¹tku w punkcie SegOrig, kierunku SegDir i parametrze koñca SegEndT oraz
+obiekt Coœ, z którym testujemy kolizjê. U¿yjemy funkcji dla prostej i
+niezale¿nie czy w przypadku kolizji z ty³u punktu RayOrig (zwrócone T ujemne)
+zwróci miejsce kolizji bli¿sze czy dalsze, odcinek koliduje z obiektem, kiedy:
+
+  float T;
+  if (PointInCoœ(SegOrig, Coœ))
+    return true;
+  if (!LineToCoœ(SegOrig, SegDir, Coœ, &T))
+    return false;
+  if (T < 0 || T > SegEndT)
+    return false;
+  return true;
+
+
+PoissonDisc
+================================================================================
+
+Dostêpne s¹ trzy tablice:
+
+  const float POISSON_DISC_1D[];
+  const VEC2  POISSON_DISC_2D[];
+  const VEC3  POISSON_DISC_3D[];
+
+Ich rozmiary to 100, a formalnie odpowiednio:
+
+  const uint4 POISSON_DISC_1D_COUNT;
+  const uint4 POISSON_DISC_2D_COUNT;
+  const uint4 POISSON_DISC_3D_COUNT;
+
+S¹ to ci¹gi punktów w przestrzeni 1D, 2D, 3D o sk³adowych z przedzia³u 0..1
+odpowiadaj¹ce próbkowaniu losowemu wg tzw. Poisson Disc. Jest to taki rozk³ad,
+który choæ losowy to zachowuje okreœlon¹ minimaln¹ odleg³oœæ miêdzy próbkami,
+¿eby nie skupia³y siê nadmiernie w jednych miejscach tylko by³y równomiernie
+roz³o¿one w ca³ej przestrzeni. Zastosowania s¹ bardzo liczne.
+
+Te próbki s¹ PROGRESYWNE. To mój autorski pomys³. Mo¿na braæ dowoln¹ liczbê
+pierwszych elementów z takiej tablicy i nadal jest to poprawny rozk³ad Poisson
+Disc, tyle ¿e obowi¹zuje dla nich wiêksza minimalna odleg³oœæ miêdzy punktami.
+
+
+Czego nie ma
+================================================================================
+
+- Macierzy innych ni¿ 4x4, np. 3x3, 3x4 itp.
+
+- Pe³nego wsparcia dla geometrii 2D (s¹ wektory, prostok¹ty i proste w 2D, ale
+brakuje kolizji miêdzy nimi).
+
+- Kolizji obiektów typu Swept - poruszaj¹cych siê (dynamicznych).
+
+- Nastêpuj¹cych obiektów geometrycznych:
+> Oriented Bounding Box (OBB)
+> Dowolny wieloœcian wypuk³y opisany p³aszczyznami lub wierzcho³kami
+> Siatka trójk¹tów
+
+- Zaawansowanych algorytmów, takich jak triangulacja, znajdowanie wypuk³ej
+otoczki czy Constructive Solid Geometry (CSG).
+

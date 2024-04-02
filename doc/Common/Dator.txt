@@ -1,0 +1,55 @@
+################################################################################
+  Kodowanie Windows-1250, koniec wiersza CR+LF, test: Za¿ó³æ gêœl¹ jaŸñ
+  Dator - Otoczka na pojedyncz¹ wartoœæ dowolnego typu
+  Copyleft (C) 2007 Adam Sawicki
+  Licencja: GNU LGPL
+  Kontakt: mailto:sawickiap@poczta.onet.pl , http://regedit.gamedev.pl/
+################################################################################
+
+
+Dator
+================================================================================
+
+Dator to obiekt otaczaj¹cy pojedyncz¹ wartoœæ jakiegoœ typu i daj¹cy dostep do
+jej zapisu i odczytu poprzez ³añcuch tekstowy. Przechowuje wskaŸnik do tej
+wartoœci. Mo¿na go zmieniaæ w trakcie dzia³ania. Mo¿e byæ 0 - wtedy operacje
+zapisu i odczytu wartoœci po prostu zwracaj¹ false. Jesli nie jest 0, musi byæ
+poprawny. Dator dzia³a dla wszystkich typów obs³ugiwanych przez SthToStr i
+StrToSth. Mo¿na te¿ tworzyæ w³asne specjalizacje. S¹ te¿ wersje dla tych samych
+typów z const. Takie datory s¹ tylko do odczytu - metoda zapisuj¹ca zwraca
+false. Niepowodzenie w ustawieniu wartoœci datora nie zmienia jego wartoœci.
+
+	int Value = 0;
+	base::Dator<int> D(&Value);
+	
+	if (D.SetValue("123") == 0)
+		std::cout << "Set OK" << std::endl;
+
+	string s;
+	if (D.GetValue(&s) == 0)
+		std::cout << "Get OK: " << s << std::endl;
+
+Wszystkie datory parametryzowane ró¿nymi typami maj¹ wspóln¹ klasê bazow¹
+GenericDator z wirtualnymi metodami SetValue i GetValue.
+
+
+DatorGroup
+================================================================================
+
+Obiekt tej klasy przechowuje w swoim wnêtrzu (i sam zarz¹dza) kolekcjê dowolnego
+rodzaju datorów identyfikowanych po nazwach.
+
+	int I = 123;
+	float F = 10.5f;
+
+	base::DatorGroup DG;
+	DG.Add("Strength", &I);
+	DG.Add("Life", &F);
+	
+	if (DG.SetValue("Strength", "124"))
+		std::cout << "Set OK" << std::endl;
+		
+	string s;
+	if (DG.GetValue("Life", &s))
+		std::cout << "Get OK: " << s << std::endl;
+

@@ -1,0 +1,12 @@
+Œrodowisko
+  Czas       : 2024-04-02 12:03:43
+  Komputer   : DESKTOP-RAN4BDQ
+  U¿ytkownik : Damian
+  Plik       : E:\New folder\clear\TFQ7_1-1_src_update_01\src\Debug\TFQ.exe
+B³¹d
+  [Framework.cpp,1490] Nie mo¿na wczytaæ konfiguracji g³ównej programu z pliku: Config.dat
+  [Config.cpp,253] Nie mo¿na wczytaæ konfiguracji z pliku: Config.dat
+  [Files.cpp,91] Nie mo¿na otworzyæ pliku: Config.dat
+  (Win32Error,2) The system cannot find the file specified.
+
+

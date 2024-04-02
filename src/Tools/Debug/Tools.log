@@ -1,0 +1,63 @@
+﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  PCH.cpp
+cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TextureTask.cpp
+  MeshTask.cpp
+E:\New folder\clear\tfq_rebirth\src\Tools\MeshTask.cpp(2031,48): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file '/MeshTask.cpp')
+  
+E:\New folder\clear\tfq_rebirth\src\Tools\MeshTask.cpp(2182,46): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file '/MeshTask.cpp')
+  
+  MapTask.cpp
+E:\New folder\clear\tfq_rebirth\src\Tools\MapTask.cpp(1252,57): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file '/MapTask.cpp')
+  
+  Main.cpp
+  GlobalCode.cpp
+  NVMeshMender.cpp
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(213,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(228,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(248,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(312,19): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(328,17): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(343,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(409,19): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(425,17): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+E:\New folder\clear\tfq_rebirth\doc\External\NVMeshMender.cpp(440,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/doc/External/NVMeshMender.cpp')
+  
+  Generating Code...
+cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Tokenizer.cpp
+  Threads.cpp
+  Stream.cpp
+  Profiler.cpp
+  Math.cpp
+  Logger.cpp
+  FreeList.cpp
+  Files.cpp
+  Error.cpp
+  Dator.cpp
+  DateTime.cpp
+  Config.cpp
+  Base.cpp
+  Generating Code...
+NVMeshMender.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  Tools.vcxproj -> E:\New folder\clear\tfq_rebirth\src\Debug\Tools.exe

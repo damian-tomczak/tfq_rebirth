@@ -1,0 +1,17 @@
+/T fx_2_0 PlainColor2d.fx /Fo ..\Working\Framework\Shaders\PlainColor2d.fxo
+/T fx_2_0 SpriteEffect01.fx /Fo ..\Working\Framework\Shaders\SpriteEffect01.fxo
+/T fx_2_0 FontEffect.fx /Fo ..\Working\Framework\Shaders\FontEffect.fxo
+
+/T fx_2_0 MathHelp.fx /Fo ..\Working\Game\MathHelp.fxo
+
+/T fx_2_0 Skybox.fx /Fo ..\Working\Engine\Shaders\Skybox.fxo
+/T fx_2_0 PpBrightPass.fx /Fo ..\Working\Engine\Shaders\PpBrightPass.fxo
+/T fx_2_0 PpBlurPass.fx /Fo ..\Working\Engine\Shaders\PpBlurPass.fxo
+/T fx_2_0 HeatEffect.fx /Fo ..\Working\Engine\Shaders\HeatEffect.fxo
+/T fx_2_0 OcclusionQueryEffect.fx /Fo ..\Working\Engine\Shaders\OcclusionQueryEffect.fxo
+/T fx_2_0 ParticleShader.fx /Fo ..\Working\Engine\Shaders\ParticleShader.fxo
+/T fx_2_0 ComplexSky.fx /Fo ..\Working\Engine\Shaders\ComplexSky.fxo
+/T fx_2_0 ComplexSky_Clouds.fx /Fo ..\Working\Engine\Shaders\ComplexSky_Clouds.fxo
+/T fx_2_0 Grass.fx /Fo ..\Working\Engine\Shaders\Grass.fxo
+/T fx_2_0 Fall.fx /Fo ..\Working\Engine\Shaders\Fall.fxo
+/T fx_2_0 Fall_Planes.fx /Fo ..\Working\Engine\Shaders\Fall_Planes.fxo

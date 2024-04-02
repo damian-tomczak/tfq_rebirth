@@ -1,0 +1,28 @@
+Dokumentacja formatu tekstowego
+================================================================================
+
+Plik GrassDesc.dat - plik tekstowy, w formacie obs³ugiwanym przez modu³ Tokenizer.
+
+GrassDesc             Nag³ówek
+Texture {
+  "Grass1Texture"     Nazwa zasobu tekstury dla wszelkich traw
+  256, 64             Szerokoœæ, wysokoœæ tekstury
+}
+Grasses {
+  "Grass1" {              Nazwa gatunku trawy
+    CX = 1, 0.1           HalfCX, HalfCXV : float
+    CY = 0.5, 0.05        HalfVY, HalfCYV : float
+    Tex = 5, 5, 32, 64    Prostok¹t na teksturze : RECTI, w pikselach (left, top, right, bottom)
+    Wind = 1              Wp³yw wiatru na górn¹ krawêdŸ : float (0..1)
+  }
+  ...                     Nastêpne gatunki trawy
+}
+DensityMap {       Sekcja opisuj¹ca znaczenie kolorów na mapie rozmieszczenia traw
+  R {              Sk³adowa R
+    "Grass1" 10,   Nazwa : string i liczba : uint traw danego gatunku
+	...            Kolejny gatunek traw na tym polu
+  }
+  G { ... }        Definicja znaczenia intensywnoœci kana³ów G i B
+  B { ... }
+}
+

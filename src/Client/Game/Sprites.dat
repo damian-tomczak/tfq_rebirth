@@ -1,0 +1,14 @@
+"MenuButton" {
+	effect "SpriteEffect01"
+	texture "MenuButton"
+	matrix {
+	2
+	64 64
+	}
+}
+"Sight" {
+	effect "SpriteEffect01"
+	texture "SightTexture"
+	rects { }
+}
+

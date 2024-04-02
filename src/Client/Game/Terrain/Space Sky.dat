@@ -1,0 +1,34 @@
+{
+	Background {
+		0.0 0x67472d/*0xED712B*/ 0x001C43  // jak na zachód s³oñca
+	}
+	
+	Sun {
+		"Sky_Sun"
+		0.093589790479692
+		1
+		-2.095816 // Jedna godzina to 0.261799
+		0, -0.2, 1
+		HorizonColor=0x80FFFFFF ZenithColor=0xFFFFFFFF
+	}
+	Moon {
+		"Sky_Mars"
+		0.2
+		0.7
+		12.3456789
+		0.3, 0.1, -0.7
+		HorizonColor=0x40FFFFFF ZenithColor=0xFFFFFFFF
+		MidnightColor=0xFFFFFFFF MiddayColor=0xFFFFFFFF
+	}
+	
+	Clouds {
+		ScaleInv = 1
+		Threshold = 0.7
+		Sharpness = 5
+		Colors {
+			//0.8 0xFF000080 0xFFFFFFFF // popo³udnie
+			0.9 0xFFEDC592 0xFFB39573 // wieczór
+		}
+	}
+}
+

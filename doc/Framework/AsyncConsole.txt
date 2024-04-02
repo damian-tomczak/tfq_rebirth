@@ -1,0 +1,23 @@
+################################################################################
+        Async Console
+################################################################################
+The Final Quest
+Autor  : Adam Sawicki
+Wersja : 1.1
+Data   : 14 sierpnia 2006
+
+
+To asynchroniczna konsola Windows. Nie jest przenoœna. Posiada funkcje do
+wypisywania tekstu na wyjœciu, zmiany tytu³u okna konsoli oraz zmiany koloru
+wyjœcia i wejœcia tekstu. Przez ca³y czas czeka te¿ na wejœcie (wprowadzenie
+lini tekstu - poleenia - przez u¿ytkownika) w sposób asynchroniczny, czyli
+nieblokuj¹cy. Mo¿na te¿ zablokowaæ czekaj¹c na polecenie.
+
+Klasa jest bezpieczna w¹tkowo. Tworzenie i usuwanie obiektu nie jest, ale ju¿
+wszelkie jego u¿ywanie tak. Mo¿na wiêc z dowolnych wielu w¹tków jednoczeœnie
+zapisywaæ i odczytywaæ.
+
+AsyncConsoleLog:
+W czasie istnienia obiektu tej klasy powinien te¿ istnieæ g_AsyncConsole.
+Inaczej log nie loguje.
+

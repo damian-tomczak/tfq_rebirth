@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="A_Common">
+      <UniqueIdentifier>{be5f4b92-8f94-4a66-9ee5-4b52e2b68bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="B_Framework">
+      <UniqueIdentifier>{99dc1382-6be2-4df1-9123-4a796a44f313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="C_Engine">
+      <UniqueIdentifier>{51a61dfb-f861-47e7-afcc-d1874c662b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D_Client">
+      <UniqueIdentifier>{014cd7d6-3a8a-4cb4-86b3-92571b42fda4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common\Base.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Config.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\DateTime.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Dator.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Error.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Files.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\FreeList.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Logger.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Math.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Profiler.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Stream.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Threads.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Tokenizer.cpp">
+      <Filter>A_Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\AsyncConsole.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\D3dUtils.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\Framework.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\Gfx2D.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\GUI.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\GUI_Controls.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\GUI_PropertyGridWindow.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\Multishader.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\pch.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\QMesh.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\Res_d3d.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\ResMngr.cpp">
+      <Filter>B_Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Camera.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Engine.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Engine_pp.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entities.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Fall.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Grass.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\IcosphereRes.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\QMap.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Sky.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Terrain.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Trees.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Water.cpp">
+      <Filter>C_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugGui.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBase.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFpp.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePacman.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRpg.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRts.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSpace.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+    <ClCompile Include="MathHelpDrawing.cpp">
+      <Filter>D_Client</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\Base.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Config.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\DateTime.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Dator.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Error.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Files.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\FreeList.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Logger.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Math.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Profiler.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Stream.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Threads.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Tokenizer.hpp">
+      <Filter>A_Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\AsyncConsole.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\D3dUtils.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\Framework.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\Gfx2D.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\GUI.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\GUI_Controls.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\GUI_PropertyGridWindow.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\Multishader.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\pch.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\QMesh.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\Res_d3d.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\ResMngr.hpp">
+      <Filter>B_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Camera.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Engine.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Engine_pp.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entities.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Fall.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Grass.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\IcosphereRes.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\QMap.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Sky.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Terrain.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Trees.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Water.hpp">
+      <Filter>C_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugGui.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBase.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFpp.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePacman.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRpg.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRts.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSpace.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelpDrawing.hpp">
+      <Filter>D_Client</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Framework\Res_d3d_Font_Draw.inc">
+      <Filter>B_Framework</Filter>
+    </None>
+  </ItemGroup>
+</Project>

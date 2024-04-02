@@ -1,0 +1,431 @@
+################################################################################
+    Resource Manager
+################################################################################
+Autor  : Adam Sawicki
+Wersja : 2.1
+Data   : 7 grudnia 2006
+
+
+Zasób
+=====
+
+Manager zasobów - zarz¹dza zasobami gry. Co to mo¿e byæ zasób:
+
+- tekstura, shader Direct3D
+- efekt, czcionka D3DX
+- siatka modelu
+- dŸwiêk FMOD
+
+A co nie powinno byæ zasobem:
+
+- materia³
+- sprite
+- potworek
+- itp.
+
+Zasoby nie powinny siê nawzajem u¿ywaæ, mieæ podzasobów, tworzyæ hierarchii ani
+w ¿aden sposób ze sob¹ wi¹zaæ. Powinny byæ niezale¿ne i reprezentowaæ coœ
+niskopoziomowego, co albo:
+
+- Mo¿e ulec utraceniu na skutek zdarzeñ systemowych od systemu np. Direct3D
+- Zajmowaæ du¿o pamiêci (RAM czy Video)
+- Wymagaæ powolnego i pracoch³onnego pozyskiwania, np. wczytania z pliku albo
+  wygenerowania proceduralnego.
+
+
+Cechy
+=====
+
+Jest uogólniony wzglêdem typu zasobów - definiuje interfejs (abstrakcyjn¹ klasê
+bazow¹), z której mo¿na dziedziczyæ w³asne rodzaje zasobów.
+
+Jest dynamiczny - mo¿na wczytywaæ definicje listy zasobów z pliku, ale mo¿na te¿
+tworzyæ i niszczyæ zasoby w czasie pracy programu, w dowolnym momencie.
+
+Nie jest uogólniony wzglêdem Ÿród³a danych - zasoby same odpowiedzialne s¹ za
+wczytanie siê, zapewne z pliku. Oogólnienie mog³oby polegaæ na wczytywaniu siê
+zasobu z dowolnego, podanego strumienia - mo¿e to na przysz³oœæ, razem z VFS...
+
+
+Sk³adnia
+========
+
+Sk³adnia zasobu w jêzyku parsowanym przez modu³ Tokenizer z CommonLib:
+
+  <typ> <nazwa> [stan] <parametr1> <parametr2> ... ;
+
+typ (identyfikator)
+  Jeden z zarejestrowanych typów zasobów
+nazwa (string)
+  Nazwa zasobu
+stan (identifikator, opcjonalny)
+  brak, LOAD, LOCK
+parametry
+  zale¿nie od typu
+
+
+Predefiniowane typy zasobów
+===========================
+
+Modu³ res_d3d
+-------------
+
+>>> D3dTexture <<<
+
+Tekstura Direct3D wczytywana do puli pamiêci MANAGED.
+
+Sk³adnia:
+
+  texture <nazwa> [stan] <nazwa-pliku> [ KeyColor = <kolor> ] [ DisableMipMapping ] ;
+
+nazwa-pliku (string) - Nazwa pliku graficznego
+kolor (uint4 lub string) - Kolor kluczowy
+  uint4 - liczba np. 0xFFFFFFFF
+  string - dowolny ³añcuch konwertowalny do koloru, np. "FFFFFFFF" albo "red"
+
+>>> D3dCubeTexture <<<
+
+Tekstura szeœcienna Direct3D wczytywana do puli MANAGED.
+
+Sk³adnia:
+
+  CubeTexture <nazwa> [stan] <nazwa-pliku> [ DisableMipMapping ] ;
+
+nazwa-pliku (string) - Nazwa pliku graficznego
+
+>>> D3dFont <<<
+
+Czcionka D3DX.
+
+Sk³adnia:
+
+  d3dxfont <nazwa> [stan] <nazwa-czcionki> <rozmiar> [bold] [italic] ;
+
+nazwa-czcionki (string) - nazwa systemowej czcionki
+rozmiar (int) - rozmiar
+  Rozmiar jest wyra¿ony w jednostkach wirtualnych, czcionka sama po zmianie
+  rozdzielczoœci tworzy siê od nowa z nowym rozmiarem.
+bold (identyfikator, opcjonalny) - pogrubienie
+italic (identyfikator, opcjonalny) - pochylenie
+
+>>> D3dEffect <<<
+
+Efekt D3DX.
+Plik FXO. Nie akceptuje plików Ÿród³owych FX - trzeba samemu kompilowaæ.
+
+Sk³adnia:
+
+  d3dxeffect <nazwa> <nazwa-pliku> ;
+  d3dxeffect <nazwa> <nazwa-pliku> params { <nazwa1> , <nazwa2> , ... } ;
+
+nazwa-pliku (string) - nazwa pliku FXO
+nazwa1, nazwa2, ... (string) - nazwy parametrów
+
+>>> Font <<<
+
+W³asna czcionka font managera.
+
+Sk³adnia:
+
+  font <nazwa> [stan] <plik-fnt> , <plik-tekstury> ;
+
+plik-fnt (string) - nazwa pliku FNT
+plik-tekstury (string) - nazwa pliku obrazka
+
+>>> D3dTextureSurface <<<
+
+Reprezentuje pojedyncz¹ surface lub teksturê + jej surface.
+
+Sk³adnia:
+
+  TextureSurface <nazwa> [stan] <IsTexture> <Width> <Height> <Pool> <Usage> <Format>
+
+IsTexture (identyfikator) - texture | surface
+Width, Height (uint4) - szerokoœæ, wysokoœæ
+Pool (identyfikator lub string, D3DPOOL) - pula pamiêci
+Usage (identyfikator lub string, D3DUSAGE) - sposób u¿ycia (np. RENDERTARGET, DEPTHSTENCIL, DYNAMIC)
+Format (identyfikator lub string, D3DFORMAT) - format
+
+>>> D3dCubeTextureSurface <<<
+
+Reprezentuje pojedyncz¹ teksturê szeœcienn¹ i jej surfaces.
+
+Sk³adnia:
+
+  CubeTextureSurface <nazwa> [stan] <Size> <Pool> <Usage> <Format>
+
+Size (uint4) - szerokoœæ i wysokoœæ
+Pool (identyfikator lub string, D3DPOOL) - pula pamiêci
+Usage (identyfikator lub string, D3DUSAGE) - sposób u¿ycia (np. RENDERTARGET, DEPTHSTENCIL, DYNAMIC)
+Format (identyfikator lub string, D3DFORMAT) - format
+
+>>> Multishader <<<
+
+Reprezentuje kod Ÿród³owy shadera (plik FX), który jest na ¿¹danie kompilowany
+z podanymi makrami preprocesora tworz¹c potrzebne shadery.
+
+Sk³adnia:
+
+  Multishader "<nazwa>" [stan]
+    Source = "<plik-Ÿród³owy>"
+    Cache = "<maska-plików-tymczasowych>"
+    Macros { "<nazwa>" <bit>, "<nazwa>" <bit>, ... }
+    Params { "<nazwa>", "<nazwa>", ... }
+
+Gdzie:
+- plik-Ÿród³owy (string) - nazwa pliku FX
+- maska-plików-tymczasowych (string) - maska dla nazwy plików w których
+  sk³adowane bêd¹ skompilowane shadery, np. "Shaders\Cache\MainShader_#.fxo"
+  Znak '#' jest zastêpowany identyfikatorem konkretnego shadera.
+- nazwa (string) - nazwy kolejnych makr czy parametrów
+- bit (uint) - numer bitu od którego zaczyna siê wartoœæ danego parametru
+
+
+Stan
+====
+
+Zasoby mo¿na tworzyæ na wiele sposobów oraz niszczyæ. Mo¿na to robiæ
+dynamicznie, w czasie pracy programu, w dowolnym momencie.
+
+Ka¿dy istniej¹cy zasób:
+
+- posiada unikatow¹ nazwê : string
+  Nazwê mo¿na przerobiæ na wskaŸnik. Mo¿na jej te¿ bezpoœrednio u¿ywaæ.
+- posiada obiekt : IResource
+  Przez wskaŸnik do niego nale¿y zasobu u¿ywaæ, ¿eby by³o szybko.
+- nale¿y do jakiejœ grupy, byæ mo¿e domyœlnej
+  Grupy mo¿na u¿ywaæ ¿eby wywo³ywaæ funkcje dla ca³ego zbioru zasobów.
+
+Ka¿dy zasób jest w jednym ze stanów:
+
+- UNLOADED
+  Zasób istnieje, jego obiekt istnieje (bo instnieje zawsze), ale
+  reprezentowany przez niego zasób nie jest wczytany. Przed u¿yciem trzeba go
+  wczytaæ.
+- LOADED
+  Zasób jest wczytany, ale w ka¿dej chwili (nie dok³adnie w ka¿dej, tylko miêdzy
+  klatkami) manager mo¿e go od³adowaæ.
+- LOCKED
+  Zasób jest wczytany i zablokowany tak, ¿e na pewno nie zostanie automatycznie
+  od³adowany.
+
+Do tego warto przeczytaæ komentarze do metod: Load, Unload, Lock, Unlock,
+a tak¿e zwróciæ uwagê, ¿e stan pocz¹tkowy mo¿na podaæ przy tworzeniu zasobu b¹dŸ
+jego definiowaniu w XNL2.
+
+Typowe techniki u¿ycia managera zasobów:
+
+1. Zasoby statyczne
+
+- Piszemy definicje tych zasobów w pliku XNL2.
+  Przy ka¿dej dopisujemy "LOCK".
+- Podczas inicjalizacji aplikacji wczytujemy zasoby z tego pliku.
+- Jak najwczeœniej i jak najrzadziej przerabiamy nazwy tych zasobów na wskaŸniki
+  IResource* (czy odpowiednie pochodne).
+- U¿ywamy tych wskaŸników w programie.
+
+2. Zasoby dynamicznie ³adowane
+
+- Piszemy definicje tych zasobów w pliku XNL2.
+- Podczas inicjalizacji aplikacji wczytujemy zasoby z tego pliku.
+- Jak najwczeœniej i jak najrzadziej przerabiamy nazwy tych zasobów na wskaŸniki
+  IResource* (czy odpowiednie pochodne).
+- U¿ywamy tych wskaŸników w programie. Przed ka¿dym u¿yciem zasobu który taki
+  obiekt reprezentuje (zwykle metoda Get) wywo³ujemy jego Load. To daje pewnoœæ,
+  ¿e zasób zostanie natychchmiast wczytany i w takim stanie pozostanie
+  przynajmniej do koñca bie¿¹cej klatki. Wielokrotne wywo³ywanie Load w jednej
+  klatce niczemu nie zaszkodzi.
+
+3. Zasoby dynamicznie tworzone
+
+Jak wy¿ej, ale trzeba samemu zarz¹dzaæ tworzeniem i niszczeniem zasobów. Trzeba
+szczególnie uwa¿aæ, aby nie stosowaæ wskaŸników do zniszczonych zasobów ani
+nie otrzymywaæ ich metodami MustGetResource*.
+
+Inne mo¿liwoœci:
+
+- Stosowanie grup do zarz¹dzania ca³ymi grupami zasobów na raz.
+
+- Stosowanie metody Unload do jawnego od³adowywania zasobów o których wiemy, ¿e
+  nie bêd¹ ju¿ na razie potrzebne.
+
+- Okresowe stosowanie Lock do zasobów, które nie chcemy ¿eby zosta³y od³adowane,
+np. ekran "Loading".
+
+
+Inne informacje
+===============
+
+- Zasób na nazwê, która jednoznacznie go identyfikuje i jest ³añcuchem.
+£adowany zasób dowiaduje siê o swojej nazwie i mo¿e j¹ wykorzystaæ jako jeden
+z parametrów, np. jako nazwa pliku (ale nie powinien!).
+
+- Zasób mo¿e mieæ nazwê pust¹. Wówczas nie da siê go odnaleŸæ, trzeba pamiêtaæ
+wskaŸnik do niego.
+
+- Zasób ma parametry. Te zasoby statyczne s¹ opisne w pliku za pomoc¹ parametrów
+w XNL2, a podczas dodawania dynamicznego mo¿na je podawaæ te¿ jako ³añcuch XNL2
+lub jako zwyk³e parametry konstruktora obiektu zasobu.
+
+- Na podstawie nazwy zasobu (albo od razu podczas dynamicznego tworzenia) mo¿na
+uzyskaæ jego wskaŸnik. Ze wskaŸnika mo¿na dowiedzieæ siê, czy zasób jest
+wczytany lub nie jest wczytany albo ¿e jest zablokowany.
+
+- Dynamiczny bufor wierzcho³ków czy indeksów, dynamiczna tekstura, tekstura
+render target itp. rzeczy nie bêd¹ zasobami, bo i tak nie uniknie siê rêcznego
+zarz¹dzania nimi. Niestety. Tak wiêc obs³uga utrata urz¹dzenia D3D czy
+deinicjalizacja systemu dŸwiêkowego nie mo¿e byæ ukryta przez resource manager,
+musi siêgaæ dalej - do odpowiednio silnika graficznego czy modu³u dŸwiêkowego.
+EDIT: Zdecydowa³em, ¿e jednak dynamiczne zasoby D3D da siê uznaæ za zasoby
+Resource Managera i tak ich u¿ywaæ, napisa³em odpowiednie klasy, wiêc to ju¿
+jest nieaktualne.
+
+- Menad¿er zasobów monitoruje iloœæ wolnej pamiêci RAM i pamiêci video. Daje
+do tych statystyk dostêp do odczytu. Na ich podstawie podejmuje te¿ decyjzje
+o wymianie. Polityka wymiany: Zasoby które s¹ w stanie LOADED (nie UNLOADED i
+nie LOCKED) mog¹ zostaæ autoamtycznie przez manager od³adowane, przy czym
+pierwszeñstwo przy od³adowywaniu maj¹ te najdawniej nie u¿ywane.
+
+- Mo¿na zasób zablokowaæ i odblokowaæ. Zablokowanie blokuj¹co ¿¹da jego
+natychmiastowego wczytania. Zasób zablokowany pozostanie zawsze wczytany.
+Odblokowanie umo¿liwi kiedyœtam jego usuniêcie. Blokowanie ma licznik - dopiero
+odblokowanie tyle razy ile zosta³ zablokowany czyni zasób faktycznie
+odblokowanym.
+
+- Jest te¿ funkcja informuj¹ca, ¿eby zwolniæ zasób, bo nie bêdzie ju¿ potrzebny.
+
+- Stan wczytywania (zacz¹æ wczytywaæ w tle, wczytaæ natychmiast, wczytaæ
+natychmiast i zablokowaæ) mo¿na te¿ okreœliæ podczas definicji zasobu w pliku.
+
+- Czy bêdzie jeden resource manager, czy osobne dla ró¿nych typów zasobów?
+DECYZJA: Bêdzie jeden.
+
+- Jak informowaæ resource manager o utracie i usuniêciu urz¹dzenia D3D dla
+zasobów graficznych czy usuniêciu systemu dŸwiêkowego dla zasobów dŸwiêkowych?
+DECYZJA: Bêdzie uogólniony interfejs - metoda powiadamiaj¹ca managera, która
+przyjmuje:
+> typ komunikatu : uint4
+> parametry komunikatu : void*
+I wywo³uje to samo dla wszystkich istniej¹ych zasobów.
+
+- Dostêpne s¹ te¿ z menad¿era zasobów statystyki - iloœæ zasobów ogólnie i
+w poszczególnych stanach (wczytane, wczytuj¹ce siê, zakolejkowane, zablokowane,
+niewczytane).
+
+- Grupowanie zasobów i wywo³ywanie operacji dla ca³ej grupy.
+
+- DECYZJA: Obiekty klas implementuj¹cych IResource bêd¹ istnia³y ca³y czas,
+kiedy zasób jest zarejestrowany w managerze (na podstawie pliku, ³añcucha lub
+jawnie wywo³anego konstruktora) i tylko bêd¹ zmienia³y swój stan potrafi¹c siê
+wczytaæ i od-czytaæ.
+
+- DECYZJA: Nie ma jednego centralnego pliku z definicjami zasobów - to kod
+wywo³uje w dowolnym momencie dla managera zasobów funkcjê wczytuj¹c¹ z podanego
+pliku.
+
+
+Font manager
+============
+
+Klasa res::Font to zasób reprezentuj¹cy w³asny font manager. U¿ywa zestawu plik
+FNT + tekstura (koniecznie tylko jedna!) generowanych przez Bitmap Font
+Generator autorstwa AngelCode.
+
+Plik FNT wczytuje w momencie tworzenia. Dlatego wszystkie informacje o czcionce
+i zapewniane przez ni¹ obliczenia s¹ dostêpne zawsze kiedy zasób istnieje.
+Jedynie rysowaæ tekst mo¿na tylko wtedy, gdy zasób jest wczytany.
+
+Do rysowania kreœleñ (podkreœlenia, nadkreœlenie, przekreœlenie) i prostok¹tów
+u¿ytkownika u¿ywa tekstury z wnêtrza znaku '-'.
+
+Funkcje rysuj¹ce klasy Font rysuj¹ tylko geometriê (quady ze znakami). Wszelkie
+stany urz¹dzenia D3D (efekt, kolor, nawet tekstura) trzeba ustawiæ samemu
+na zewn¹trz.
+
+Jako Flags trzeba podawaæ:
+- Zawsze jedn¹ z flag trybu zawijania wiersza - FLAG_WRAP_*.
+- Zawsze jedn¹ z flag dosuniêcia poziomego - FLAG_H*.
+- Zawsze jedn¹ z flag dosuniêcia pionowego - FLAG_V*.
+- Opcjonalnie podkreœlenie pojedyncze lub podkreœlenie podwójne.
+- Opcjonalnie nadkreœlenie, opcjonalnie przekreœlenie (lub obydwa).
+
+Rysowanie w trybie FLAG_SINGLELINE jest szybsze ni¿ z zawijaniem wierszy.
+
+Klasa Font jest u¿ywana przez Canvas do rysowania grafiki 2D.
+
+Klasa wszystkie znaki traktuje jednakowo. Jedynie spacji nie rysuje. W miejsce
+znaku którego nie ma na czcionce rysuje znak '?'. Nie traktuje specjalnie
+tabulacji.
+
+IMPLEMENTACJA:
+
+Klasa u¿ywa jednego, wspó³dzielonego miêdzy obiekty tej klasy bufora
+wierzcho³ków i indeksów.
+
+
+OcclusionQueries
+================================================================================
+
+To zasób niedefiniowalny tekstowo, do tworzenia tylko z poziomu kodu. Nie ma
+wiêkszego sensu tworzyæ wiele obiektów tej klasy, aczkolwiek mo¿na. Przechowuje
+on kolekcjê podanej liczby zapytañ Occlusion Query i wirtualizuje je daj¹c
+wygodny dostêp do tych zapytañ. Udostêpnia w³asne zapytania, które od tych
+systemowych ró¿ni¹ siê:
+
+- Mo¿na i trzeba tworzyæ je od nowa i niszczyæ za ka¿dym razem, w ka¿dej klatce,
+gdy¿ s¹ jednorazowego u¿ytku
+- Mo¿na ich na raz stworzyæ i u¿ywaæ (zadawaæ zapytania jedno za drugim, potem
+oczekiwaæ na wyniki) dowolnie du¿o, bardzo du¿o.
+
+Sposób u¿ycia
+-------------
+
+// Na pocz¹tku aplikacji stworzyæ obiekt klasy zasobu
+res::OcclusionQueries *res = new res::OcclusionQueries(string(), string(), 30);
+// Na koñcu aplikacji usun¹æ go
+delete res;
+
+// Na pocz¹tku klatki lub gdzieœ w klatce stworzyæ obiekty zapytañ
+res::OcclusionQueries::Query *Queries[N];
+for (int i = 0; i < N; i++)
+	Queries[i] = res->Create();
+// Zadaæ zapytania
+for (int i = 0; i < N; i++)
+{
+	res::OcclusionQueries::Issue query_issue_obj(Queries[i]);
+	RysujCos(); // ZEnable=true, ZWriteEnable=false, ColorWriteEnable=false
+}
+// Odebraæ i wykorzystaæ wyniki
+for (int i = 0; i < N; i++)
+	if (Queries[i]->GetResult() > 0)
+		// obiekt i jest widoczny - narysuj go.
+// Przed zakoñczeniem tej klatki koniecznie usun¹æ obiekty zapytañ
+for (int i = 0; i < N; i++)
+	res->Destroy(Queries[i]);
+
+Uwagi
+-----
+
+Nie nale¿y na raz rozpoczynaæ zadawania (Issue) wielu zapytañ. To powinno
+dzia³aæ do progu tolerancji takiego, jaka podana zosta³a iloœæ Occlusion Queries
+jako parametr konstruktora klasy zasobu, ale przekroczenie tego limitu skoñczy
+siê najprawdopodobniej Debug Assertion Failed. Najlepiej w ogóle tego nie
+próbowaæ.
+
+Obiektów zapytañ mo¿e byæ wiêcej, ni¿ wynosi pula prawdziwych Direct3D Queries.
+Zapytania s¹ wirtualizowane i w takim przypadku tworzenie nowego zapytania czeka
+na zakoñcznie i odebranie wyników od jednego z istniej¹cych.
+
+Jedyna prawid³owa sekwencja u¿ywania obiektów zapytañ klasy
+res::OcclusionQueries::Query to:
+
+1. Utworzyæ obiekt metod¹ res::OcclusionQueries::Create.
+2. Zadaæ zapytanie tworz¹c na czas rysowania na stercie obiekt klasy
+   res::OcclusionQueries::Issue i podaj¹c do jego konstruktora obiekt zapytania.
+3. Opcjonalnie odpytywaæ co jakiœ czas o wynik metod¹ CheckResult.
+4. Ostatecznie poczekaæ i odebraæ wynik (liczbê narysowanych pikseli) metod¹
+   GetResult.
+5. Usun¹æ obiekt metod¹ res::OcclusionQueries::Destroy.
+
+Wynik mo¿na odbieraæ metod¹ CheckResult i GetResult wiele razy.
+

@@ -1,0 +1,20 @@
+TerrainForms 1
+
+0x000000 complex {
+	0 {
+		"Sand"
+		TexScale = 0.234
+	}
+	100 {
+		"Grass"
+		TexScale = 0.345
+	}
+}
+0xFF0000 simple {
+	"PacmanMapFloor"
+	TexScale = 0.234
+}
+0x00FF00 simple {
+	"Path"
+	TexScale = 0.678
+}

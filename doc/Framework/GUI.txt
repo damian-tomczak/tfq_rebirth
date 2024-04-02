@@ -1,0 +1,268 @@
+################################################################################
+    GUI
+################################################################################
+Autor  : Adam Sawicki
+Wersja : 2.0
+Data   : 10 listopada 2006
+
+
+Szkielet graficznego interfejsu u¿ytkownika prezentuj¹cego rysowane w postaci
+grafiki 2D kontrolki, które mog¹ reagowaæ na wejœcie z klawiatury i z myszy,
+a tak¿e przechowywaæ swój stan, pozostawaæ we wzajemnych relacjach i reagowaæ
+na zdarzenia.
+
+Cechy:
+
+- Wypasiony
+  Posiada wsparcie dla hintów, kursorów, przeci¹gania, wysuwanych menu,
+  dziedziczon¹ aktywnoœæ i widzialnoœæ, ognisko z klawiatury i wiele innych
+  cech - wszystko co zdo³a³em wymyœliæ i napisaæ.
+- Uogólniony
+  Jest wprawdzie zale¿ny od PCH (a wiêc g³ównie Common Lib) oraz Framework,
+  ale mo¿na go ³atwo dostosowaæ do wspó³pracy z praktycznie ka¿dym silnikiem
+  gry.
+
+
+Podstawy
+================================================================================
+
+Wszystko zgromadzone jest w przestrzeni nazw gui. Podstaw¹ jest singleton klasy
+Manager. Nale¿y mu w ka¿dej klatce wywo³ywaæ OnFrame w celu przeliczenia
+(wtedy te¿ powstaje wiêkszoœæ zdarzeñ dla kontrolek) oraz OnDraw w celu
+odrysowania (wtedy powstaj¹ zdarzenia OnDraw kontrolek).
+
+Manager implementuje interfejs frame::IInputObject. W ten sposób reaguje
+na zdarzenia z wejœcia od klawiatury i myszy. Niestety w zdarzeniach
+od klawiatury zawsze zwraca true, bo nie potrafi stwierdziæ natychchmiast czy
+dane zdarzenie zostaje obs³u¿one. Dlatego w razie potrzeby obs³ugiwania tych
+zdarzeñ w razie nieobs³u¿enia przez modu³ GUI, nale¿y wykorzystaæ delegaty
+OnUnhandled* z obiektu klasy Manager.
+
+Modu³ GUI. nie u¿ywa modu³u Err. Nie rzuca wyj¹któw. Jeœli próbuje siê zrobiæ
+coœ niedozwolonego, po prostu jest to ignorowane. B³êdy krytyczne s¹ sprawdzane
+za pomoc¹ asercji, a wszelkie absolutnie karygodne niedopatrzenia zakoñcz¹ siê -
+wiadomo - b³êdem ochrony.
+
+
+Kontrolki
+================================================================================
+
+G³ówn¹ struktur¹ GUI jest las kontrolek. S¹ to obiekty klas dziedzicz¹cych po
+klasie Control lub CompositeControl. CompositeControl, sama bêd¹c odziedziczona
+z Control, jest zdolna do przechowywania w sobie podkontrolek i z niej nale¿y
+wyprowadzaæ kontrolki konkretne, które te¿ maj¹ mieæ tak¹ zdolnoœæ.
+
+Manager przechowuje na trzech warstwach listy kontrolek g³ównego poziomu.
+Te kontrolki mog¹ mieæ swoje podkontrolki itd.
+
+Kontrolki definiuje siê dziedzicz¹c z klasy Control lub CompositeControl i
+implementuj¹c wybrane metody wirtualne. Wiêkszoœæ z nich to zdarzenia wywo³ywane
+w ramach Manager::OnFrame, które podlegaj¹ kolejkowaniu. Dziêki temu mo¿na
+w nich (mam nadziejê) bezpiecznie wywo³ywaæ ró¿ne operacje na strukturze
+kontrolek i ich stanie (³¹cznie z usuwaniem), ale za to zachodz¹ z opóŸnieniem,
+niekoniecznie od razu w chwili zajœcia zdarzenia i z takim stanem jaki maj¹
+natychmiast po tym zajœciu.
+
+Kontrolki tworzy siê wywo³uj¹c konstruktor klasy. Nale¿y je tworzyæ na stercie
+operatorem new. Do konstruktora podaje siê kontrolkê rodzica /parent/ lub 0
+jeœli to kontrolka najwy¿szego poziomu. W konstruktorze klasy potomnej mo¿na
+sobie poustawiaæ ró¿ne rzeczy, jak SetHint, SetRect, SetLayer itd.
+
+Kontrolki usuwaæ nale¿y metod¹ Release, nie bezpoœrednio delete. Obecnie to nie
+robi ró¿nicy, ale w przysz³oœci mo¿liwe jest odraczanie usuwania w celu
+rozwi¹zania pewnych komplikacji z sekwencj¹ wywo³añ metod. Kontrolka
+CompositeControl sama usuwa swoje podkontrolki podczas zniszczenia. Kontrolki
+najwy¿szego poziomu zobowi¹zany jest usuwaæ u¿ytkownik - nie robi tego Manager.
+
+ClientRect to prostok¹t wyznaczaj¹cy w CompositeControl obszar, w którym
+mieszcz¹ siê podkontrolki. Jest wyra¿ony we wspó³rzêdnych lokalnych danej
+kontrolki (wzglêdem jej normalnego Rect), a wspó³rzêdne Rect podkontrolek s¹
+z kolei wzglêdem miejsca pocz¹tku tego prostok¹ta ClientRect. Podkontrolka,
+która nie mieœci siê w zakresie ClientRect w ca³oœci / w ogóle (zale¿nie
+od sta³ej NO_CLIP) nie jest rysowana ani nie ma szansy na hit-test, ale nie jest
+formalnie uznana za niewidzialn¹ ani nieaktywn¹, mo¿e wiêc mieæ ognisko itd.
+
+Warstwy
+-------
+
+Manager posiada trzy warstwy, na których zgromadzone mog¹ byæ kontrolki g³ównego
+poziomu - NORMAL, STAYONTOP i VOLATILE. Zwyk³e okna i kontrolki nale¿y tworzyæ
+na warstwie NORMAL. Do niej domyœlnie trafiaj¹ kontrolki. STAYONTOP to warstwa
+dla okien zawsze-na-wierzchu, jak powiadomienia /MessageBox/. VOLATILE to
+miejsce dla "wyskakuj¹cych" kontrolek, jak menu, rozwijane listy z ComboBoksa
+itp. Wszystko okna na tej warstwie s¹ automatycznie chowane (Visible=false)
+kiedy ognisko otrzumuje jakaœ kontrolka nie nale¿¹ca choæby poœrednio do okna
+z tej warstwy.
+
+Kontrolkê mo¿na przenieœæ do wybranej warstwy metod¹ SetLayer.
+
+
+Aktywnoœæ
+================================================================================
+
+Kontrolka jest aktywna /Enabled/ lub nieaktywna. Kontrolka jest prawdziwie
+aktywna /RealEnabled/ kiedy aktywna jest ona i wszystkie jej nadrzêdne a¿ do
+g³ównego poziomu. Aktywnoœæ mo¿na zmieniaæ metod¹ SetEnabled. O zmianie
+powiadamiana jest zdarzeniami OnEnable i OnDisable, jednak nie dotycz¹ one
+zmiany aktywnoœci kontrolek nadrzêdnych (TODO: Czy na pewno??? Kod mówi
+inaczej!).
+
+Kontrolka nieaktywna traci ognisko i nie mo¿e otrzymywaæ zdarzeñ od klawiatury
+ani od myszy, nie mo¿e mieæ ogniska. Mo¿e jednak pokazywaæ hint i mieæ kursor.
+Powinna inaczej wygl¹daæ. Nie jest gwarantowane, ¿e ¿adne zdarzenie do kontrolki
+która sta³a siê nieaktywna nie dotrze - jakieœ mog³o siê gdzieœ zapodziaæ :)
+
+
+Widzialnoœæ
+================================================================================
+
+Widzialnoœæ /Visible/ dzia³a podobnie do aktywnoœci. Te¿ jest dziedziczona. Te¿
+istnieje prawdziwa widzialnoœæ /RealVisible/. Kontrolki niewidzialne nie s¹
+rysowane, nie mog¹ mieæ ogniska, nie mog¹ odbieraæ wejœcia od klawiatury ani od
+myszy. Do zmiany widzialnoœci s³u¿y metoda SetVisible. Do powiadamiania -
+zdarzenia OnShow i OnHide.
+
+
+Wejœcie od myszy
+================================================================================
+
+OnMouseButton wywo³uje siê dla kontrolki, nad któr¹ jest kursor. Wyj¹tkiem jest
+sytuacja kiedy trwa przeci¹ganie - wówczas wywo³uje siê dla kontrolki, która
+jest przeci¹gana i powoduje zawsze zakoñczenie przeci¹gania - b¹dŸ to pozytywne
+b¹dŸ to jego anulowanie.
+
+OnMouseMove wywo³uje siê podobnie - dla kontrolki, nad któr¹ jest kursor,
+z wyj¹tkiem sytuacji, kiedy trwa przeci¹ganie - wówczas dla kontrolki
+przeci¹ganej.
+
+OnMouseWheel wywo³uje siê zawsze dla kontrolki, nad któr¹ jest kursor
+niezale¿nie od tego czy trwa przeci¹ganie.
+
+OnMouseEnter dostaje kontrolka, nad któr¹ wchodzi kursor myszy, o ile nie trwa
+przeci¹ganie - wówczas uznaje siê, ¿e kursor jest tak jakby ca³y czas nad
+kontrolk¹ przeci¹gan¹. OnMouseLeave analogicznie.
+
+Hit-Testing
+-----------
+
+Poprzez w³asn¹ implementacjê metody OnHitTest kontrolka mo¿e decydowaæ, czy dany
+punkt le¿¹cy na obszarze jej prostok¹ta faktycznie do niej nale¿y. Jeœli nie,
+to miejsce uznane zostanie za przezroczyste i klikniêcie czy najechanie mysz¹
+"przejdzie" do kontrolki nadrzêdnej, le¿¹cej pod spodem, co spowoduje w³aœciwe
+zachowanie w ka¿dej sytuacji. Dziêki temu kontrolka mo¿e mieæ nieregularne
+kszta³ty, o ile wyznaczaj¹cy j¹ prostok¹t jest na tym kszta³cie w ca³oœci
+opisany.
+
+Drag&drop
+---------
+
+Drag&drop albo przeci¹ganie to najbardziej zaawansowany mechanizm ca³ego modu³u
+GUI. Polega na mo¿liwoœci przeci¹gania obiektów kursorem myszy z jednej
+kontrolki do innej (albo tej samej). Procedura jest nastêpuj¹ca:
+
+1. Rozpoczêcie przeci¹gania
+
+Kontrolka wewn¹trz zdarzenia OnMouseButton w reakcji na akcjê MOUSE_DOWN
+odpowiedniego klawisza wywo³uje metodê StartDrag, podaj¹c stworzony specjalnie
+obiekt klasy dziedzicz¹cej z DragData.
+
+2. Przeci¹ganie trwa
+
+Zamiast kontrolki, nad któr¹ faktycznie jest mysz, zdarzenia od myszy -
+OnMouseButton i OnMouseMove, dostaje kontrolka przeci¹gana. Kontrolka docelowa
+przeci¹gania - ta nad któr¹ jest mysz - dostaje w zamian zdarzenia OnDragEnter,
+OnDragLeave, OnDragOver. Jako kursor wykorzystywany jest obiekt klasy DragData.
+
+3. Przeci¹ganie koñczy siê sukcesem
+
+Jeœli u¿ytkownik zwolni klawisz myszy, którym rozpocz¹³ przeci¹ganie, kontrolka
+docelowa (to mo¿e byæ ta sama co Ÿród³owa albo inna) dostaje zdarzenie
+OnDragDrop, a Ÿród³owa OnDragFinished.
+
+4. Przeci¹ganie koñczy siê pora¿k¹
+
+Jeœli klikniêto lub zwolniono inny klawisz myszy, kontrolka docelowa dostaje
+zdarzenie OnDragCancel, a Ÿród³owa OnDragFinished.
+
+Jeœliby kontrolka Ÿród³owa chcia³a przerwaæ przeci¹ganie - na przyk³ad w wyniku
+otrzymania zdarzenia naciœniêcia klawisza ESC (o ile ma ognisko), mo¿e to zrobiæ
+wywo³uj¹c metodê CancelDrag.
+
+
+Wejœcie od klawiatury
+================================================================================
+
+Kontrolka, która jest prawdziwie aktywna, prawdziwie widzialna i mo¿e mieæ
+ognisko /Focusable/, mo¿e otrzymaæ ognisko /Focus/. Wówczas w³aœnie ona dostaje
+zdarzenia z klawiatury - OnKeyDown, OnKeyUp, OnChar. Jeœli w danej metodzie
+zwróci false, zdarzenie przechodzi do jej kontrolki nadrzêdnej itd. a¿
+do g³ównego poziomu. Dzieje siê tak nawet jeœli dana kontrolka nadrzêdna sama
+nie mo¿e mieæ ogniska (/Focusable/ nie jest dziedziczone). To okazja
+do obs³u¿enia zdarzeñ wy¿szego poziomu takich jak przeniesienie ogniska
+na nastêpn¹/poprzedni¹ kontrolkê pod wp³ywem klawiszy takich jak Tab/Shift+Tab
+czy Góra/Dó³.
+
+Nadaæ danej kontrolce ognisko mo¿na metod¹ Focus. O uzyskaniu i utracie ogniska
+przez kontrolkê informuj¹ zdarzenia OnFocusEnter i OnFocusLeave.
+
+Metoda FocusNext i FocusPrev daje ognisko odpowiednio nastêpnej i poprzedniej
+kontrolce wzglêdem danej, przy czym w poszukiwaniu takiej kontrolki
+przeszukiwane jest ca³e drzewo danej kontrolki g³ównej, tak¿e na ni¿szych i
+wy¿szych poziomach, a po zakoñczeniu od pocz¹tku.
+
+
+Kursor
+================================================================================
+
+Kursor to obiekt dziedzicz¹cy z klasy Cursor. Ka¿da kontrolka ma swój kursor -
+domyœlnie jest to wskaŸnik pusty. Kontrolka mo¿e ustawiæ swój kursor na wybrany
+obiekt metod¹ SetCursor. Sama jest odpowiedzialna za jego tworzenie, niszczenie
+oraz za to, ¿eby modu³ GUI nie mia³ go ustawionego w chwili kiedy ju¿ nie
+istnieje. Jeœli coœ zmieni siê wewn¹trz przypisanego ca³y czas do kontrolki
+obiektu kursora, nale¿y wywo³aæ metodê CursorChanged.
+
+To, jakie informacje bêdzie przechowywa³a konkretna klasa kursora i jak one
+zostan¹ wykorzystane do pokazywania kursora w programie, to jest zupe³nie
+dowolne - elastycznoœæ jest jak widaæ ogromna. U¿ytkownik mo¿e w ka¿dej chwili
+otrzymaæ od managera pozycjê kursora metodê GetMousePos i bie¿¹cy kursor metod¹
+GetCurrentCursor. Mo¿e te¿ zmieniaæ pokazywany kursor tylko kiedy to naprawdê
+konieczne - w reakcji zdarzenie OnCursorChange managera.
+
+Jako bie¿¹cy kursor manager uznaje kursor tej kontrolki, nad któr¹ jest
+aktualnie kursor myszy. Wyj¹tkiem jest sytuacja, kiedy coœ jest przeci¹gane -
+wówczas kursorem jest obiekt klasy DragData dotycz¹cy bie¿¹cego przeci¹gania.
+
+
+Hint
+================================================================================
+
+Dzia³a podobnie jak kursor, ale tutaj nie liczy siê przeci¹ganie - bie¿¹cy
+hint dotyczy zawsze kontrolki, nad któr¹ jest kursor myszy. Hint to mechanizm
+do pokazywania w³asnych dymków czy innych informacji z podpowiedzi¹ na temat
+danej kontrolki - czy to w dymku przy tej kontrolce, czy to gdzieœ w wybranym
+przez u¿ytkownika miejscu.
+
+Hint dziedziczy z klasy Hint. Kontrolka ustawia swój hint metod¹ SetHint.
+Pocz¹tkowo jest to wskaŸnik pusty. O zmianie w obiekcie swojego hinta powiadamia
+wywo³aniem HintChanged.
+
+U¿ytkownik mo¿e w ka¿dej chwili otrzymaæ od managera obiekt bie¿¹cego hinta
+metod¹ GetCurrentHint lub reagowaæ tylko na zmiany hinta obs³uguj¹c zdarzenie
+OnHintChanged.
+
+Hint, podobnie jak kursor, w chwili kiedy pozycja myszy nie jest nad ¿adn¹
+kontrolk¹ ma wartoœæ 0.
+
+Hint wyprowadzony z klasy PopupHint ma specjaln¹ w³asnoœæ. Po odczekaniu
+odpowiedniego czasu (sta³e HINT_DELAY_*) wed³ug specjalnego algorytmu wywo³ywana
+jest takiemu obiektowi metoda OnDraw - ju¿ po narysowaniu wszystkich kontrolek,
+ale jeszcze w ramach OnDraw managera. Metoda ta otrzymuje pozycjê, w której by³
+kursor kiedy dany dymek po raz pierwszy siê pokaza³. Mo¿na sobie do niej dodaæ
+coœ celem pokazania go gdzieœ obok. Dziêki PopupHint mo¿na ³atwo robiæ
+wyskakuj¹ce po jakimœ czasie w miejscu kursora dymki z podpowiedziami.
+
+Jak zrobiæ ¿eby nie tworzyæ masy obiekcików klasy Hint czy Cursor tylko u¿ywaæ
+wszêdzie kilku alternatywnych wartoœci? Utworzyæ kilka globalnie dostêpnych
+obiektów klasy byle jakiej pochodnej od Hint/Cursor albo klasy Hint/Cursor,
+je przypisywaæ i z nimi porównywaæ.
+

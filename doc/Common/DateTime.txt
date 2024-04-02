@@ -1,0 +1,166 @@
+################################################################################
+  Kodowanie Windows-1250, koniec wiersza CR+LF, test: Za¿ó³æ gêœl¹ jaŸñ
+  DateTime - Data i czas
+  Copyleft (C) 2007 Adam Sawicki
+  Licencja: GNU LGPL
+  Kontakt: mailto:sawickiap@poczta.onet.pl , http://regedit.gamedev.pl/
+################################################################################
+
+
+Uwagi ogólne
+================================================================================
+
+- Modu³ nie jest mo¿e ekstremalnie optymalny, ale jest pisany pod k¹tem
+  szybkoœci i elegancji.
+- Wzorowany jest bibliotece wxWidgets - na module datetime (klasa wxDateTime i
+  pokrewne).
+- Bezpieczny zakres czasu, na którym potrafi operowaæ modu³, to mniej wiêcej
+  lata 1970 - 2037.
+- W³¹cza <time.h>
+
+
+Dostêpne typy
+================================================================================
+
+- WEEKDAY - enum
+  Dzieñ tygodnia
+- MONTH - enum
+  Miesi¹c roku
+- NAME_FORM - enum (flagi bitowe)
+  Sposób generowania nazw dla dni tygodnia i miesiêcy
+- DATESPAN - struct
+  Reprezentuje odcinek czasu. Przechowuje osobne liczby ca³kowite dla: lat,
+  miesiêcy, tygodni i dni. Mo¿na za jego pomoc¹ przesuwaæ TMSTRUCT.
+- TIMESPAN - struct
+  Reprezentuje odcinek czasu. Przechowuje liczbê ca³kowit¹ ze znakiem w
+  milisekundach. Mo¿na za jego pomoc¹ przesuwaæ DATETIME.
+- TMSTRUCT - struct
+  Reprezentuje moment czasu. Przechowuje osobne pola: dzien, miesi¹c, rok,
+  godzina, minuta, sekunda, milisekunda. Pamiêta tak¿e dzieñ tygodnia, który
+  wyliczany jest przy pierwszym odczytaniu (pole mutable).
+- DATETIME - struct
+  Reprezentuje moment czasu. Przechowuje liczbê milisekund od epoki Uniksowej,
+  czyli 1 stycznia 1970.
+
+
+Konwersja z ³añcuchami
+================================================================================
+
+- DATETIME:
+  SthToStr - pokazuje liczbê milisekund
+- TIMESPAN:
+  Metody ToString, ToString_Nice
+  SthToStr - pokazuje liczbê milisekund
+- TMSTRUCT:
+  Funkcje DateToStr, StrToDate
+  SthToStr, StrToSth - konwersja na ³añcuch wg domyœlnego formatu DEFAULT_FORMAT
+
+£añcuch formatuj¹cy - znaki o specjalnym znaczeniu:
+
+- h  - godzina 0-23
+- H  - godzina 00-23
+- m  - minuta 0-59
+- M  - minuta 00-59
+- s  - sekunda 0-59
+- S  - sekunda 00-59
+- w  - dzieñ tygodnia 1-7
+- W  - dzieñ tygodnia 1-7
+- wl - dzieñ tygodnia pn-ndz
+- wf - dzieñ tygodnia Pn-Ndz
+- wu - dzieñ tygodnia PN-NDZ
+- Wl - dzieñ tygodnia poniedzia³ek-niedziela
+- Wf - dzieñ tygodnia Poniedzia³ek-Niedziela
+- Wu - dzieñ tygodnia PONIEDZIA£EK-NIEDZIELA
+- d  - dzieñ 1-31
+- D  - dzieñ 01-31
+- n  - miesi¹c 1-12
+- N  - miesi¹c 01-12
+- nl - miesi¹c sty-gru
+- nf - miesi¹c Sty-Gru
+- nu - miesi¹c STY-GRU
+- Nl - miesi¹c styczeñ-grudzieñ
+- Nf - miesi¹c Styczeñ-Grudzieñ
+- Nu - miesi¹c STYCZEÑ-GRUDZIEÑ
+- y  - rok np. 97, 03
+- Y  - rok np. 1997, 2003
+- i  - milisekunda 0-999
+- I  - milisekunda 000-999
+
+Ka¿dy inny znak jest traktowany dos³ownie.
+
+Podczas parsowania StrToDate:
+
+- Ka¿da liczba mo¿e byæ lub nie byæ poprzedzona pocz¹tkowymi zerami.
+- Ka¿da nazwa mo¿e byæ w dowolnym z formatów.
+- Dzieñ tygodnia jest ignorowany.
+
+
+Konwersje miêdzy typami
+================================================================================
+
+DATETIME  -> TMSTRUCT  : TMSTRUCT::ctor, TMSTRUCT::Set
+TMSTRUCT  -> DATETIME  : DATETIME::ctor, DATETIME::Set
+time_t    -> DATETIME  : DATETIME::ctor, DATETIME::Set
+DATETIME  -> time_t    : DATETIME::GetTicks
+struct tm -> DATETIME  : DATETIME::ctor, DATETIME::Set
+struct tm -> TMSTRUCT  : TMSTRUCT::ctor, TMSTRUCT::Set
+TMSTRUCT  -> struct tm : TMSTRUCT::GetTm
+
+
+Operatory
+================================================================================
+
+- Konstruktory
+
+  Ka¿dy ma te¿ odpowiadaj¹c¹ metodê Set.
+  
+  DATESPAN() - niezainicjalizowany
+  DATESPAN(Years, Months, Weeks, Days)
+  
+  TIMESPAN() - niezainicjalizowany
+  TIMESPAN(int8) - milisekundy
+  TIMESPAN(Hours, Minutes, Seconds, [Milliseconds])
+  
+  TMSTRUCT() - niezainicjalizowany
+  TMSTRUCT(DATETIME)
+  TMSTRUCT(struct tm)
+  
+  DATETIME(Day, Month, Year, Hour, Minute, Second, [Millisecond])
+  DATETIME(Day, Month, Year)
+  DATETIME(time_t)
+  DATETIME(struct tm)
+  DATETIME(TMSTRUCT)
+
+- Operatory porównania
+
+  DATESPAN == DATESPAN, DATESPAN != DATESPAN
+  
+  TIMESPAN == TIMESPAN, TIMESPAN != TIMESPAN
+  TIMESPAN <  TIMESPAN, TIMESPAN >  TIMESPAN
+  TIMESPAN <= TIMESPAN, TIMESPAN >= TIMESPAN
+  
+  DATETIME == DATETIME, DATETIME != DATETIME
+  DATETIME <  DATETIME, DATETIME >  DATETIME
+  DATETIME <= DATETIME, DATETIME >= DATETIME
+
+- Operatory arytmetyczne
+
+  Ka¿dy ma te¿ wersjê z przypisaniem np. +=
+
+  DATESPAN + DATESPAN = DATESPAN
+  DATESPAN - DATESPAN = DATESPAN
+  DATESPAN * int = DATESPAN, int * DATESPAN = DATESPAN
+
+  TIMESPAN + TIMESPAN = TIMESPAN
+  TIMESPAN - TIMESPAN = TIMESPAN
+  TIMESPAN * int = TIMESPAN, int * TIMESPAN = TIMESPAN
+  -TIMESPAN
+
+  TMSTRUCT + DATESPAN = TMSTRUCT
+  TMSTRUCT - DATESPAN = TMSTRUCT
+
+  DATETIME + TIMESPAN = DATETIME
+  DATETIME - TIMESPAN = DATETIME
+
+  DATETIME - DATETIME = TIMESPAN
+

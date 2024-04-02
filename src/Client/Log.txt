@@ -1,0 +1,43 @@
+[F:-] App: Ctor
+[F:-] Framework: Wczytywanie konfiguracji z pliku: Config.dat
+[F:-] App: OnActivate
+[F:-] App: OnCreate
+[F:-] ResMngr: D3dEffect: Loading "PlainColor2d" from: Framework\Shaders\PlainColor2d.fxo
+[F:-] ResMngr: D3dEffect: Loading "SpriteEffect01" from: Framework\Shaders\SpriteEffect01.fxo
+[F:-] ResMngr: Font: Creating "Font02"
+[F:-] ResMngr: D3dEffect: Loading "FontEffect" from: Framework\Shaders\FontEffect.fxo
+[F:-] ResMngr: D3dTexture: Loading "GuiSprites" from: Framework\Textures\GuiSprites.png
+[F:-] Engine: Checking device capabilities...
+[F:-] Engine: Device capabilities OK.
+[F:-] Game: CreateGame: 1
+[F:-] ResMngr: QMap: "PacMan_Map" Loading from "Game\PacMan.qmap"
+[F:-] ResMngr: QMap: "PacMan_Map" Loading mesh from "Game\PacMan.qmap"
+[F:-] ResMngr: QMesh: "PacmanModel" Loading header from "Game\Models\Pacman.qmsh"
+[F:-] ResMngr: QMesh: "PacmanModel" Loading data from "Game\Models\Pacman.qmsh"
+[F:-] ResMngr: QMesh: "Gem" Loading header from "Game\Models\Gem.qmsh"
+[F:-] ResMngr: QMesh: "Gem" Loading data from "Game\Models\Gem.qmsh"
+[F:-] ResMngr: QMesh: "GhostModel" Loading header from "Game\Models\Ghost.qmsh"
+[F:-] ResMngr: QMesh: "GhostModel" Loading data from "Game\Models\Ghost.qmsh"
+[F:1] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Screen, IsTexture=true, Width=1024, Height=768, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:1] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00000180
+[F:1] ResMngr: D3dTexture: Loading "PacmanMapFloor" from: Game\Textures\PacmanMapFloor.jpg
+[F:1] ResMngr: D3dTexture: Loading "PacmanMapKlocek" from: Game\Textures\PacmanMapKlocek.bmp
+[F:1] ResMngr: D3dEffect: Loading "OcclusionQueryEffect" from: Engine\Shaders\OcclusionQueryEffect.fxo
+[F:1] ResMngr: IcosphereRes: "" Creating buffers.
+[F:1] ResMngr: D3dTexture: Loading "PacmanTexture" from: Game\Textures\Pacman.tga
+[F:1] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00000104
+[F:1] ResMngr: D3dCubeTexture: Loading "Gemstone" from: Engine\Textures\Gemstone Env Cube Map.dds
+[F:1] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00021003
+[F:1] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Blur_2, IsTexture=true, Width=256, Height=192, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:1] ResMngr: D3dTextureSurface.CreateSurface: Name=Engine_Special_Blur_1, IsTexture=true, Width=256, Height=192, Pool=DEFAULT, Usage=RENDERTARGET, Format=A8R8G8B8
+[F:1] ResMngr: D3dEffect: Loading "PpBrightPass" from: Engine\Shaders\PpBrightPass.fxo
+[F:1] ResMngr: D3dEffect: Loading "PpBlurPass" from: Engine\Shaders\PpBlurPass.fxo
+[F:1] ResMngr: Multishader: Loading from cache. Shader=PpShader, Hash=00000000
+[F:1] ResMngr: D3dTexture: Loading "MenuButton" from: Game\Textures\MenuButton.tga
+[F:2] ResMngr: D3dTexture: Loading "GemParticleTexture" from: Game\Textures\GemParticle.tga
+[F:2] ResMngr: D3dEffect: Loading "ParticleShader" from: Engine\Shaders\ParticleShader.fxo
+[F:564] ResMngr: Multishader: Loading from cache. Shader=MainShader, Hash=00030203
+[F:614] Game: DestroyGame
+[F:614] App: OnDestroy
+[F:614] App: OnDeactivate
+[F:614] App: Dtor

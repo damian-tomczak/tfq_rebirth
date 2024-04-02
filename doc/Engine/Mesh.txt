@@ -1,0 +1,197 @@
+Eksport z Blendera - mo¿liwoœci i za³o¿enia
+================================================================================
+
+SIATKA
+======
+
+- JEST wsparcie dla wielu obiektów. Pozostaj¹ osobnymi obiektami, nazwy obiektów
+(nie siatek "ME") zostaj¹ zachowane.
+
+- JEST wsparcie dla materia³ów. Zachowane zostaj¹ wy³¹cznie nazwy materia³ów.
+Obiekt mo¿e nie mieæ materia³u - wówczas nazwa jego materia³u bêdzie ³añcuchem
+pustym.
+
+- JEST wsparcie dla wielu materia³ów w jednym obiekcie. Jeœli siatka u¿ywa wielu
+materia³ów, zostaje rozdzielona na osobne obiekty, których nazwy budowane s¹
+jako: "<Nazwa_obiektu>.<Nazwa_materia³u>".
+
+- JEST wsparcie dla transformacji ca³ych obiektów - ich translacji, rotacji i
+skalowania.
+
+- JEST eksport wspó³rzêdnych (koordynatów) tekstur. Siatka mo¿e nie mieæ
+wspó³rzêdnych tekstur - wtedy wszystkie s¹ zerowe (0,0). Jeœli siatka ma wiele
+zestawów wspó³rzêdnych tekstur, eksportowane s¹ te z zestawu ustawionego jako
+aktywny (nie tego ustawionego jako renderowany).
+
+- Kwestia normalnych i wyg³adzania jest z³o¿ona. Blender w ogóle nie udostêpnia
+dla skryptu prawid³owych normalnych, a wektorów stycznych w ogóle nie wspiera.
+Tote¿ eksporowane i respektowane JEST JEDYNIE ustawienie k¹ta "Degr" dla funkcji
+"AutoSmooth". Sam stan w³¹czenia funkcji "AutoSmooth" NIE JEST eksportowany, bo
+w ogóle nie jest dostêpny dla skryptu. NIE JEST respektowane równie¿ ustawienie
+Smooth (Set Smooth / Set Solid) dla poszczególnych œcianek. Wektory normalne i
+styczne s¹ zawsze wyg³adzane na podstawie k¹ta i wyliczane w programie Tools
+przez NVMeshMender. Nie nale¿y u¿ywaæ w Tools generowania wektorów Tangent i
+Binormal kiedy jakieœ obiekty nie posiadaj¹ poprawnych wspó³rzêdnych tekstury -
+program mo¿e siê wysypaæ albo oblicza b³êdne wektory.
+
+- NIE ma wsparcia dla obiektów typu krzywa (Curve), kratownica (Lattice), meta
+(MBall) czy powierzchni (Surf). Jeœli s¹ obecne, wyœwietlaj¹ ostrze¿enie. Aby je
+wyeksportowaæ, zamieñ je na siatki.
+
+- NIE ma wsparcia dla œwiate³ (Lamp) i kamer (Camera) - te obiekty s¹
+ignorowane.
+
+- NIE wolno parentowaæ obiektów do poszczególnych wierzcho³ków innych obiektów,
+aczkolwiek nie sprawdzam tego bo nie wiem jak to sprawdzaæ w Python API.
+
+- NIE wolno parentowaæ jednych obiektów do drugich. Wyj¹tkiem s¹ kamery, œwiat³a
+itp. (które i tak s¹ ignorowane) oraz parentowanie siatek do obiektu Armature
+(lub jednej z jego koœci) celem skinningu.
+
+
+KOŒCI
+=====
+
+- Co najwy¿ej JEDEN obiekt Armature mo¿e znajdowaæ siê na scenie.
+
+TODO... | tylko ¿e teraz ju¿ nie pamiêtam co tu napisaæ wiêcej...
+
+
+ANIMACJA
+========
+
+- Dzia³aj¹ TYLKO krzywe IPO dla koœci w Pose Mode.
+
+- NIE dzia³aj¹ krzywe IPO modyfikuj¹ce prêdkoœæ czasu.
+
+- Jeœli pierwszy klucz zaczyna siê w IPO wczeœniej lub póŸniej ni¿ w klatce
+zerowej, animacja zostaje przesuniêta tak, ¿e pierwszy klucz to pocz¹tek
+animacji.
+
+- Podczas konwersji miary czasu w klatkach (Blender) na miarê w sekundach (QMSH)
+respektowane jest ustawienie liczby klatek na sekundê (Frs/sec) znajduj¹ce siê
+poœród ustawieñ sceny (F10).
+
+TODO... | tylko ¿e teraz ju¿ nie pamiêtam co tu napisaæ wiêcej...
+
+
+Format .qmsh.tmp
+================================================================================
+
+Format poœredni eksportu modeli z Blendera.
+Plik tekstowy. Kodowanie ANSI. Koniec wiersza dowolny. Format jak w module
+Tokenizer z CommonLib.
+
+Sk³adnia:
+
+QMSH TMP 10
+objects {
+	mesh <Nazwa_obiektu(string)> {
+		<Pozycja_obiektu>
+		<Orientacja_obiektu>
+		<Rozmiar_obiektu>
+		<Parent_armataure(string)> <Parent_bone(string)>
+		<Auto_smooth_angle(float)>
+		materials <Liczba_materia³ów> {
+			<Nazwa_materia³u>
+			<Nazwa_materia³u>
+			...
+		}
+		vertices <Liczba_wierzcho³ków> {
+			<Pozycja_wierzcho³ka>
+			<Pozycja_wierzcho³ka>
+			...
+		}
+		faces <Liczba_œcianek> {
+			<Liczba_wierzcho³ków> <Nr_materia³u> <Czy_smooth> <Indeks_wierzcho³ka> <Wsp_tekstury> <Indeks_wierzcho³ka> <Wsp_tekstury> ...
+			<Liczba_wierzcho³ków> <Nr_materia³u> <Czy_smooth> <Indeks_wierzcho³ka> <Wsp_tekstury> <Indeks_wierzcho³ka> <Wsp_tekstury> ...
+			...
+		}
+		vertex_groups {
+			<Nazwa(string)> { <Indeks(int)> <Waga(float)> <Indeks> <Waga> <Indeks> <Waga> ... }
+			<Nazwa(string)> { <Indeks(int)> <Waga(float)> <Indeks> <Waga> <Indeks> <Waga> ... }
+			...
+		}
+	}
+	armature <Nazwa_obiektu(string)> {
+		<Pozycja_obiektu>
+		<Orientacja_obiektu>
+		<Rozmiar_obiektu>                
+		<Vertex_groups(0|1)> <Envelopes(0|1)>
+		bone <Nazwa(string)> {
+			<Parent(string)>
+			head <Head_BONESPACE> <Head_ARMATURESPACE> <Head_radius>
+			tail <Tail_BONESPACE> <Tail_ARMATURESPACE> <Tail_radius>
+			<Roll_BONESPACE(float)> <Roll_ARMATURESPACE(float)>
+			<Length(float)> <Weight(float)>
+			
+			<Matrix_BONESPACE(matrix3x3)>
+			
+			<Matrix_ARMATURESPACE(matrix4x4)>
+		}
+		...
+	}
+}
+actions {
+	<Nazwa_Action(string)> {
+		<Nazwa_Channel(string)> {
+			<Nazwa_Curve(string)> <Interpolation_method(identifikator)> <Extend_method(identyfikator)> { <X(float)>,<Y(float)> <X>,<Y> ... }
+			<Nazwa_Curve(string)> <Interpolation_method(identifikator)> <Extend_method(identyfikator)> { <X(float)>,<Y(float)> <X>,<Y> ... }
+			...
+		}
+		...
+	}
+	...
+}
+params {
+	fps = <Frames_per_second(int)>
+}
+
+Gdzie:
+- Pozycja_obiektu - pozycja œrodka danego obiektu:
+  <x>,<y>,<z>
+- Orientacja_obiektu - k¹ty Eulera:
+  <x>,<y>,<z>
+- Rozmiar_obiektu - wspó³czynniki skalowania:
+  <x>,<y>,<z>
+- Parent_armature (string) - nazwa obiektu Armature do którego ta siatka jest
+  przyczepiona lub "", jeœli do ¿adnego
+- Parent_bone (string) - nazwa koœci, do której ca³a ta siatka jest
+  przyczepiona. £añcuch niepusty tylko, jeœli jest Parent_armature i ca³a siatka
+  jest do jednej koœci, a nie skinning.
+- Nazwa_materia³u - (³añcuch)
+- Pozycja_wierzcho³ka:
+  <x>,<y>,<z>
+- Indeks_wierzcho³ka (uint) - odnosi siê do tablicy wierzcho³ków, zawsze w odpowiednim zakresie
+- Wsp_tekstury:
+  <x>,<y>
+- Nr_materia³u:
+  Liczba ca³kowita bez znaku, 0..15
+  Mo¿e wykraczaæ poza rozmiar listy materia³ów.
+- Czy_smooth: 0 lub 1
+
+- Parent - nazwa koœci nadrzêdnej.
+  Jeœli to jest koœæ g³ównego poziomu, ³añcuch pusty.
+- Head_BONESPACE, Head_ARMATURESPACE
+  Tail_BONESPACE, Tail_ARMATURESPACE
+  To wektory trzech floatów: <x>,<y>,<z>
+- Head_radius, Tail_radius (float)
+- Matrix_BONESPACE, Matrix_ARMATURESPACE
+  Macierz, w formacie (zale¿nie od wymiaru):
+  <a11>, <a12>, <a13>, <a14>;
+  <a21>, <a22>, <a23>, <a24>;
+  <a31>, <a32>, <a33>, <a34>;
+  <a41>, <a42>, <a43>, <a44>;
+
+- Interpolation_method (identyfikator): mo¿e byæ jedna z wartoœci:
+  CONST, LINEAR, BEZIER
+- Extend_method (identyfikator): mo¿e byæ jedna z wartoœci:
+  CONST, EXTRAP, CYCLIC, CYCLIC_EXTRAP
+
+Obiektów mesh mo¿e pojawiæ siê kilka. Obiekt armature zero lub jeden. Kolejnoœæ
+obiektów jest dowolna.
+
+Materia³ów jest miêdzy 0..16.
+Wierzcho³ków w œcianie jest miêdzy 3..4.
+
+

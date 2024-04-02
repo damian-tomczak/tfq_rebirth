@@ -1,0 +1,141 @@
+texture "MenuButton" "Game\\Textures\\MenuButton.tga";
+
+////// Pacman
+
+QMap "PacMan_Map" "Game\\PacMan.qmap";
+texture "PacmanMapFloor" "Game\\Textures\\PacmanMapFloor.jpg";
+texture "PacmanMapKlocek" "Game\\Textures\\PacmanMapKlocek.bmp";
+
+QMesh "Gem" "Game\\Models\\Gem.qmsh";
+texture "GemParticleTexture" "Game\\Textures\\GemParticle.tga";
+
+QMesh "PacmanModel" "Game\\Models\\Pacman.qmsh";
+texture "PacmanTexture" "Game\\Textures\\Pacman.tga";
+
+QMesh "GhostModel" "Game\\Models\\Ghost.qmsh";
+
+////// RTS
+
+Terrain "RtsTerrain"
+	CX = 63 CZ = 63 VertexDistance = 0.8 MinY = -5.0 MaxY = 0.0
+	HeightmapFileName = "Game\\Terrain\\RTS Heightmap.bmp"
+	FormDescFileName = "Game\\Terrain\\RTS Form Desc.dat"
+	FormMapFileName = "Game\\Terrain\\RTS Formmap.bmp"
+	CacheFileName = "Cache\\Terrain\\RtsTerrain";
+texture "Grass" "Game\\Textures\\Grass.tga";
+texture "Path" "Game\\Textures\\Path.tga";
+texture "Sand" "Game\\Textures\\Sand.tga";
+texture "TreeTexture" "Game\\Textures\\Tree.tga";
+texture "GrassTexture" "Game\\Textures\\GrassSprite.tga";
+
+QMesh "CastleModel" "Game\\Models\\Castle.qmsh";
+texture "CastleTexture" "Game\\Textures\\CastleTexture.jpg";
+
+QMesh "SwordsmanModel" "Game\\Models\\Swordsman.qmsh";
+texture "SwordsmanTexture" "Game\\Textures\\Swordsman.dds";
+
+texture "SelectionTexture" "Game\\Textures\\Selection.tga";
+
+texture "SparkParticleTexture" "Game\\Textures\\SparkParticle.tga";
+
+////// Space
+
+Terrain "SpaceTerrain"
+	CX = 255 CZ = 255 VertexDistance = 1.2 MinY = -10.0 MaxY = 10.0
+	HeightmapFileName = "Game\\Terrain\\Space Heightmap.bmp"
+	FormDescFileName = "Game\\Terrain\\Space Form Desc.dat"
+	FormMapFileName = "Game\\Terrain\\Space Formmap.tga"
+	CacheFileName = "Cache\\Terrain\\SpaceTerrain";
+
+texture "MarsTerrain2" "Game\\Textures\\MarsTerrain2.bmp";
+texture "MarsTerrain1" "Game\\Textures\\MarsTerrain1.bmp";
+
+texture "Sky_Mars" "Game\\Textures\\Sky_Mars.tga";
+texture "Sky_Sun" "Game\\Textures\\Sky_Sun.tga";
+
+QMesh "Craft01Model" "Game\\Models\\Craft01.qmsh";
+texture "Craft01Texture" "Game\\Textures\\Craft01.tga";
+texture "Craft01NormalTexture" "Game\\Textures\\Craft01_n.tga";
+
+QMesh "Rock1Model" "Game\\Models\\Rock1.qmsh";
+QMesh "Rock2Model" "Game\\Models\\Rock2.qmsh";
+
+QMesh "Craft02Model" "Game\\Models\\Craft02.qmsh";
+texture "Craft02Texture" "Game\\Textures\\Craft02.dds";
+texture "Craft02NormalTexture" "Game\\Textures\\Craft02_n.tga";
+
+texture "MainParticle" "Game\\Textures\\MainParticle.tga";
+texture "SmokeParticle" "Game\\Textures\\SmokeParticle.tga";
+texture "MissileParticle" "Game\\Textures\\MissileParticle.tga";
+texture "FireParticle" "Game\\Textures\\FireParticle.tga";
+texture "LaserStripeTexture" "Game\\Textures\\LaserStripe.tga";
+
+////// FPP
+
+QMap "FppMap" "Game\\Fpp.qmap";
+
+texture "FppMapTex_Kompy" "Game\\Textures\\FppMap\\kompy.jpg";
+	texture "FppMapTex_Kompy_emissive" "Game\\Textures\\FppMap\\kompy_emissive.tga";
+texture "FppMapTex_Krata" "Game\\Textures\\FppMap\\krata.dds";
+	texture "FppMapTex_Krata_n" "Game\\Textures\\FppMap\\krata_n.tga";
+texture "FppMapTex_KrataStalowa" "Game\\Textures\\FppMap\\krata_stalowa.tga";
+	texture "FppMapTex_KrataStalowa_n" "Game\\Textures\\FppMap\\krata_stalowa_n.tga";
+texture "FppMapTex_Lampy" "Game\\Textures\\FppMap\\lampy.tga";
+texture "FppMapTex_ScianyMur" "Game\\Textures\\FppMap\\mur.tga";
+	texture "FppMapTex_ScianyMur_n" "Game\\Textures\\FppMap\\mur_n.tga";
+texture "FppMapTex_Pipe" "Game\\Textures\\FppMap\\pipe.tga";
+	texture "FppMapTex_Pipe_n" "Game\\Textures\\FppMap\\pipe_n.bmp";
+texture "FppMapTex_Plakat" "Game\\Textures\\FppMap\\plakat.tga";
+texture "FppMapTex_Podloga" "Game\\Textures\\FppMap\\Podloga.dds";
+	texture "FppMapTex_Podloga_n" "Game\\Textures\\FppMap\\Podloga_n.jpg";
+texture "FppMapTex_Sufit" "Game\\Textures\\FppMap\\sufit.tga";
+	texture "FppMapTex_Sufit_n" "Game\\Textures\\FppMap\\sufit_n.tga";
+texture "FppMapTex_Szyby" "Game\\Textures\\FppMap\\szyby.tga";
+	texture "FppMapTex_Szyby_n" "Game\\Textures\\FppMap\\szyby_n.bmp";
+
+QMesh "GunModel" "Game\\Models\\Gun.qmsh";
+texture "GunTexture" "Game\\Textures\\Gun.jpg";
+
+QMesh "MonsterModel" "Game\\Models\\FppMonster.qmsh";
+texture "MonsterTexture" "Game\\Textures\\FppMonster.jpg";
+	texture "MonsterTexture_emissive" "Game\\Textures\\FppMonster_emissive.tga";
+
+texture "SightTexture" "Game\\Textures\\Sight.tga";
+
+////// RPG
+
+Terrain "RpgTerrain"
+	CX = 255 CZ = 511 VertexDistance = 1.0 MinY = -30.0 MaxY = 30.0
+	HeightmapFileName = "Game\\Terrain\\RPG Heightmap.bmp"
+	FormDescFileName = "Game\\Terrain\\RPG Form Desc.dat"
+	FormMapFileName = "Game\\Terrain\\RPG Formmap.tga"
+	CacheFileName = "Cache\\Terrain\\RpgTerrain";
+// Mamy ju¿ tekstury Sand, Path, Grass z RTS-a...
+texture "Snow" "Game\\Textures\\Snow.jpg";
+texture "Creep" "Game\\Textures\\Creep.tga";
+
+texture "SnowFlake" "Game\\Textures\\Weather\\SnowFlake.tga";
+texture "SnowPlane" "Game\\Textures\\Weather\\SnowPlane.tga";
+texture "RainDrop" "Game\\Textures\\Weather\\RainDrop.tga";
+texture "RainPlane" "Game\\Textures\\Weather\\RainPlane.tga";
+
+QMesh "Campfire" "Game\\Models\\Campfire.qmsh";
+texture "Wood" "Game\\Textures\\Wood.jpg";
+
+QMesh "WormMesh" "Game\\Models\\Worm.qmsh";
+texture "WormTexture" "Game\\Textures\\Worm.jpg";
+
+QMesh "DwarfMesh" "Game\\Models\\DxSdkDwarf.qmsh";
+texture "DwarfArmor" "Game\\Textures\\DwarfArmor.jpg";
+texture "DwarfBeard" "Game\\Textures\\DwarfBeard.jpg";
+texture "DwarfBody" "Game\\Textures\\DwarfBody.jpg";
+texture "DwarfHead" "Game\\Textures\\DwarfHead.jpg";
+texture "DwarfWeapon" "Game\\Textures\\DwarfWeapon.jpg";
+
+QMesh "ExclamationMesh" "Game\\Models\\Exclamation.qmsh";
+
+QMesh "TinyMesh" "Game\\Models\\DxSdkTiny.qmsh";
+texture "TinyTexture" "Game\\Textures\\Tiny.dds";
+
+texture "RainbowTexture" "Game\\Textures\\Rainbow.tga";
+

@@ -1,0 +1,104 @@
+Terrain
+Modu³ terenu
+Wersja 1.0 skoñczona 21.09.2007
+The Final Quest, Adam Sawicki
+
+
+Wstêp
+================================================================================
+
+Modu³ tworz¹ pliki Terrain.hpp i Terrain.cpp.
+Klasa Terrain jest rodzajem zasobu Direct3D.
+
+Sk³adnia tekstowa definicji zasobu:
+
+Terrain "NAZWA" [STAN]
+	CX=UINT CZ=UINT VertexDistance=FLOAT MinY=FLOAT MaxY=FLOAT,
+	HeightmapFileName="NAZWA_PLIKU"
+	FormDescFileName="NAZWA_PLIKU"
+	FormMapFileName="NAZWA_PLIKU"
+	CacheFileName="NAZWA_PLIKU"
+
+Gdzie:
+- CX, CZ - rozmiar terenu w quadach.
+  Nie musi byæ potêg¹ dwójki.
+  Wierzcho³ków bêdzie w ka¿d¹ stronê o jeden wiêcej.
+- VertexDistance - odleg³oœæ miêdzy wierzcho³kami, w przestrzeni œwiata.
+- MinY, MaxY - zakres wysokoœci we wspó³rzêdnych œwiata
+
+- HeightmapFileName - nazwa pliku z map¹ wysokoœci
+Obs³ugiwane formaty:
+> Wszystkie graficzne obs³ugiwane przez D3DX, ale tylko w formacie 24 lub 32
+  bpp. Brany pod uwagê jest kolor R. Rozmiar mo¿e mieæ dowolny, mniejszy lub
+  wiêkszy ni¿ zadeklarowane CX i CZ, chocia¿ zalecane jest (CX+1) x (CZ+1).
+  Reszta jest wype³niana zerami.
+> Format RAW, bez nag³ówka, 8 bpp
+  Musi mieæ rozmiar (CX+1) x (CZ+1).
+
+- FormDescFileName
+Plik tekstowy z definicj¹ form terenu. Patrz ni¿ej.
+
+- FormMapFileName - nazwa pliku z map¹ form terenu
+Tekstura o wymiarach dowolnych (ale zalecane (CX+1) x (CZ+1)), w dowolnym
+formacie graficznym. Kolory pikseli wyznaczaj¹ formy terenu w miejscu danego
+wierzcho³ka. Kolory nie musz¹ byæ dok³adnie takie jak w zdefiniowane w
+FormDescFileName, mog¹ byæ przybli¿one, ale jeœli bêd¹ dok³adne to szybciej siê
+wczytuje. Ponadto formy terenu s¹ rozmywane.
+
+- CacheFileName
+Nazwa pliku tymczasowego na teren. Bêdzie wygenerowany przy pierwszym u¿yciu i
+póŸniej wczytywany aby przyspieszyæ ³adowanie danego zasobu terenu. Zmiany w
+plikach Heightmap, FormMap, FormDesc automatycznie go uniwa¿niaj¹ (sprawdzana
+jest data modyfikacji pliku), ale zmiany w kodzie lub w parametrach z jakimi
+zdefiniowany jest zasób nie, wiêc wtedy trzeba go skasowaæ.
+
+
+Format pliku z opisem form terenu - *.DAT
+================================================================================
+
+TerrainForms 1      to jest nag³ówek
+0xFFFFFF simple {   kolor bia³y to pojedyncza tekstura
+  "Snow"            nazwa zasobu tekstury (wymagana)
+  Tag=1025          dodatkowa, w³asna liczba skojarzona z terenem (opcjonalna)
+  TexScale=0.5      skalowanie tekstury (opcjonalne, typu float)
+}
+0xFF0000 complex {  kolor czerwony to forma z³o¿ona
+  0 {               forma terenu dla wysokoœci wiêkszej lub równej 0 i mniejszej od nastêpnej (pierwsza musi wynosiæ 0)
+   "Grass"          dane jak wy¿ej
+    Tag=0
+  }
+  64 {               forma terenu dla wysokoœci wiêkszej lub równej 64
+   "Sand"
+  }
+}
+
+
+Format pliku binarnego z cache terenu
+================================================================================
+
+TFQ_TERRAIN_10 (14 znaków) - nag³ówek
+Dla kolejnych patchów po Z, X:
+- uint TerrainForm[TERRAIN_FORMS_PER_PATCH]
+  Indeksy form terenu u¿ywanych w tym patchu.
+- VERTEX Vertices[PATCH_VERTEX_COUNT]
+  Wierzcho³ki.
+
+VERTEX:
+- float3 Pos - pozycja
+- float3 Normal - normalna
+- uint Diffuse - wagi form terenu (z wyj¹tkiem piewszej) zapisane jako sk³adowe A,R,G
+  Sk³adowa B=0
+
+
+Zajêtoœæ pamiêci
+================================================================================
+
+Rozmiar wierzcho³ka: 28 B
+Rozmiar heightmapy    Przybli¿ony rozmiar w pamiêci (niedoszacowany)
+   32                   28 KB
+   64                  112 KB
+  128                  448 KB
+  256                  1.7 MB
+  512                    7 MB
+ 1024                   28 MB
+ 2048                  112 MB

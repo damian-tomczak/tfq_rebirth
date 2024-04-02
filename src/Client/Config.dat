@@ -1,0 +1,303 @@
+// Pocz¹tkowe ustawienia graficzne
+Display
+{
+	// Wybór urz¹dzenia graficznego.
+	// Podaj indeks, np. 0, 1, 2 itd., jeœli masz wiêcej kart graficznych
+	// Domyœlnie: DEFAULT.
+	Adapter = DEFAULT
+	// Format bufora g³êbokoœci i bufora szablonu.
+	// Dopuszczalne: D16, D24X8, D24S8.
+	// Jeœli program u¿ywa bufora szablonu, trzeba podaæ D24S8.
+	// Jeœli nie u¿ywa, mo¿na podaæ dowolny.
+	// Ten program nie u¿ywa bufora szablonu, ale D16 powoduje brzydkie linie na ³¹czeniach fragmentów terenu.
+	// Domyœlnie: D24X8
+	AutoDepthStencilFormat = D24X8
+	// Liczba tylnych buforów: 0, 1, 2, 3.
+	// 0 oznacza to samo, co 1.
+	// Domyœlnie: 1
+	BackBufferCount = 1
+	// Format tylnego bufora.
+	// Domyœlnie: A8R8G8B8
+	BackBufferFormat = A8R8G8B8
+	// Rozdzielczoœæ w pikselach.
+	// Domyœlnie: odpowiednio 800 i 600.
+	BackBufferWidth = 1024
+	BackBufferHeight = 768
+	// Czêstotliwoœæ odœwie¿ania w Hz.
+	// W przypadku trybu okienkowego nie ma znaczenia.
+	// Domyœlnie: 60
+	RefreshRate = 60
+	// Tryb pe³noekranowy.
+	// true - pe³ny ekran, false - okno
+	// Domyœlnie: false
+	FullScreen = true
+	// Rodzaj urz¹dzenia - HAL lub REF.
+	// HAL - sterownik sprzêtowy
+	// REF - sterownik referencyjny. Nie wybieraæ - dzia³a zbyt wolno!
+	// Domyœlnie: HAL
+	DeviceType = HAL
+	// Czy mo¿na porzucaæ poprzedni¹ zawartoœæ bufora g³êbokoœci i szablonu.
+	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
+	// W przypadku tej aplikacji mo¿e i powinno byæ true.
+	DiscardDepthStencil = true
+	// Czy bufor g³êbokoœci i szablonu jest w³¹czony.
+	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
+	// W przypadku tej aplikacji musi byæ true.
+	EnableAutoDepthStencil = true
+	// Czy bufor ekranu ma siê nadawaæ do blokowania.
+	// Zale¿y od sposobu jego wykorzystania przez aplikacjê.
+	// W przypadku tej aplikacji mo¿e i powinno byæ false.
+	LockableBackBuffer = false
+	// Ustawienia antialiasingu.
+	// Wy³¹czone. Nie sprawdzane, czy program dzia³a przy w³¹czonych.
+	MultiSampleQuality = 0
+	MultiSampleType = NONE
+	// Sposób prezentacji klatki. Odpowiada za pionow¹ synchronizacjê (VSync).
+	// Dopuszczalne wartoœci: IMMEDIATE, DEFAULT, ONE, TWO, THREE, FOUR.
+	// IMMEDIATE - VSync wy³¹czone
+	// DEFAULT - VSync w³¹czone
+	// Domyœlnie: IMMEDIATE
+	PresentationInverval = IMMEDIATE
+	// Sposób prezentacji klatki.
+	// Dopuszczalne wartoœci: DISCARD, FLIP, COPY
+	// Domyœlnie: DISCARD
+	SwapEffect = DISCARD
+	// Sposób przetwarzania wierzcho³ków.
+	// Dopuszczalne wartoœci: HARDWARE, MIXED, SOFTWARE, AUTO
+	// Domyœlnie: AUTO
+	// Mo¿esz spróbowaæ przestawiæ na SOFTWARE, jeœli program siê nie uruchamia i masz kartê zintegrowan¹ firmy Intel.
+	VertexProcessing = AUTO
+	// Tryb oczekiwania na pokazanie klatki.
+	// Dopuszczalne wartoœci: None, Event, Lock
+	// Domyœlnie: Event
+	// None - brak oczekiwania, zalecane - pozwala uzyskaæ najwiêcej FPS
+	// Event - wybierz, jeœli gra "szarpie"
+	// Lock - wybierz, jeœli gra "szarpie", a Event nie pomaga
+	FlushMode = Event
+}
+
+// Ustawienia silnika
+Engine
+{
+	// Czy w³¹czone jest oœwietlenie (false / true)
+	Lighting = true
+
+	// Ustawienia cieni	
+	ShadowMapping
+	{
+		// Czy w³¹czone s¹ cienie (false / true)
+		Enabled = true
+		// Format tekstury Shadow Mapy
+		// Dopuszczalne: A8R8G8B8, G16R16, R32F
+		Format = A8R8G8B8
+		// Maksymalny rozmiar tekstury Shadow Mapy
+		MaxSize = 1024
+		// Maksymalny rozmiar œcianki tekstury szeœciennej Shadow Mapy dla œwiate³ punktowych
+		MaxCubeSize = 256
+		// Przesuniêcie pozwalaj¹ce pozbyæ siê brzydkich artefaktów.
+		// Eksperymentalnie udowodniona najlepsza wartoœæ
+		Epsilon = 0.005
+	}
+	
+	// Ustawienia efektów postprocessingu
+	Postprocessing
+	{
+		// Czy postprocessing jest w³¹czony (false / true)
+		Enabled = true
+	}
+	
+	// Ustawienia trawy
+	Grass
+	{
+		// Odlegloœæ, w jakiej widaæ trawê
+		ZFar = 30
+	}
+}
+
+// Ustawienia gry
+Game
+{
+	BeginTime = 1.0
+	WinTime = 1.0
+	LoseTime = 2.0
+
+	// Ustawienia gry nr 1
+	Pacman
+	{
+		LightDir = "0.5345,-0.8017,0.2672"
+		LightColor   = "1.0,0.8,0.8,0.8"
+		AmbientColor = "1.0,0.2,0.2,0.2"
+		GemRotSpeed = 1.5707 // PI/2
+		PacmanStepTime = 0.3 // s
+		GhostStepTime  = 0.4 // s
+		CameraAngleX = 1.09955 // PI/2 * 0.7
+		CameraAngleY = 0.15707 // PI/2 * 0.1
+		CameraDist = 20
+		CameraSmoothTime = 0.05
+		GemCollectParticleEffectTime = 0.5
+	}
+	
+	// Ustawienia gry nr 2
+	Rts
+	{
+		LightDir = "0.666,-0.666,0.333"
+		LightColor   = "1.0,0.8,0.8,0.8"
+		AmbientColor = "1.0,0.2,0.2,0.2"
+		CameraAngleX = 1.09955 // PI/2 * 0.7
+		CameraAngleY = 0.10 // PI/2 * 0.1 - ileœtam
+		CameraDist = 14
+		CameraSmoothTime = 0.05
+		WindVec = "0.2,0.3"
+		ShadowFactor = 0.2
+		CastlePos = "40,15"
+		CastleSize = 0.4
+		Team1_Loc = "8.0,32.0,16.0,35.0"
+		Team2_Loc = "32.0,20.0,37.0,25.0"
+		Team1_Units = 10
+		Team2_Units = 10
+		UnitSize = 1.1
+		AttackTime = 0.5
+		AnimBlendTime = 0.5
+		CamSpeed = 20.0
+		UnitRadius = 0.5
+		UnitSpeed = 2.0
+		SelectionTime = 0.5
+		FormationHalfsize = 2.0
+		AttackDistance = 5.0
+		AttackDamage = 0.15
+		AttackParticleEffectTime = 0.3
+	}
+	
+	// Ustawienia gry nr 3
+	Space
+	{
+		LightDir = "0.57,-0.57,0.57" // "0.666,-0.666,0.333"
+		LightColor   = "1.0,0.8,0.8,0.8"
+		AmbientColor = "1.0,0.2,0.2,0.2"
+		CameraAngleX = 3.0
+		CameraDist = 7
+		CameraSmoothTime = 0.1
+		WindVec = "0.2,0.3"
+		ShadowFactor = 0.2
+		DayTime = 2.13
+		GameplayY = 10.5
+		RockCount = 50
+		RockSize = 4.5
+		RockSizeV = 0.5
+		PlayerAccel = 70
+		FrictionFactor = 0.05
+		OrientationSmoothTime = 0.1
+		OrientationVel = 1.5
+		CameraAbovePlayer = 1.0
+		CameraAngleXSmoothTime = 0.02
+		SpeedMotionBlurThreshold = 0.8
+		MotionBlurThresholdTime = 2.0
+		PlayerRadius = 0.7
+		MissileSpeed = 30
+		ExplosionTime = 1.0
+		BigExplosionTime = 2.0
+		EnemyShotPeriod = 1.5
+		LaserDamagePerSecond = 0.4
+		EnemyMissileDamage = 0.15
+		EnemyMissileLifeTime = 2.0
+	}
+	
+	// Ustawienia gry nr 4
+	FPP
+	{
+		PlayerStartPos = "0.0,0.0,0.0"
+		PlayerMoveSmoothTime = 0.1
+		PlayerMoveSpeed = 10.0
+		PlayerRotSpeed = 0.005
+		PlayerY = 0.0
+		AmbientColor = "0.1,0.1,0.1"
+		FlashingPointLightColor = "0.8,0.8,0.8"
+		HallPointLightColor = "0.69,0.86,0.44"
+		SpotLight1Color = "0.6,0.4,0.4"
+		SpotLight2Color = "0.4,0.4,0.6"
+		CameraAboveCenter = 0.8
+		EllipsoidRadiusVector = "0.5,1.5,0.5"
+		Gravity = -7.0
+		Climb = 3
+		MonsterPos = "18,-5,43"
+		MonsterSize = 2.5
+		MonsterAngleY = 1.5
+		GunOffset = "0.4,-0.8,1.0"
+		ShotPeriod = 0.5
+		ShotGunAnimTime = 0.1
+		ShotGunAngle = 0.4
+		ShotGunOffset = 0.3
+		GunAngleZ = -0.15
+		MissileLightColor = "0.8,0.8,0.4"
+		MissileLightDist = 7
+		MissileQuadHalfSize = 0.2
+		MissileQuadColor = "1.0,1.0,0.5"
+		MissileSpeed = 20.0
+		MissileDamage = 0.2
+		BloodEffectTime = 0.5
+		
+		CollisionMap = "
+			-10,-2,-10; -10,-2,20; 50,-2,20; 50,-2,-10;
+			-10,-2,20; -10,-7,30; 50,-7,30; 50,-2,20;
+			-10,-7,30; -10,-7,60; 50,-7,60; 50,-7,30;
+			
+			-3,-10,-4; -3,10,-4; -3,10,7; -3,-10,7;
+			-3,-10,7; -3,10,7; 9,10,34; 9,-10,34;
+			9,-10,34; 9,10,34; 6,10,40; 6,-10,40;
+			6,-10,40; 6,10,40; 9,10,48; 9,-10,48;
+			9,-10,48; 9,10,48; 15,10,50; 15,-10,50;
+			15,-10,50; 15,10,50; 27,10,43; 27,-10,43;
+			27,-10,43; 27,10,43; 27,10,38; 27,-10,38;
+			27,-10,38; 27,10,38; 25,10,34; 25,-10,34;
+			25,-10,34; 25,10,34; 17,10,30; 17,-10,30;
+			17,-10,30; 17,10,30; 15,10,32; 15,-10,32;
+			15,-10,32; 15,10,32; 3,10,11; 3,-10,11;
+			3,-10,11; 3,10,11; 20,10,9; 20,-10,9;
+			20,-10,9; 20,10,9; 22,10,17; 22,-10,17;
+			22,-10,17; 22,10,17; 40,10,14; 40,-10,14;
+			40,-10,14; 40,10,14; 38,10,-5; 38,-10,-5;
+			38,-10,-5; 38,10,-5; 20,10,-3; 20,-10,-3;
+			20,-10,-3; 20,10,-3; 20,10,5; 20,-10,5;
+			20,-10,5; 20,10,5; 3,10,7; 3,-10,7;
+			3,-10,7; 3,10,7; 2,10,-3; 2,-10,-3;
+			2,-10,-3; 2,10,-3; -3,10,-4; -3,-10,-4
+		"
+		// Wzór:
+		// x1,-10,z1; x1,10,z1; x2,10,z2; x2,-10,z2;
+		// y= zawsze -10 .. 10
+	}
+	
+	// Ustawienia gry nr 5
+	RPG
+	{
+		CameraDist = 3.0
+		CameraRight = 0.65
+		CameraAngleSmoothTime = 0.1
+		PlayerStartPos = "127,0,474"
+		PlayerMoveSmoothTime = 0.1
+		PlayerMoveSpeed = 6.0
+		PlayerRotSpeed = 0.005
+		AmbientColor = "0.1,0.1,0.1"
+		LightColor = "0.9,0.9,0.9"
+		DarkLightColor = "0.5,0.5,0.5"
+		LightDir = "-3,-3,-2" // Nie musi byæ znormalizowany
+		DayTime = 0.6
+		Wind = "0.25,0.15"
+		DarkWind = "0.75,0.25"
+		CampfirePos = "113,368"
+		WormCount = 6
+		WormRadius = 2.5
+		WormSize = 0.3
+		WormSpeed = 0.3
+		WormText = "Robak\nPoziom 1"
+		WormTextColor = "1.0,0.2,0.8,0.2"
+		WormTextSize = 0.1
+		NPCPos = "119,70"
+		WaterHeight = 32
+		TimeToWin = 3.0
+		DistanceToWin = 5.0
+		WinText = "Quest Complete"
+		WinTextSize = 48
+	}
+}
+

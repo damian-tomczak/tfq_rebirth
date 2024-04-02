@@ -1,0 +1,52 @@
+Format tekstowy
+================================================================================
+
+Niebo:
+
+{
+	Background <T³o>               Definicja koloru t³a
+	Sun = <Cia³o-niebieskie>         Definicja s³oñca
+	Moon = <Cia³o-niebieskie>        Dowolna liczba ksiê¿yców, mo¿e byæ 0
+	Moon = <Cia³o-niebieskie>
+	...
+	Clouds = {
+		ScaleInv = <Skalowanie>     (float) Odwrotnoœæ skalowania, czyli rozci¹gniêcia chmur
+		Movement = <x>, <z>         (float2) Kierunek ruchu, d³ugoœæ wektora wskazuje prêdkoœæ
+		Threshold = <Próg>          (float, 0.0 .. 1.0) stopieñ pokrycia chmurami
+		Sharpness = <Ostroœæ>       (float, 1.0 .. INF) ostroœæ chmur
+		Colors {                    Patrz klasa ComplexSky::CLOUD_COLORS
+			<Czas> <Kolor-zewnêtrzny> <Kolor-wewnêtrzny>,
+			<Czas> <Kolor-zewnêtrzny> <Kolor-wewnêtrzny>,
+			...
+		}
+	}
+}
+
+T³o:
+(Patrz klasa ComplexSky::BACKGROUND_ITEM)
+
+{
+	<Czas> <Kolor-horyzontu> <Kolor-zenitu>,
+	<Czas> <Kolor-horyzontu> <Kolor-zenitu>,
+	...
+}
+
+Czas : float (0.0 .. 1.0)
+  Pora dnia od pó³nocy (0.0) poprzez po³udnie (0.5) do nastêpnej pó³nocy (1.0).
+Kolor-horyzontu, Kolor-zenitu
+  Format: ³añcuch z nazw¹ np. "red" lub liczba uint4 np. "0x8080FF".
+
+Cia³o niebieskie:
+(Patrz klasa ComplexSky::CELESTIAL_OBJECT_DESC)
+
+{
+	"NAZWA-TEKSTURY"         Tekstura (string)
+	<Rozmiar>                (float) W radianach
+	<Okres>                  (float) W dobach
+	<Faza>                   (float) W dobach
+	x, y, z                  (float3) Kierunek normalny. Nie musi byæ znormalizowany.
+	HorizonColor=<Kolor>     Kolory zale¿ne od wysokoœci (opcjonalne)
+	  ZenithColor=<Kolor>
+	MidnightColor=<Kolor>    Kolory zale¿ne od pory dnia (opcjonalne)
+	  MiddayColor=<Kolor>
+}

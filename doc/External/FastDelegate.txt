@@ -1,0 +1,136 @@
+################################################################################
+        FastDelegate
+################################################################################
+
+To jest biblioteka zewnêtrzna.
+
+Autor         : Don Clugston
+Znaleziona na : http://www.codeproject.com/cpp/FastDelegate.asp
+Licencja      : Public Domain
+
+
+Wstêp
+================================================================================
+
+Implementuje przenoœne (bardzo przenoœne - dzia³aj¹ wszêdzie od dziadowskich
+kompilatorów w rodzaju Borlanda czy Visuala 6 poprzez Visual 2003, 2005 czy g++
+a¿ po jakieœ egzotyczne, 64-bitowe, a nawet Managed C++) delegaty, czyli
+wskaŸniki na metody (konkretna metoda konkretnego obiektu dowolnej klasy o
+zgodnej sygnaturze), których bardzo brakuje w C++ (ma je np. Delphi/Object
+Pascal, C# i ka¿dy cywilizowany jêzyk), a które s¹ bardzo potrzebne, g³ównie do
+realizacji callbacków, np. w systemie GUI.
+
+S¹ bardzo szybkie.
+
+Nie ma eventów (sygna³ów), czyli pamiêtania i wywo³ywania ca³ej listy wskaŸników
+na funkcje - i dobrze :P
+
+
+W³aœciwoœci
+================================================================================
+
+Obs³uguje funkcje maj¹ce do 8 parametrów. Funkcje mog¹ zwracaæ wartoœæ.
+
+Zgodnoœæ sygnatury jest sprawdzana na etapie kompilacji.
+
+Wszystko jest w przestrzeni nazw 'fastdelegate'.
+
+Przy tworzeniu automatycznie siê zeruj¹.
+
+Mo¿na porównywaæ z u¿yciem operatorów == i !=.
+
+Dzia³a te¿ dla funkcji globalnych i metod statycznych.
+
+Dzia³a te¿ dla metod wirtualnych, nawet dla dziedziczenia wirtualnego, metod
+abstrakcyjnych itd. - full serwis.
+
+Wywo³uje siê tak po prostu - operator ().
+
+
+U¿ycie
+================================================================================
+
+FastDelegateN<...>() // konstruktor domyœlny
+Delegat.clear()
+	Zeruje
+
+FastDelegateN<...>(&Funkcja) // konstruktor
+Delegat.Bind(&Funkcja)
+Delegat = &Funkcja
+	Przypisanie wskaŸnika na funkcjê globaln¹ lub metodê statyczn¹
+
+FastDelegateN<...>(&Obiekt, &KlasaObiektu::Metoda) // konstruktor
+Delegat.bind(&Objekt, &KlasaObjektu::Metoda)
+Delegat = fastdelegate::MakeDelegate(&Objekt, &KlasaObjektu::Metoda)
+	Przypisanie wskaŸnika na metodê
+
+if (Delegat)
+if (Delegat.empty())
+	Testowanie na nie zerowoœæ / zerowoœæ
+
+
+Przyk³ad
+================================================================================
+
+// Taki nag³ówek w³¹czamy
+
+#include "FastDelegate.h"
+
+// Jakaœ kontrolka, która bêdzie wywo³ywa³a callback
+// Ktoœ jej wywo³uje metodê MouseDown, a w reakcji ona wywo³uje komuœ callback
+// OnClick.
+
+class Button
+{
+public:
+	// Typedef, dla wygody. Tak wygl¹da typ callbacka.
+	// S¹ osobne typy zale¿nie od liczby parametrów.
+	// Ostatni, opcjonalny parametr szablonu to typ zwracany (domyœlnie void).
+	
+	typedef fastdelegate::FastDelegate2<int, int, bool> ON_CLICK_DELEGATE;
+	
+	// Pole typu wskaŸnik na metodê (callback)
+
+	ON_CLICK_DELEGATE OnClick;
+
+	void MouseDown(int x, int y)
+	{
+		// Sprawdzanie czy wskaŸnik nie pusty
+		if (OnClick)
+			// Wywo³anie
+			bool Foo = OnClick(x, y);
+	}
+};
+
+// Formularz - jest w³aœcicielem przycisku, reaguje na jego callback
+
+class Form1
+{
+public:
+	// Przycisk
+	
+	Button m_Btn;
+
+	Form1()
+	{
+		// Bindowanie callbacka - opcja 1
+		m_Btn.OnClick.bind(this, &Form1::Button1_Click);
+		
+		// Bindowanie callbacka - opcja 2
+		//m_Btn.OnClick = fastdelegate::MakeDelegate(this, &Form1::Button1_Click);
+	}
+	
+	// Ta metoda bêdzie reagowa³a na callback
+
+	bool Button1_Click(int x, int y)
+	{
+		Beep(1000, 100);
+		return true;
+	}
+};
+
+(...)
+
+Form1 Obj;
+Obj.m_Btn.MouseDown(1, 2);
+

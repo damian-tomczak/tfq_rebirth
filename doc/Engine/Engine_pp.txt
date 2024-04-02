@@ -1,0 +1,72 @@
+Postprocessing
+
+1. Color
+----------------------------------------
+
+Ca³y ekran zostaje zamalowany w sposób pó³przezroczysty na podany kolor. Dziêki
+temu mo¿na obraz rozjaœniæ (kolor bia³y), œciemniæ (kolor czarny), wyblakn¹æ
+(kolor szary), zaczerwieniæ (kolor czerwony lub dowolny inny) itd.
+Intensywnoœci¹ ewektu steruje sk³adowa Alfa koloru.
+
+2. Texture
+----------------------------------------
+
+Ca³y ekran zostaje zamalowany tekstur¹ pomno¿on¹ przez kolor. Wspó³rzêdne
+tekstury to pierwotnie x=0..1, y=0..1, x w prawo i y w dó³, ale s¹ mno¿one przez
+podan¹ macierz, co pozwala uzyskaæ dowolny efekt - losowe albo te¿ jakieœ
+zmienne w czasie translacjê, rotacjê, skalowanie itd. Dziêki skalowaniu tekstura
+mo¿e byæ roz³o¿ona wiele razy. Mo¿liwe efekty to np. œnie¿enie.
+
+Ogólne
+----------------------------------------
+
+Nie wszystkie efekty post-processingu piêknie ze sob¹ wspó³pracuj¹.
+
+- Obraz rysowany addytywnie przez Bloom nie przechodzi przez filtr Function. To
+  jest OK dopóki robimy jasnoœæ, kontrast itp., ale przy Grayscale wygl¹da ju¿
+  niedobrze.
+
+(Tu by mo¿na wiêcej napisaæ ale mi siê nie chce...)
+
+
+Shader preprocessingu - PpShader
+================================================================================
+
+MAKRA
+----------------------------------------
+
+- Efekt Function
+  - GRAYSCALE = 0, 1, 2
+    0 = brak uwzglêdniania odcieni szaroœci
+    1 = ca³oœæ zastêpowana odcieniami szaroœci
+    2 = liniowa interpolacja od koloru do odcieni szaroœci wg GrayscaleFactor
+    Hash: bit 0-1
+  - FUNCTION = 0, 1
+    Czy uwzglêdniaæ funkcjê liniow¹ wg AFactor i BFactor?
+    Hash: bit 2
+- Efekt Tone Mapping
+  - TONE_MAPPING = 0, 1
+    Hash: bit 3
+- Efekt Heat Haze
+  - HEAT_HAZE = 0, 1
+    Hash: bit 4
+
+PARAMETRY
+----------------------------------------
+
+- Efekt Function
+  - float GrayscaleFactor
+    (GRAYSCALE==2)
+    Stopieñ interpolacji odcieni szaroœci.
+  - float4 AFactor
+    float4 BFactor
+    (FUNCTION==1)
+    Wspó³czynniki równania liniowego.
+- Efekt Tone Mapping
+  - float LuminanceFactor
+    (TONE_MAPPING==1)
+- Efekt Heat Haze
+  - texture PerturbationMap
+    (HEAT_HAZE==1)
+  - Wspó³rzêdne tekstury nr 1 i 2 typu float2
+

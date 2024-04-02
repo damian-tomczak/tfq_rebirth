@@ -1,0 +1,507 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pl">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+    <title>CommonLib 7.0</title>
+    <style type="text/css">
+		body { background-color: white; font-family: Verdana, Arial, sans-serif; color: black; font-size: 9pt; }
+		td { background-color: white; font-family: Verdana, Arial, sans-serif; color: black; font-size: 9pt; vertical-align: top; }
+		th { text-align: left; font-weight: bold; }
+		img { border: 0px; }
+		a { color: navy; text-decoration: underline; }
+		a:visited { color: black; }
+		h1.doc_title { font-weight: bold; font-size: 16pt; color: navy; text-align: center; border-style: none; }
+		h1 { font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 16pt; color: navy; }
+		h2 { font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-style: italic; font-size: 14pt; color: navy; }
+		h3 { font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 13pt; color: navy; }
+		h4, h5, h6, .news_title { font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 10pt; color: navy; }
+		dt { font-weight: bold; }
+		pre, .pre { font-family: "Courier New", Courier, monospace; font-size: 9pt; color: gray; /* border: silver 1px solid; padding: 4px;*/ }
+		code, .code { font-family: "Courier New", Courier, monospace; font-size: 9pt; color: gray; font-weight: normal; }
+		table { background-color: white; }
+		address { font-style: italic; margin-left: 1em; }
+		q, blockquote { font-style: italic; }
+		.img { text-align: center; }
+		div.Module { border: 2px solid blue; padding: 4px; margin-bottom: 1ex; }
+		div.Module p.Title { font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12pt; color: navy; margin-top: 1ex; margin-bottom: 1ex; }
+		div.Module p.Desc { font-style: italic; margin-top: 1ex; }
+		div.Module p.Files a, div.Module p.Files a:hover, div.Module p.Files a:active, div.Module p.Files a:visited { font-weight:bold; }
+  </style>
+  </head>
+  <body style="background-color:navy;">
+<div style="background-color:white; padding:8px; margin-left:10%; margin-right:10%;">
+  
+<h1 class="doc_title">CommonLib 7.0</h1>
+
+<p style="font-style:italic">Biblioteka CommonLib
+<br>Wersja: 7.0
+<br>Data: 3 listopada 2007</p>
+
+
+<h1>Wstęp</h1>
+
+<p>CommonLib to uniwersalna biblioteka dla C++ zawierająca różnorodne elementy.
+Powstała przy okazji pisania silnika graficznego i różnych innych moich projektów.
+Obecna wersja jest pisana od wakacji 2006.
+</p>
+
+<p>Właściwie od dziecka, odkąd tylko zacząłem programować (wtedy to był jeszcze
+Turbo Pascal pod DOS) zawsze rozwijałem jakąś swoją bibliotekę modułów bazowych,
+z którymi potem nigdy się nie rozstawałem pisząc swoje projekty.
+Teraz uważam, że nadal jest to potrzebne - szczególnie w C++, którego biblioteka
+standardowa - w przeciwieństwie do nowoczesnych języków i środowisk programowania
+takich jak Delphi, C# czy Java - jest bardzo uboga, a to co zawiera pozostawia
+wiele do życzenia.
+</p>
+
+
+<h1>Cechy i założenia</h1>
+
+<ul>
+<li>Jest przenośna - Windows i Linux.
+<li>Używa tylko biblioteki standardowej C, C++ oraz API systemowego.
+<li>Do przechowywania wszelkich łańcuchów stosuje typ string z biblioteki C++.
+<li>Do obsługi błędów stosowane są wyjątki klas z modułu Error.
+Jedynie funkcje wykonujące proste obliczenia lub konwersje nigdy nie rzucają wyjątków.
+<li>Nastawiona jest na maksymalną wydajność, ale nie kosztem kontroli błędów.
+Bardzo ważna jest też wygoda.
+<li>Wymaga dobrego kompilatora C++, ponieważ używa zaawansowanych cech języka
+takich jak częściowa specjalizacja szablonów.
+Kompilacja była testowana na Visual C++ 2005 oraz GCC 4.
+<li>Wszystkie elementy zgromadzone są w przestrzeni nazw common.
+<li>Komentarze w kodzie oraz dokumentacja są po polsku.
+Identyfikatory w kodzie są po angielsku.
+<li>Komentarze nie są w formacie Doxygen ani innym specjalnym.
+<li>Pliki z kodem (łącznie z wpisanymi do nich łańcuchami) i dokumentacją mają polskie znaki
+w kodowaniu Windows-1250 z końcami wiersza w formacie Windows ("\r\n").
+Biblioteka posiada funkcje do konwersji polskich znaków i końców wiersza.
+<li>Nie wspiera Unikodu.
+<li>Polega na rozmiarze, a nawet budowie bitowej typów atomowych takich jak
+znaki, liczby całkowite i zmiennoprzecinkowe. Przez to nie nadaje się do użycia
+na platformach z inną endianowością czy 64-bitowych.
+</ul>
+
+
+<h1>Jak użyć</h1>
+
+<p>Biblioteki można użyć na trzy sposoby:
+</p>
+
+<ol>
+<li>Skompilować całą jako bibliotekę statyczną LIB, ustawić ścieżki do pliku
+LIB i plików HPP w swoim środowisku programowania i używać jako biblioteki.
+<li>Skopiować wszystkie lub wybrane moduły do źródeł swojego projektu.
+<li>Skopiować do źródeł swojego projektu wybrane funkcje i klasy.
+</ol>
+
+
+<h1>Składniki i możliwości</h1>
+
+<div class="Module">
+<p class="Title">Moduł Base</p>
+<p class="Desc">Moduł podstawowy</p>
+<p class="Files"><a href="../src/Base.hpp">&raquo; Base.hpp</a> - nagłówek
+<br><a href="Base.txt">&raquo; Base.txt</a> - dokumentacja
+</p>
+
+<ul>
+<li>Podstawy:
+  <ul>
+  <li>Włącza:
+    &lt;cassert&gt;, &lt;string&gt;, &lt;vector&gt;
+  <li>Definiuje:
+    using std::string;
+  <li>Typy całkowitoliczbowe:
+    uint1, uint2, uint4, uint8
+    int1, int2, int4, int8
+  </ul>
+<li>Różne drobne, użyteczne makra i funkcje
+<li>Operator dosłownej reinterpretacji bitowej absolute_cast
+<li>Inteligentne wskaźnki i uchwyty
+  <ul>
+  <li>Parametryzowane polityką zwalniania
+  <li>Z wyłączną własnością lub ze zliczaniem referencji
+  </ul>
+<li>Funkcje do operacji na znakach i łańcuchach, w tym oprócz prostych także:
+  <ul>
+  <li>Konwersja między stronami kodowymi:
+    Windows-1250, ISO-8859-2, IBM CP852, UTF-8
+  <li>Dopasowanie do maski ze znakami wieloznacznymi '*' i '?'
+  <li>Odległość edycyjna łańcuchów - Levenshtein Distance
+  <li>Porównywanie łańcuchów w tzw. porządku naturalnym
+  </ul>
+<li>Funkcje do operacji na ścieżkach do plików
+  <ul>
+  <li>Działające zarówno dla ścieżek Windows jak i Linux
+  </ul>
+<li>Konwersje różnych typów do i z łańcucha znaków, w tym:
+  <ul>
+  <li>Własne IntToStr, StrToInt, UintToStr, StrToUint sprawdzające błędy składni i
+    zakresu
+  <li>Uogólniony, rozszerzony mechanizm konwersji zrealizowany za pomocą szablonów
+    SthToStr i StrToSth
+  <li>Wygodny mechanizm formułowania łańcuchów korzystający z powyższego, np.:
+    string s = Format("x=#, y=#") % x % y;
+  </ul>
+<li>Dokładny pomiar czasu i czekanie określony czas
+<li>Podstawowe typy, stałe, makra i funkcje matematyczne, w tym oprócz prostych
+  także:
+  <ul>
+  <li>Funkcja wygładzająca metodą Critically Damped Smoothing
+  <li>Funkcje okresowe - sinus, trójkąta, prostokątna, piłokształtna, PWM
+  </ul>
+<li>Generator liczb pseudolosowych
+  <ul>
+  <li>Bardzo szybki, deterministyczny
+  <li>Losowanie liczb różnych typów
+  <li>Generowanie losowych danych binarnych
+  <li>Losowanie liczb o rozkładzie normalnym (Gaussa)
+  </ul>
+<li>Generator unikatowych identyfikatorów
+<li>Parser parametrów przekazanych z wiersza poleceń
+  <ul>
+  <li>Szybki i prosty w użyciu
+  <li>Wsparcie zarówno dla main (int argc, char **argv), jak i WinMain (char
+    *CmdLine)
+  <li>Obsługuje opcje krótkie (jednoznakowe) i długie (wieloznakowe), w formatach:
+    <ul>
+    <li>Linuksa:  -a -b -c -abc --długa -lARG -l ARG -l=ARG
+    <li>Windowsa: /a /b /c      /długa  /lARG /l ARG /l=ARG
+    </ul>
+  </ul>
+<li>Klasa bazowa dla wzorca projektowego Singleton
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Config</p>
+<p class="Desc">Obsługa plików konfiguracyjnych</p>
+<p class="Files"><a href="../src/Config.hpp">&raquo; Config.hpp</a> - nagłówek
+<br><a href="Config.txt">&raquo; Config.txt</a> - dokumentacja
+</p>
+<p>Obsługuje hierarchiczne pliki konfiguracyjne o składni wzorowanej na C/C++.
+</p>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł DateTime</p>
+<p class="Desc">Data i czas</p>
+<p class="Files"><a href="../src/DateTime.hpp">&raquo; DateTime.hpp</a> - nagłówek
+<br><a href="DateTime.txt">&raquo; DateTime.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Dostępne typy:
+	<ul>
+	<li>WEEKDAY - Dzień tygodnia
+	<li>MONTH - Miesiąc roku
+	<li>NAME_FORM - Sposób generowania nazw dla dni tygodnia i miesięcy
+	<li>DATESPAN - Reprezentuje odcinek czasu jako liczbę lat, miesięcy, tygodni i dni
+	<li>TIMESPAN - Reprezentuje odcinek czasu jako liczbę milisekund
+	<li>TMSTRUCT - Reprezentuje moment czasu jako pola: dzien, miesiąc, rok,
+	godzina, minuta, sekunda, milisekunda oraz dzień tygodnia
+	<li>DATETIME - Reprezentuje moment czasu jako liczbę milisekund od 1 stycznia 1970.
+	</ul>
+	<li>Dokładne pobieranie bieżącego czasu
+	<li>Konwersja do i z łańcucha, dowolne formatowanie
+	<li>Konwersje między typami daty i czasu - z tej biblioteki oraz z biblioteki standardowej C
+	<li>Przeładowane operatory
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Dator</p>
+<p class="Desc">Otoczka na pojedynczą wartość dowolnego typu</p>
+<p class="Files"><a href="../src/Dator.hpp">&raquo; Dator.hpp</a> - nagłówek
+<br><a href="Dator.txt">&raquo; Dator.txt</a> - dokumentacja
+</p>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Error</p>
+<p class="Desc">Klasy wyjątków do obsługi błędów</p>
+<p class="Files"><a href="../src/Error.hpp">&raquo; Error.hpp</a> - nagłówek
+<br><a href="Error.txt">&raquo; Error.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Ujednolicony mechanizm obsługi błędów w programie z użyciem wyjątków C++
+<li>Wyjątek przechowuje stos komunikatów
+<li>Makra ułatwiające obsługę błędów
+<li>Wsparcie dla błędów zgłaszanych przez: errno, Win32API, SDL, OpenGL,
+DirectX, FMOD, WinSock, DevIL, AVIFile
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Files</p>
+<p class="Desc">Obsługa plików i systemu plików</p>
+<p class="Files"><a href="../src/Files.hpp">&raquo; Files.hpp</a> - nagłówek
+<br><a href="Files.txt">&raquo; Files.txt</a> - dokumentacja
+</p>
+<ul>
+<li>FileStream - klasa strumienia do zapisywania i odczytywania treści pliku
+<li>DirLister - klasa do listowania zawartości katalogu
+<li>Funkcje do operacji na systemie plików, w tym:
+  <ul>
+  <li>Zapisywanie i odczytywanie całych plików
+  <li>Sprawdzanie, czy plik albo katalog istnieje
+  <li>Odczytywanie i zapisywanie daty modyfikacji, utworzenia i ostatniego dostępu
+  <li>Tworzenie, usuwanie, zmiana nazwy i przenoszenie plików i katalogów
+  </ul>
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł FreeList</p>
+<p class="Desc">Bardzo szybki alokator pamięci</p>
+<p class="Files"><a href="../src/FreeList.hpp">&raquo; FreeList.hpp</a> - nagłówek
+<br><a href="FreeList.txt">&raquo; FreeList.txt</a> - dokumentacja
+</p>
+<p>Szablony klas FreeList oraz DynamicFreeList.
+Obiekty tych klas to napisane we własnym zakresie
+alokatory przeznaczone do alokowania dużych ilości zmiennych jednego wybranego
+typu, które działają znacząco szybciej niż standardowe operatory new i delete.
+</p>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Logger</p>
+<p class="Desc">Mechanizm logowania komunikatów</p>
+<p class="Files"><a href="../src/Logger.hpp">&raquo; Logger.hpp</a> - nagłówek
+<br><a href="Logger.txt">&raquo; Logger.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Bezpieczny wątkowo.
+<li>Opcjonalnie logowaine odbywa się w osobnym wątku.
+<li>Uogólnienie logów:
+  Log to abstrakcyjny obiekt, którym może być plik, konsola i dowolne inne
+  miejsce. Można pisać własne logi.
+<li>Rozdzielenie komunikatów od logów:
+  Zapisywane komunikaty trafiają do centralnego loggera, a stamtąd dopiero każdy
+  jest mapowany na zero, jeden lub więcej logów.
+<li>Uogólniony podział komunikatów:
+  Komuniaty są opisywane przez maskę bitową, która może oznaczać kategorię,
+  priorytet lub cokolwiek i którą można wykorzystać do mapowania na logi
+  docelowe, na prefiksy, kolory i dowolne inne rzeczy zależnie od loga.
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Math</p>
+<p class="Desc">Moduł matematyczny</p>
+<p class="Files"><a href="../src/Math.hpp">&raquo; Math.hpp</a> - nagłówek
+<br><a href="Math.txt">&raquo; Math.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Wsparcie dla obiektów geometrycznych:
+	<ul>
+	<li>Punkt 2D, prostokąt 2D, prosta 2D
+	<li>Wektor 2D, 3D, 4D
+	<li>Macierz 4x4
+	<li>Kwaternion
+	<li>Płaszczyzna 3D
+	<li>Prostopadłościan
+	<li>Kolor
+	<li>Promień/prosta 3D
+	<li>Sfera
+	<li>Trójkąt 3D
+	<li>Frustum
+	</ul>
+<li>Kolizje między różnego rodzaju obiektami geometrycznymi
+<li>Tablice liczb losowych o rozkładzie progresywnego Poisson Disc
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Profiler</p>
+<p class="Desc">Przyrząd do pomiarów czasu i wydajności</p>
+<p class="Files"><a href="../src/Profiler.hpp">&raquo; Profiler.hpp</a> - nagłówek
+<br><a href="Profiler.txt">&raquo; Profiler.txt</a> - dokumentacja
+</p>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Stream</p>
+<p class="Desc">Hierarchia klas strumieni</p>
+<p class="Files"><a href="../src/Stream.hpp">&raquo; Stream.hpp</a> - nagłówek
+<br><a href="Stream.txt">&raquo; Stream.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Stream - klasa bazowa strumieni
+<li>SeekableStream - klasa bazowa strumieni z obsługą długości i kursora
+<li>CharWriter - klasa przyspieszająca zapisywanie do strumienia po znaku
+<li>CharReader - klasa przyspieszająca odczytywanie ze strumienia po znaku
+<li>MemoryStream - strumień do bloku pamięci o stałym rozmiarze
+<li>VectorStream - strumień do samorozszerzającego się bloku pamięci
+<li>StringStream - strumień do łańcucha typu string
+<li>OverlayStream - klasa bazowa nakładek na strumienie
+<li>CounterOverlayStream - nakładka zliczająca zapisywane i odczytywane dane
+<li>LimitOverlayStream - nakładka ograniczająca ilość zapisywanych i odczytywanych
+  danych
+<li>MultiWriterStream - strumień zapisujący na raz do wielu strumieni
+<li>Hash_Calc - strumień liczący hash
+<li>CRC32_Calc - strumień liczący sumę kontrolną CRC32
+<li>MD5_Calc - strumień liczący sumę kontrolną MD5
+<li>XorCoder - strumień szyfrujący i deszyfrujący dane operacją XOR
+<li>BinEncoder, BinDecoder - strumień kodujący, dekodujący dane binarne jako ciąg
+  zer i jedynek. Szczyt bezużyteczności :) Każdy bajt zamienia na 8 znaków.
+<li>HexEncoder, HexDecoder - strumień kodujący, dekodujący dane binarne jako ciąg
+  liczb szesnastkowych. Każdy bajt zamienia na 2 znaki.
+<li>Base64Encoder, Base64Decoder - strumień kodujący, dekodujący dane binarne w
+  formacie Base64. Każde 3 bajty zamienia na 4 znaki.
+<li>RingBuffer - bufor kołowy.
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Threads</p>
+<p class="Desc">Biblioteka do wielowątkowości i synchronizacji</p>
+<p class="Files"><a href="../src/Threads.hpp">&raquo; Threads.hpp</a> - nagłówek
+<br><a href="Threads.txt">&raquo; Threads.txt</a> - dokumentacja
+</p>
+<ul>
+<li>Thread - klasa wątku
+<li>Obiekty synchronizujące:
+	<ul>
+	<li>Mutex - muteks
+		<ul>
+		<li>Klasa pomocnicza MutexLock i makro MUTEX_LOCK
+		</ul>
+	<li>Semaphore - semafor zliczający
+	<li>Cond - zmienna warunkowa
+	<li>Barrier - bariera
+	<li>Event - zdarzenie (auto-reset lub manual-reset)
+	</ul>
+</ul>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł Tokenizer</p>
+<p class="Desc">Parser składni języka podobnego do C/C++</p>
+<p class="Files"><a href="../src/Tokenizer.hpp">&raquo; Tokenizer.hpp</a> - nagłówek
+<br><a href="Tokenizer.txt">&raquo; Tokenizer.txt</a> - dokumentacja
+</p>
+</div>
+
+<div class="Module">
+<p class="Title">Moduł ZlibUtils</p>
+<p class="Desc">Moduł wspmagający biblioteki zlib</p>
+<p class="Files"><a href="../src/ZlibUtils.hpp">&raquo; ZlibUtils.hpp</a> - nagłówek
+<br><a href="ZlibUtils.txt">&raquo; ZlibUtils.txt</a> - dokumentacja
+</p>
+<ul>
+<li>ZlibCompressionStream - strumień kompresji danych do formatu zlib
+<li>GzipCompressionStream - strumień kompresji danych do formatu gzip
+<li>ZlibDecompressionStream - strumień dekompresji danych z formatu zlib
+<li>GzipDecompressionStream - strumień dekompresji danych z formatu gzip
+<li>GzipFileStream - strumień zapisu i odczytu pliku w formacie gzip (.gz)
+</ul>
+</div>
+
+
+<h1>Mini FAQ</h1>
+
+<blockquote>Skąd taka nazwa?</blockquote>
+<p>W moim głównym kodzie, z którego biblioteka się wywodzi, mam w Visual C++
+w Solution szereg projektów. Jednym z nich jest silnik graficzny, innym
+pomocnicze narzędzie konsolowe czy program testujący. Kod wspólny dla wszystkich
+projektów zgromadziłem w katalogu, który nazwałem Common i tak już zostało.
+</p>
+
+<blockquote>Skąd taka wersja?</blockquote>
+<p>Faktycznie nie było CommonLib 4 czy 5, a wersja 6.1 była tak różna od 6.0,
+że powinna się nazywać 7.0. Jednak chciałem zrównać numerację biblioteki
+z numeracją mojego głównego projektu - silnika graficznego, na potrzeby
+którego napisałem tą bibliotekę.
+</p>
+
+
+<h1>Co nowego?</h1>
+
+<h2>Wersja 7.0 (3 listopada 2007)</h2>
+
+<p>Biblioteka była przez ostatnie miesiące uzupełniana i poprawiana na bieżąco
+wraz z rozwojem silnika graficznego 3D, na potrzeby którego powstała.</p>
+
+<ul>
+<li>Moduł Base
+	<ul>
+	<li>Dodane nowe funkcje do obsługi surowej pamięci:
+	CompareMem i FillMem.
+	<li>Dodana funkcja do rozwiązywania równania kwadratowego: QuadraticEquation.
+	<li>Dodane funkcje generujące szum: PerlinNoise1/2/3 i BrownianNoise1/2/3.
+	<li>Zmiana w RandomGenerator: metody RandUint i RandInt losują teraz liczby
+	z wyłączeniem górnej granicy (max).
+	</ul>
+<li>Moduł Error
+	<ul>
+	<li>Dodane makra dla wygody:
+	ERR_GUARD_BOOL, ERR_GUARD_DIRECTX, ERR_GUARD_BOOL_D, ERR_GUARD_DIRECTX_D
+	<li>Poprawiony błąd w funkcji MustStrToSth.
+	</ul>
+<li>Moduł Math
+	<ul>
+	<li>Dodana funkcja PerpedicularVectors - oblicza dwa dowolne wektory prostopadłe do danego.
+	<li>Dodana funkcja ColorDistance - zwraca "odległość" dwóch kolorów.
+	<li>Dodana funkcja CapsuleVolume licząca objętość kapsuły.
+	<li>Dodane funkcje SphereInBox i BoxInSphere.
+	<li>Dodane funkcje do kolizji trójkąta z prostpadłościanem: TriangleInBox, TriangleToBox.
+	<li>Dodane funkcje do kolizji z płaskim wielokątem w 3D: PointInPolygon, RayToPolygon.
+	<li>Dodane funkcje do kolizji poruszających się obiektów: SweptSphereToSphere, SweptBoxToBox.
+	<li>Dodane funkcje do losowania punktów z wnętrza brył:
+	RandomPointInUnitSphere, RandomPointInUnitCircle, RandomPointInCapsule.
+	<li>Ulepszona funkcja RayToTriangle - teraz można wybrać czy ma być Backface Culling.
+	<li>Poprawione błędy w funkcjach:
+	LinesIntersection,
+	RotationYawPitchRoll, RotationYawPitchRollInv,
+	Normalize (do kwaterninów),
+	Log (do kwaternionów),
+	ClosestPointOnLineSegment,
+	RayToSphere.
+	</ul>
+<li>Moduł Stream
+	<ul>
+	<li>Dodana nowa klasa strumienia: RingBuffer - bufor kołowy.
+	</ul>
+<li>Moduł Tokenizer
+	<ul>
+	<li>Dodane metody do klasy Tokenizer czyniące parsowanie jeszcze wygodniejszym:
+	QueryToken, QueryEOF, QueryEOL, QuerySymbol, QueryIdentifier, QueryKeyword,
+	AssertToken, AssertIdentifier.
+	<li>Poprawiony błąd tokenizacji liczb.
+	<li>Poprawione metody GetUint*, GetInt*, MustGetUint*, MustGetInt*, GetFloat, GetDouble -
+	w przypadku błędu zamiast wykonywać assert rzucają wyjątek błędu tokenizacji.
+	</ul>
+</ul>
+
+<h2>Wersja 6.1 (29 czerwca 2007)</h2>
+
+<p>Od wersji 6.0 biblioteka zmieniła się właściwie nie do poznania.
+Dlatego nie ma sensu wypisywać zmian.
+Szczególnie, że pewnie nikt z niej wcześniej nie korzystał :P
+</p>
+
+
+<h1>Licencja</h1>
+
+<p>Biblioteka dostępna jest na licencji GNU LGPL, co znaczy m.in., że
+masz dostęp do jej kodu źródłowego oraz że możesz używać jej za darmo
+w dowolnych swoich programach, także zamkniętych.
+</p>
+
+<p><b><a href="../lgpl.txt">&raquo; Licencja GNU LGPL</a></b>
+</p>
+
+
+<h1>Autor</h1>
+
+<p>Adam Sawicki
+<br>E-mail: <a href="mailto:sawickiap@poczta.onet.pl">sawickiap@poczta.onet.pl</a>
+<br>WWW: <a href="http://regedit.gamedev.pl/">http://regedit.gamedev.pl</a>
+<br>IRC: <a href="irc://ircnet.pl/warsztat">#warsztat</a> @ <a href="http://www.ircnet.pl">PolNet</a>
+<br>Gadu-Gadu: <a href="gg:2272474">2272474</a>
+</p>
+
+
+</div>
+  </body>
+</html>

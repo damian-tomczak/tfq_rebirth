@@ -1,0 +1,214 @@
+Multishader "MainShader"
+	Source="Engine\\Multishaders\\MainShader.fx"
+	Cache="Cache\\Shaders\\MainShader_#.fxo"
+	Macros {
+		"PASS"                    0,
+		"EMISSIVE"                4,
+		"AMBIENT_MODE"            6,
+		"DIFFUSE_TEXTURE"         8,
+		"COLOR_MODE"              9,
+		"TEXTURE_ANIMATION"      11,
+		"ENVIRONMENTAL_MAPPING"  12,
+		"ALPHA_TESTING"          13,
+		"USE_FOG"                14,
+		"ALPHA_MODE"             15,
+		"FRESNEL_TERM"           17,
+		"HALF_LAMBERT"           18,
+		"PER_PIXEL"              19,
+		"NORMAL_TEXTURE"         20,
+		"SPECULAR"               21,
+		"GLOSS_MAP"              23,
+		"SPOT_SMOOTH"            24,
+		"SHADOW_MAP_MODE"        25,
+		"VARIABLE_SHADOW_FACTOR" 27,
+		"POINT_SHADOW_MAP"       28,
+		"SKINNING"               29,
+		"TERRAIN"                30,
+	}
+	Params {
+		"WorldViewProj",
+		"EmissiveTexture",
+		"DiffuseTexture",
+		"DiffuseColor",
+		"TeamColor",
+		"AmbientColor",
+		"TextureMatrix",
+		"CameraPos",
+		"EnvironmentalTexture",
+		"FogColor",
+		"FogFactors",
+		"FresnelColor",
+		"FresnelPower",
+		"LightColor",
+		"DirToLight",
+		"NormalTexture",
+		"SpecularColor",
+		"SpecularPower",
+		"LightPos",
+		"LightRangeSq",
+		"LightCosFov2",
+		"LightCosFov2Factor",
+		"ShadowFactor",
+		"ShadowFactorA",
+		"ShadowFactorB",
+		"ShadowMapTexture",
+		"ShadowMapMatrix",
+		"ShadowMapSize",
+		"ShadowMapSizeRcp",
+		"ShadowEpsilon",
+		"LightRangeSq_World",
+		"BoneMatrices",
+		"TerrainTexture0",
+		"TerrainTexture1",
+		"TerrainTexture2",
+		"TerrainTexture3",
+		"TerrainTexScale",
+	};
+
+Multishader "PpShader"
+	Source="Engine\\Multishaders\\PpShader.fx"
+	Cache="Cache\\Shaders\\PpShader_#.fxo"
+	Macros {
+		"GRAYSCALE"    0,
+		"FUNCTION"     2,
+		"TONE_MAPPING" 3,
+		"HEAT_HAZE"    4,
+	}
+	Params {
+		"Texture",
+	
+		"GrayscaleFactor",
+		"AFactor",
+		"BFactor",
+	
+		"LuminanceFactor",
+	
+		"PerturbationMap",
+	};
+d3dxeffect "PpBrightPass" "Engine\\Shaders\\PpBrightPass.fxo" params { "Texture", "AFactor", "BFactor" };
+d3dxeffect "PpBlurPass" "Engine\\Shaders\\PpBlurPass.fxo" params { "Texture" };
+d3dxeffect "HeatEffect" "Engine\\Shaders\\HeatEffect.fxo" params { "WorldViewProj", "DirToCam", "ZFar" };
+texture "PerturbationMap" "Engine\\Textures\\PerturbationMap.tga";
+texture "LensFlare01" "Engine\\Textures\\LensFlare01.dds";
+texture "LensFlare02" "Engine\\Textures\\LensFlare02.dds";
+texture "LensFlare03" "Engine\\Textures\\LensFlare03.dds";
+texture "LensFlare_Halo" "Engine\\Textures\\LensFlare_Halo.dds";
+
+d3dxeffect "SE_FliesEffect" "Engine\\Shaders\\SE_FliesEffect.fxo" params { "BlurTexture", "FliesTexture" };
+texture "SE_Hole" "Engine\\Textures\\pp_SE_Hole.tga";
+texture "SE_Flies" "Engine\\Textures\\pp_SE_Flies.dds";
+
+Multishader "TreeShader"
+	Source="Engine\\Multishaders\\Tree.fx"
+	Cache="Cache\\Shaders\\Tree_#.fxo"
+	Macros {
+		"FOG"                  0,
+		"LIGHTING"             1,
+		"RENDER_TO_SHADOW_MAP" 2,
+		"SHADOW_MAP_MODE"      3,
+	}
+	Params {
+		"WorldViewProj",
+		"Texture",
+		"RightVec",
+		"UpVec",
+		"DirToLight",
+		"LightColor",
+		"FogColor",
+		"FogFactors",
+		"QuadWindFactors",
+	};
+
+Multishader "WaterShader"
+	Source="Engine\\Multishaders\\Water.fx"
+	Cache="Cache\\Shaders\\Water_#.fxo"
+	Macros {
+		"FOG" 0,
+	}
+	Params {
+		"WorldViewProj",
+		"NormalTexture",
+		"CameraPos",
+		"DirToLight",
+		"LightColor",
+		"CausticsTexture",
+		"FogColor",
+		"FogFactors",
+		"SpecularExponent",
+		"WaterColor",
+		"CausticsColor",
+		"HorizonColor",
+		"ZenithColor",
+		"TexOffsets",
+		"TexScales",
+	};
+texture "Water_n" "Engine\\Textures\\Water_n.tga";
+texture "Water_Caustics" "Engine\\Textures\\Water_Caustics.tga";
+
+d3dxeffect "ParticleShader" "Engine\\Shaders\\ParticleShader.fxo" params {
+	"WorldViewProj",
+	"RightDir",
+	"UpDir",
+	"Texture",
+	"Data"
+};
+d3dxeffect "ComplexSkyShader" "Engine\\Shaders\\ComplexSky.fxo"
+	params {
+		"WorldViewProj",
+		"HorizonColor",
+		"ZenithColor",
+		"StarsTexture",
+		"StarVisibility"
+	};
+d3dxeffect "ComplexSkyCloudsShader" "Engine\\Shaders\\ComplexSky_Clouds.fxo"
+	params {
+		"WorldViewProj",
+		"NoiseTexture",
+		"NoiseTexA_01",
+		"NoiseTexA_23",
+		"NoiseTexB_01",
+		"NoiseTexB_23",
+		"Color1",
+		"Color2",
+		"Sharpness",
+		"Threshold"
+	};
+texture "Sky_Stars" "Engine\\Textures\\Sky_Stars.png";
+texture "Sky_Glow" "Engine\\Textures\\Sky_Glow.tga";
+
+d3dxeffect "GrassShader" "Engine\\Shaders\\Grass.fxo"
+	params {
+		"Texture",
+		"ViewProj",
+		"RightDir",
+		"UpDir",
+		"WindFactors",
+		"Color",
+		"FadeFactors",
+		"NoiseTexture",
+	};
+texture "NoiseTexture" "Engine\\Textures\\Noise_Blurred.dds";
+
+d3dxeffect "FallShader" "Engine\\Shaders\\Fall.fxo"
+	params {
+		"Texture",
+		"WorldViewProj",
+		"RightVec",
+		"UpVec",
+		"Movement1",
+		"Movement2",
+		"MainColor",
+		"Translation",
+	};
+d3dxeffect "FallShader_Planes" "Engine\\Shaders\\Fall_Planes.fxo"
+	params {
+		"Texture",
+		"WorldViewProj",
+		"MainColor",
+		"TexOffset",
+	};
+texture "FallNoise" "Engine\\Textures\\FallNoise.tga";
+
+d3dxeffect "SkyboxEffect" "Engine\\Shaders\\Skybox.fxo";
+d3dxeffect "OcclusionQueryEffect" "Engine\\Shaders\\OcclusionQueryEffect.fxo" params { "World", "View", "Proj" };
+CubeTexture "Gemstone" "Engine\\Textures\\Gemstone Env Cube Map.dds";

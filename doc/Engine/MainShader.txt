@@ -1,0 +1,272 @@
+Makra
+================================================================================
+
+PASS = 0, 1, 2, 3, 4, 5, 6, 7, 8
+Zawsze.
+Rodzaj przebiegu - G£ÓWNA OPCJA!!!
+0 = Z-Fill + Ambient + Emissive + Environmental Mapping
+1 = Fog
+2 = WireFrame - obiekty rysowane materia³em siatkowym WireFrameMaterial
+3 = Translucent - obiekty rysowane materia³em pó³przezroczystym TranslucentMaterial
+4 = Directional - oœwietlenie œwiat³em Directional
+5 = Point - œwiat³o punktowe
+6 = Spot - œwiat³o Spot
+7 = Shadow Map - renderowanie g³êbokoœci do Shadow Mapy
+8 = Terrain (rysuje ambient + directinal light + fog)
+
+EMISSIVE = 0, 1
+Warunek: PASS == 0 || PASS == 3
+Czy w³¹czony jest rysowany w tym przebiegu Emissive.
+
+AMBIENT_MODE = 0, 1, 2
+Warunek: PASS == 0 | PASS == 8
+Tryb dzia³ania oœwietlenia Ambient.
+0 = Brak oœwietlenia Ambient, rysuje siê na czarno.
+1 = Pe³ne oœwietlenie Ambient, bez koloru.
+    Czyli tak jakby AmbientColor=WHITE lub jakby encja nie podlega³a oœwietleniu.
+2 = Jest Ambient, jest jego kolor przez który trzeba mno¿yæ
+
+DIFFUSE_TEXTURE = 0, 1
+Warunek: PASS == 0 || PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7
+Czy jest DiffuseTexture. Jeœli 0, to zamiast tekstury jest DiffuseColor.
+
+COLOR_MODE = 0, 1, 2
+Warunek: PASS == 0 || PASS == 2 || PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6
+Tryb przekolorowania materia³u przez TeamColor encji.
+PASS == 0 || PASS == 3:
+  0 = MATERIAL - brak przekolorowania, kolor jest brany z Diffuse materia³u
+  1 = MODULATE - kolor Diffuse materia³u jest mno¿ony przez TeamColor encji
+  2 = LERP - kolor Diffuse materia³u jest interpolowany do TeamColor encji na
+      podstawie wartoœci Alfa z Diffuse materia³u
+PASS == 2:
+  0 = MATERIAL - brak przekolorowania, kolor jest brany z materia³u
+  1 = ENTITY - kolor jest brany w ca³oœci z TeamColor encji
+  2 = MODULATE - kolor i kana³ Alfa materia³u jest mno¿ony przez TeamColor encji
+
+TEXTURE_ANIMATION = 0, 1
+Warunek: PASS == 0 || PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7
+Czy jest animacja tekstury, czyli mno¿enie wsp. tekstury przez macierz.
+
+ENVIRONMENTAL_MAPPING = 0, 1
+Warunek: PASS == 0 || PASS == 3
+Czy jest w tym przebiegu rysowany dodatkowo Environmental Mapping.
+
+ALPHA_TESTING = 0, 1
+Warunek: PASS == 0 || PASS == 1 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7
+Czy materia³ ma alfa-testing.
+Ty czy naprawdê w³¹czany jest alfa-testing czy jest ustawiane ZFunc=EQUAL to
+zale¿y od przebiegu i jest ustawiane poza FX-em.
+
+USE_FOG = 0, 1
+Warunek: PASS == 2 || PASS == 3 || PASS == 8
+Czy u¿ywaæ mg³y przy okazji rysowania tego przeebigu.
+
+ALPHA_MODE = 0, 1, 2
+Warunek: PASS == 3
+Tryb przekolorowania kana³u Alpha z Diffuse materia³u przez Alpha z TeamColor encji.
+0 = MATERIAL - brak przekolorowania, alpha jest brana z materia³u
+1 = ENTITY - alpha jest brana w ca³oœci z TeamColor encji
+2 = MODULATE - Alpha materia³u jest mno¿ony przez Alpha z TeamColor encji
+
+FRESNEL_TERM = 0, 1
+Warunek: PASS == 0 || PASS == 3
+Czy Fresnel Term jest w³¹czony.
+
+HALF_LAMBERT = 0, 1
+Warunek: PASS == 4 || PASS == 5 || PASS == 6
+Czy dane oœwietlenie ma byæ liczone dla Diffuse metod¹ Half-Lambert.
+
+PER_PIXEL = 0, 1
+Warunek: PASS == 4 || PASS == 5 || PASS == 6
+Czy dane oœwietlenie jest Per Pixel.
+Jeœli nie, to jest Per Vertex.
+
+NORMAL_TEXTURE = 0, 1
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6) && PER_PIXEL == 1
+Czy jest tekstura Normal Mapy.
+Jeœli nie ma, wektor normalny sterczy zawsze w t¹ sam¹ stronê.
+
+SPECULAR = 0, 1, 2, 3
+Warunek: PASS == 4 || PASS == 5 || PASS == 6
+Tryb odblasku specular (odpowiada OpaqueMaterial::SPECULAR_MODE)
+0 = NONE
+1 = SPECULAR
+2 = ANISO_TANGENT (PER_PIXEL == 1 && NORMAL_TEXTURE == 0)
+3 = ANISO_BINORMAL (PER_PIXEL == 1 && NORMAL_TEXTURE == 0)
+
+GLOSS_MAP = 0, 1
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6) && SPECULAR != 0
+Czy jest gloss mapping.
+
+SPOT_SMOOTH = 0, 1
+Warunek: PASS == 6
+Czy œwiat³o zanika p³ynnie wraz z k¹tem ochylenia od kierunku.
+
+SHADOW_MAP_MODE = 0, 1, 2
+Warunek: PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7 || PASS == 8
+Rodzaj Shadow Mapy.
+0 = Brak shadow mappingu (tylko PASS == 7)
+1 = wykorzystuje tylko kana³ R, który ma du¿¹ dok³adnoœæ
+2 = wykorzystuje 3 kana³y o ma³ej dok³adnoœci - R, G, B, do których trzeba pakowaæ g³êbokoœæ
+    ma te¿ kana³ alpha, to te¿ mo¿na robiæ Alpha Testing
+
+VARIABLE_SHADOW_FACTOR = 0, 1
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && (SHADOW_MAP_MODE != 0)
+W praktyce tylko PASS == 4
+Czy Shadow Factor jest zmienny z odleg³oœci¹, nie sta³y.
+
+POINT_SHADOW_MAP = 0, 1
+Warunek: PASS == 7 || PASS == 5
+Czy renderowana do Shadow Mapy ma byæ odleg³oœæ a nie g³êbokoœæ, bo to jest
+œwiat³o punktowe.
+
+SKINNING = 0, 1
+Zawsze.
+Czy jest Skinning stosowany do pozycji wierzcho³ka, jego Normal i ewentualnego
+Tangent i Binormal.
+
+TERRAIN = 0, 1
+Warunek: ???
+Czy rysowany jest specjalny materia³ terenu.
+
+
+Parametry
+================================================================================
+
+WorldViewProj : float4x4
+Zawsze.
+Po³¹czona macierz World * View * Projection.
+
+EmissiveTexture : texture
+Warunek: (PASS == 0 || PASS == 3) && EMISSIVE == 1
+Tekstura u¿ywana do Emissive.
+
+DiffuseTexture : texture
+Warunek:
+  (PASS == 0 && DIFFUSE_TEXTURE == 1 && (AMBIENT_MODE != 0 || ALPHA_TESTING == 1)) ||
+  ((PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7) && DIFFUSE_TEXTURE == 1)
+Tekstura g³ówna Diffuse.
+
+DiffuseColor : float4
+Warunek:
+  (PASS == 0 && AMBIENT_MODE != 0 && DIFFUSE_TEXTURE == 0) ||
+  (PASS == 2)
+  ((PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7) && DIFFUSE_TEXTURE == 0)
+Jednolity kolor u¿ywany zamiast tekstury Diffuse.
+
+TeamColor : float4
+Warunek:
+  (PASS == 0 && AMBIENT_MODE != 0 && COLOR_MODE != 0) ||
+  ((PASS == 2 || PASS == 4 || PASS == 5 || PASS == 6) && COLOR_MODE != 0) ||
+  (PASS == 3 && (COLOR_MODE != 0 || ALPHA_MODE != 0))
+Kolor pochodz¹cy od encji.
+
+AmbientColor : float4
+Warunek: (PASS == 0 || PASS == 8) && AMBIENT_MODE == 2
+Kolor oœwietlenia Ambient.
+
+TextureMatrix : float4x4
+Warunek: (PASS == 0 || PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6 || PASS == 7) && TEXTURE_ANIMATION == 1
+Macierz do przekszta³cania wsp. tekstury.
+
+CameraPos : float3
+Warunek:
+	(PASS == 0 || PASS == 3 || PASS == 4 || PASS == 5 || PASS == 6) &&
+	(ENVIRONMENTAL_MAPPING == 1 || FRESNEL_TERM == 1 || SPECULAR != 0)
+Pozycja kamery we wsp. lokalnych modelu.
+
+EnvironmentalTexture : texture (CUBE)
+Warunek: (PASS == 0 || PASS == 3) && ENVIRONMENTAL_MAPPING == 1
+Tekstura szeœcienna do Environmental Mappingu.
+
+FogColor : float4
+Warunek:
+  PASS == 1 ||
+  ((PASS == 2 || PASS == 3 || PASS == 8) && USE_FOG == 1)
+Kolor mg³y.
+
+FogFactors : float2
+Warunek:
+  PASS == 1 ||
+  ((PASS == 2 || PASS == 3 || PASS == 8) && USE_FOG == 1)
+Wspó³czynniki równania liniowego do intensywnoœci mg³y zale¿nej od Z = 0..1.
+Równanie jest: FogIntensity = FogFactors.x * Z + FogFactors.y
+
+FresnelColor : half4
+Warunek: FRESNEL_TERM == 1
+Kolor i jasnoœæ Fresnel Term.
+
+FresnelPower : float
+Warunek: FRESNEL_TERM == 1
+Wyk³adnik Fresnel Term.
+
+LightColor : half4
+Warunek: PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8
+Kolor danego œwiat³a.
+
+DirToLight : float3
+Warunek: PASS == 4 || PASS == 6 || PASS == 8
+Directional: Kierunek do œwiat³a - zanegowany kierunek œwiat³a kierunkowego.
+Spot: Zanegowany kierunek œwiecenia œwiat³a Spot.
+
+NormalTexture : texture
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6) && NORMAL_TEXTURE == 1
+Tekstura Normal Map.
+
+SpecularColor : half4
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6) && SPECULAR != 0
+Kolor odblasku.
+
+SpecularPower : float
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6) && SPECULAR != 0
+Wyk³adnik odblasku.
+
+LightPos : float3
+Warunek: PASS == 5 || PASS == 6 || (PASS == 7 && POINT_SHADOW_MAP == 1)
+Pozycja œwiat³a we wsp. modelu.
+
+LightRangeSq : float
+Warunek: PASS == 5 || PASS == 6 || (PASS == 7 && POINT_SHADOW_MAP == 1)
+Kwadrat zasiêgu œwiat³a.
+
+LightCosFov2 : half
+Warunek: PASS == 6
+Cosinus po³owy k¹ta rozchylenia snopa œwiat³a typu spot.
+
+LightCosFov2Factor : half
+Warunek: PASS == 6 && SPOT_SMOOTH == 1
+Wyliczany ze wzoru: 1 / (1 - LightCosFov2)
+
+ShadowFactor : float
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0
+
+ShadowFactorA : float
+ShadowFactorB : float
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0 && VARIABLE_SHADOW_FACTOR == 1
+Wspó³czynniki do równania liniowego zmiany ShadowFactor z odleg³oœci¹
+
+ShadowMapTexture : texture
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0
+
+ShadowMapMatrix : float4x4
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0
+Macierz przekszta³caj¹ca pozycjê ze wsp. modelu do wsp. shadow mapy.
+
+ShadowMapSize : float
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0
+Rozmiar shadow mapy w pikselach.
+
+ShadowMapSizeRcp : float
+Warunek: (PASS == 4 || PASS == 5 || PASS == 6 || PASS == 8) && SHADOW_MAP_MODE != 0
+Równy: 1 / ShadowMapSize
+
+ShadowEpsilon : float
+Warunek: PASS == 5 && SHADOW_MAP_PODE != 0
+
+LightRangeSq_World : float
+Warunek: PASS == 5 && SHADOW_MAP_MODE != 0
+Zasiêg œwiat³a Point w przestrzeni œwiata - potrzebny do Shadow Mappingu.
+
+BoneMatrices : float4x3 [32]
+Warunek: SKINNING == 1
+Macierze koœci dla skinningu (animacji szkieletowej).

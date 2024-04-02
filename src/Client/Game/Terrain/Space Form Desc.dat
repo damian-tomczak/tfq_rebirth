@@ -1,0 +1,16 @@
+TerrainForms 1
+
+0x000000 complex {
+	0 {
+		"MarsTerrain2"
+		TexScale = 0.178
+	}
+	100 {
+		"MarsTerrain1"
+		TexScale = 0.123
+	}
+	150 {
+		"MarsTerrain2"
+		TexScale = 0.154
+	}
+}

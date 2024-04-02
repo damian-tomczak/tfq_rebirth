@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectName>TFQ</ProjectName>
+    <ProjectGuid>{777FF8B0-D77A-45A7-BBC7-AE181DDE7DEF}</ProjectGuid>
+    <RootNamespace>TFQ</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.31919.74</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;D3D_DEBUG_INFO;USE_DIRECTX;PROJECT_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\Framework\pch.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)TFQ.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;USE_DIRECTX;PROJECT_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\Framework\pch.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr9.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)TFQ.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common\Base.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Config.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\DateTime.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Dator.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Error.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Files.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\FreeList.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Logger.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Math.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Profiler.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Stream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Threads.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\Tokenizer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Camera.cpp" />
+    <ClCompile Include="..\Engine\Engine.cpp" />
+    <ClCompile Include="..\Engine\Engine_pp.cpp" />
+    <ClCompile Include="..\Engine\Entities.cpp" />
+    <ClCompile Include="..\Engine\Fall.cpp" />
+    <ClCompile Include="..\Engine\Grass.cpp" />
+    <ClCompile Include="..\Engine\IcosphereRes.cpp" />
+    <ClCompile Include="..\Engine\QMap.cpp" />
+    <ClCompile Include="..\Engine\Sky.cpp" />
+    <ClCompile Include="..\Engine\Terrain.cpp" />
+    <ClCompile Include="..\Engine\Trees.cpp" />
+    <ClCompile Include="..\Engine\Water.cpp" />
+    <ClCompile Include="..\Framework\AsyncConsole.cpp" />
+    <ClCompile Include="..\Framework\D3dUtils.cpp" />
+    <ClCompile Include="..\Framework\Framework.cpp" />
+    <ClCompile Include="..\Framework\Gfx2D.cpp" />
+    <ClCompile Include="..\Framework\GUI.cpp" />
+    <ClCompile Include="..\Framework\GUI_Controls.cpp" />
+    <ClCompile Include="..\Framework\GUI_PropertyGridWindow.cpp" />
+    <ClCompile Include="..\Framework\Multishader.cpp" />
+    <ClCompile Include="..\Framework\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Framework\QMesh.cpp" />
+    <ClCompile Include="..\Framework\ResMngr.cpp" />
+    <ClCompile Include="..\Framework\Res_d3d.cpp" />
+    <ClCompile Include="DebugGui.cpp" />
+    <ClCompile Include="GameBase.cpp" />
+    <ClCompile Include="GameFpp.cpp" />
+    <ClCompile Include="GamePacman.cpp" />
+    <ClCompile Include="GameRpg.cpp" />
+    <ClCompile Include="GameRts.cpp" />
+    <ClCompile Include="GameSpace.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MathHelpDrawing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\Base.hpp" />
+    <ClInclude Include="..\Common\Config.hpp" />
+    <ClInclude Include="..\Common\DateTime.hpp" />
+    <ClInclude Include="..\Common\Dator.hpp" />
+    <ClInclude Include="..\Common\Error.hpp" />
+    <ClInclude Include="..\Common\Files.hpp" />
+    <ClInclude Include="..\Common\FreeList.hpp" />
+    <ClInclude Include="..\Common\Logger.hpp" />
+    <ClInclude Include="..\Common\Math.hpp" />
+    <ClInclude Include="..\Common\Profiler.hpp" />
+    <ClInclude Include="..\Common\Stream.hpp" />
+    <ClInclude Include="..\Common\Threads.hpp" />
+    <ClInclude Include="..\Common\Tokenizer.hpp" />
+    <ClInclude Include="..\Engine\Camera.hpp" />
+    <ClInclude Include="..\Engine\Engine.hpp" />
+    <ClInclude Include="..\Engine\Engine_pp.hpp" />
+    <ClInclude Include="..\Engine\Entities.hpp" />
+    <ClInclude Include="..\Engine\Fall.hpp" />
+    <ClInclude Include="..\Engine\Grass.hpp" />
+    <ClInclude Include="..\Engine\IcosphereRes.hpp" />
+    <ClInclude Include="..\Engine\QMap.hpp" />
+    <ClInclude Include="..\Engine\Sky.hpp" />
+    <ClInclude Include="..\Engine\Terrain.hpp" />
+    <ClInclude Include="..\Engine\Trees.hpp" />
+    <ClInclude Include="..\Engine\Water.hpp" />
+    <ClInclude Include="..\Framework\AsyncConsole.hpp" />
+    <ClInclude Include="..\Framework\D3dUtils.hpp" />
+    <ClInclude Include="..\Framework\Framework.hpp" />
+    <ClInclude Include="..\Framework\Gfx2D.hpp" />
+    <ClInclude Include="..\Framework\GUI.hpp" />
+    <ClInclude Include="..\Framework\GUI_Controls.hpp" />
+    <ClInclude Include="..\Framework\GUI_PropertyGridWindow.hpp" />
+    <ClInclude Include="..\Framework\Multishader.hpp" />
+    <ClInclude Include="..\Framework\pch.hpp" />
+    <ClInclude Include="..\Framework\QMesh.hpp" />
+    <ClInclude Include="..\Framework\ResMngr.hpp" />
+    <ClInclude Include="..\Framework\Res_d3d.hpp" />
+    <ClInclude Include="DebugGui.hpp" />
+    <ClInclude Include="GameBase.hpp" />
+    <ClInclude Include="GameFpp.hpp" />
+    <ClInclude Include="GamePacman.hpp" />
+    <ClInclude Include="GameRpg.hpp" />
+    <ClInclude Include="GameRts.hpp" />
+    <ClInclude Include="GameSpace.hpp" />
+    <ClInclude Include="MathHelpDrawing.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Framework\Res_d3d_Font_Draw.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

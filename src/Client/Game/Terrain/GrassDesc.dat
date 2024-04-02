@@ -1,0 +1,39 @@
+GrassDesc
+Texture {
+	"GrassTexture"
+	512, 128
+}
+Grasses {
+	"Grass" {
+		CX = 0.7, 0.1
+		CY = 0.5, 0.05
+		Tex = 0, 0, 207, 127
+		Wind = 1
+	}
+	"Flower" {
+		CX = 0.5, 0.1
+		CY = 0.5, 0.05
+		Tex = 257, 0, 397, 127
+		Wind = 0.8
+	}
+	"Stone" {
+		CX = 0.1, 0.05
+		CY = 0.05, 0.03
+		Tex = 415, 39, 483, 72
+		Wind = 0
+	}
+}
+DensityMap {
+	R {
+		"Stone" 5
+	}
+	G {
+		"Grass" 5,
+		//"Flower" 2
+	}
+	B {
+		"Grass" 5,
+		"Flower" 2
+	}
+}
+

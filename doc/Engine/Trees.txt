@@ -1,0 +1,56 @@
+Format tekstowy
+================================================================================
+
+Plik TreeDesc.dat wczytywany przez klasê TerrainRenderer:
+
+Textures {
+  "Tex1"                nazwa
+    { ... }             TreeTextureDesc (patrz ni¿ej)
+}
+
+Trees {                      Kolejne drzewa. Bêd¹ indeksowane od 0.
+  Tree
+    Texture="Tex1"           Nazwa definicji tekstury z poprzedniej sekcji pliku
+    Name="Tree1"             Nazwa (opcjonalna, domyœlnie brak nazwy)
+    Kinds=3                  KindCount (liczba odmian) (opcjonalna, domyœlnie 1)
+    DensityMapColor=0xFFFFFF Kolor dla TreeDensityMap (opcjonalny, domyœlnie brak)
+    { ... }                  TREE_DESC (patrz ni¿ej)
+  ...                        Nastêpne drzewo...
+}
+
+
+Struktura TREE_LEVEL_DESC:
+
+{
+	1              Visible (0, 1)
+	6              SubbranchCount (uint)
+	0.3 1.0        SubbranchRangeMin, SubbranchRangeMax (float)
+	0.78 0.15      SubranchAngle, SubbranchAngleV (float)
+	2 0 0          Length, LengthV, LengthToParent (float)
+	0.1 0.01 0.5   Radius, RadiusV, RadiusEnd (float)
+	1 0            LeafCount, LeafCountV (float)
+	1.0 1.1        LeafRangeMin, LeafRangeMax (float)
+}
+
+Struktura TREE_DESC:
+
+{
+	1 2              HalfWidth, HalfHeight (float)
+	1                BarkTexScale (float)
+	0.3 0.1 0.3 0.1  LeafHalfSizeCX, LeafHalfSizeCXV, LeafHalfSizeCY, LeafHalfSizeCYV (float)
+	1                AllowTexFlipX (0, 1)
+	Roots = { ... }  TREE_LEVEL_DESC (korzenie)
+	{ ... }          TREE_LEVEL_DESC (poziom 0)
+	{ ... }          TREE_LEVEL_DESC (poziom 1)
+	...
+}
+
+Klasa TreeTextureDesc:
+
+{
+	"Tree1Texture"   TextureName (string)
+	1024 512         TextureCX, TextureCY (uint)
+	63 0 315 510     Root (rect<int>: left, top, right, bottom)
+	529 18 1020 486  Leaves (rect<int>: left, top, right, bottom)
+}
+

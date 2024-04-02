@@ -1,0 +1,25 @@
+TerrainForms 1
+
+0x000000 complex {
+	0 {
+		"Sand"
+		TexScale = 0.234
+	}
+	50 {
+		"Grass"
+		TexScale = 0.345
+	}
+	162 {
+		"Snow"
+		TexScale = 0.294
+	}
+}
+0xFF0000 simple {
+	"Path"
+	TexScale = 0.678
+}
+0x00FF00 simple {
+	"Creep"
+	TexScale = 0.938
+}
+
